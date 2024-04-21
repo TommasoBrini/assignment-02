@@ -18,7 +18,6 @@ public class RunTrafficSimulation {
 //		 var simulation = new TrafficSimulationWithCrossRoads();
 
 		final SimulationView view = SimulationSingleton.simulationView;
-
 		SimulationSingleton.simulation.addViewListener(view);
 		view.setupCommandsSimulation(SimulationSingleton.simulation);
 	}
