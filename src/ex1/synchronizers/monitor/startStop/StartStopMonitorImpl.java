@@ -33,23 +33,17 @@ public class StartStopMonitorImpl implements StartStopMonitor {
 
     @Override
     public void play() {
-        try {
-            this.mutex.lock();
-            this.isRunning = true;
-            this.conditionRunning.signal();
-        } finally {
-            this.mutex.unlock();
-        }
+        this.mutex.lock();
+        this.isRunning = true;
+        this.conditionRunning.signalAll();
+        this.mutex.unlock();
     }
 
     @Override
     public void pause() {
-        try {
-            this.mutex.lock();
-            this.isRunning = false;
-        } finally {
-            this.mutex.unlock();
-        }
+        this.mutex.lock();
+        this.isRunning = false;
+        this.mutex.unlock();
     }
 
     @Override

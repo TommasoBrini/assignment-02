@@ -1,33 +1,31 @@
 package ex1.synchronizers.monitor.cycleBarrier;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
-import ex1.synchronizers.monitor.startStop.StartStopMonitor;
-import ex1.synchronizers.monitor.startStop.StartStopMonitor;
+import ex1.synchronizers.worker.master.MasterWorker;
 
 public class MyCyclicBarrierImpl implements MyCyclicBarrier {
-    final StartStopMonitor startStopMonitorWhenBreakBarrier;
-    private final AtomicInteger countWorker;
-    private int totalWorker;
+    private final MasterWorker masterWorker;
+    private CyclicBarrier cyclicBarrier;
 
-    public MyCyclicBarrierImpl(final StartStopMonitor startStopMonitorWhenBreakBarrier) {
-        this.startStopMonitorWhenBreakBarrier = startStopMonitorWhenBreakBarrier;
-        this.countWorker = new AtomicInteger(0);
+    public MyCyclicBarrierImpl(final MasterWorker masterWorker) {
+        this.masterWorker = masterWorker;
     }
 
 
     @Override
     public void setup(final int parties) {
-        this.totalWorker = parties;
+        final Runnable runnable = this.masterWorker::actionBreakBarrier;
+        this.cyclicBarrier = new CyclicBarrier(parties, runnable);
     }
 
     @Override
     public void hit() {
-        if (this.countWorker.incrementAndGet() == this.totalWorker) {
-            this.countWorker.set(0);
-            System.out.println();
-            System.out.println("BRAKE BARRIER: play next command");
-            this.startStopMonitorWhenBreakBarrier.play();
+        try {
+            this.cyclicBarrier.await();
+        } catch (final InterruptedException | BrokenBarrierException e) {
+            throw new RuntimeException(e);
         }
     }
 }

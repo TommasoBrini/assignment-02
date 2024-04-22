@@ -1,16 +1,20 @@
 package ex1.synchronizers.worker.slave;
 
+import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrier;
+import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrierImpl;
 import ex1.synchronizers.monitor.startStop.StartStopMonitor;
 import ex1.synchronizers.monitor.startStop.StartStopMonitorImpl;
 import ex1.synchronizers.monitor.startStop.StartStopMonitor;
 import ex1.synchronizers.monitor.startStop.StartStopMonitorImpl;
 
-public abstract class BaseWorker extends Thread implements StartStopMonitor {
+public abstract class BaseWorker extends Thread {
     private final StartStopMonitor startStopMonitor;
+    private final MyCyclicBarrier cyclicBarrier;
     private boolean isRunning;
 
-    protected BaseWorker() {
+    protected BaseWorker(final MyCyclicBarrier cyclicBarrier) {
         this.startStopMonitor = new StartStopMonitorImpl();
+        this.cyclicBarrier = cyclicBarrier;
         this.isRunning = true;
         this.start();
     }
@@ -19,34 +23,24 @@ public abstract class BaseWorker extends Thread implements StartStopMonitor {
 
     @Override
     public void run() {
-        this.pause();
-        this.awaitUntilPlay();
+        this.startStopMonitor.pauseAndWaitUntilPlay();
         while (this.isRunning) {
+            this.startStopMonitor.awaitUntilPlay();
             this.execute();
-            this.pauseAndWaitUntilPlay();
+            this.cyclicBarrier.hit();
         }
         System.out.println("Worker terminated");
     }
 
-    @Override
-    public void play() {
+    protected void play() {
         this.startStopMonitor.play();
     }
-    @Override
+
     public void pause() {
         this.startStopMonitor.pause();
     }
-    @Override
-    public void awaitUntilPlay() {
-        this.startStopMonitor.awaitUntilPlay();
-    }
-    @Override
-    public void pauseAndWaitUntilPlay() {
-        this.startStopMonitor.pauseAndWaitUntilPlay();
-    }
 
     public void terminate() {
-        this.play();
         this.isRunning = false;
     }
 

@@ -25,7 +25,7 @@ public abstract class BaseMasterWorker {
     }
 
     protected void setDtToCarAgents(final int dt) {
-        this.carAgents.stream().parallel().forEach(carAgent -> carAgent.setTimeDt(dt));
+        this.carAgents.forEach(carAgent -> carAgent.setTimeDt(dt));
     }
 
     public void addCarAgent(final CarAgent carAgent) {

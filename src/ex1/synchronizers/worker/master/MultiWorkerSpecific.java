@@ -10,11 +10,6 @@ import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrierImpl;
 import ex1.synchronizers.monitor.startStop.StartStopMonitor;
 import ex1.synchronizers.worker.slave.Worker;
 import ex1.synchronizers.worker.slave.WorkerCarBarrier;
-import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrier;
-import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrierImpl;
-import ex1.synchronizers.monitor.startStop.StartStopMonitor;
-import ex1.synchronizers.worker.slave.Worker;
-import ex1.synchronizers.worker.slave.WorkerCarBarrier;
 import utils.ListUtils;
 
 import java.util.ArrayList;
@@ -34,9 +29,9 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
         super(starStopMonitorSimulation);
         this.carsWorkersList = new ArrayList<>();
         this.commands = List.of(new SenseCommand(), new DecideCommand(), new ActionCommand());
-        this.senseCycleBarrier = new MyCyclicBarrierImpl(this.startStopMonitorSimulation());
-        this.decideCycleBarrier = new MyCyclicBarrierImpl(this.startStopMonitorSimulation());
-        this.actionCycleBarrier = new MyCyclicBarrierImpl(this.startStopMonitorSimulation());
+        this.senseCycleBarrier = new MyCyclicBarrierImpl(this);
+        this.decideCycleBarrier = new MyCyclicBarrierImpl(this);
+        this.actionCycleBarrier = new MyCyclicBarrierImpl(this);
         this.senseDivisor = 5;
         this.decideDivisor = 5;
         this.actionDivisor = 5;
@@ -72,7 +67,7 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
         this.setDtToCarAgents(dt);
         int index = 0;
         for (final var command : this.commands) {
-            this.carsWorkersList.get(index++).forEach(worker -> worker.play(command));
+            this.carsWorkersList.get(index++).forEach(worker -> worker.setCarCommand(command));
             this.startStopMonitorSimulation().pauseAndWaitUntilPlay();
         }
     }
@@ -80,5 +75,10 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
     @Override
     public void terminateWorkers() {
         this.carsWorkersList.forEach(workers -> workers.forEach(Worker::terminate));
+    }
+
+    @Override
+    public void actionBreakBarrier() {
+
     }
 }

@@ -10,5 +10,7 @@ public interface MasterWorker {
 
     void terminateWorkers();
 
+    void actionBreakBarrier();
+
     void addCarAgent(final CarAgent carAgent);
 }
