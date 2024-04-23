@@ -14,12 +14,9 @@ import utils.ListUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
 
 public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker {
     private final MyCyclicBarrier cycleBarrier;
-    private final CyclicBarrier barrier;
     private final List<CarCommand> carCommands;
     private final List<Worker> carsWorkers;
     private int indexCommand;
@@ -30,7 +27,6 @@ public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker
         this.carsWorkers = new ArrayList<>();
         this.carCommands = List.of(new SenseCommand(), new DecideCommand(), new ActionCommand());
         this.cycleBarrier = new MyCyclicBarrierImpl(this);
-        this.barrier = new CyclicBarrier(2);
         this.indexCommand = 0;
         this.divisor = 5;
     }
@@ -48,23 +44,26 @@ public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker
     }
 
     @Override
-    public void actionBreakBarrier() {
+    public void breakBarrierAction() {
         if (this.indexCommand < this.carCommands.size()) {
             final CarCommand command = this.carCommands.get(this.indexCommand++);
             System.out.println("\nRUN COMMAND: " + command.getClass().getSimpleName());
             this.carsWorkers.forEach(worker -> worker.setCarCommand(command));
         } else {
             System.out.println("\nWEAK UP SIMULATION");
-            this.indexCommand = 0;
-            this.startStopMonitorSimulation().play();
             this.carsWorkers.forEach(Worker::pause);
+            this.startStopMonitorSimulation().play();
         }
     }
 
     @Override
     public void execute(final int dt) {
+        this.startStopMonitorSimulation().pause();
+        this.indexCommand = 0;
         this.setDtToCarAgents(dt);
-        this.actionBreakBarrier();
+        this.breakBarrierAction();
+        this.carsWorkers.forEach(Worker::play);
+        this.startStopMonitorSimulation().awaitUntilPlay();
     }
 
     @Override

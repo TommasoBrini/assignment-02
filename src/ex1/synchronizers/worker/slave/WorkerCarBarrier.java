@@ -24,7 +24,6 @@ public class WorkerCarBarrier extends BaseWorker implements Worker {
     @Override
     public void setCarCommand(final CarCommand command) {
         this.command = command;
-        this.play();
     }
 
 }

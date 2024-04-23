@@ -1,9 +1,6 @@
 package ex1.synchronizers.worker.slave;
 
 import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrier;
-import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrierImpl;
-import ex1.synchronizers.monitor.startStop.StartStopMonitor;
-import ex1.synchronizers.monitor.startStop.StartStopMonitorImpl;
 import ex1.synchronizers.monitor.startStop.StartStopMonitor;
 import ex1.synchronizers.monitor.startStop.StartStopMonitorImpl;
 
@@ -16,6 +13,7 @@ public abstract class BaseWorker extends Thread {
         this.startStopMonitor = new StartStopMonitorImpl();
         this.cyclicBarrier = cyclicBarrier;
         this.isRunning = true;
+        this.startStopMonitor.pause();
         this.start();
     }
 
@@ -23,16 +21,16 @@ public abstract class BaseWorker extends Thread {
 
     @Override
     public void run() {
-        this.startStopMonitor.pauseAndWaitUntilPlay();
+        this.startStopMonitor.awaitUntilPlay();
         while (this.isRunning) {
-            this.startStopMonitor.awaitUntilPlay();
             this.execute();
             this.cyclicBarrier.hit();
+            this.startStopMonitor.awaitUntilPlay();
         }
         System.out.println("Worker terminated");
     }
 
-    protected void play() {
+    public void play() {
         this.startStopMonitor.play();
     }
 
@@ -42,6 +40,7 @@ public abstract class BaseWorker extends Thread {
 
     public void terminate() {
         this.isRunning = false;
+        this.play();
     }
 
 

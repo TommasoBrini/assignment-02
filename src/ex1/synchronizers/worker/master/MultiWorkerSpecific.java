@@ -68,7 +68,7 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
         int index = 0;
         for (final var command : this.commands) {
             this.carsWorkersList.get(index++).forEach(worker -> worker.setCarCommand(command));
-            this.startStopMonitorSimulation().pauseAndWaitUntilPlay();
+//            this.startStopMonitorSimulation().pauseAndWaitUntilPlay();
         }
     }
 
@@ -78,7 +78,7 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
     }
 
     @Override
-    public void actionBreakBarrier() {
+    public void breakBarrierAction() {
 
     }
 }

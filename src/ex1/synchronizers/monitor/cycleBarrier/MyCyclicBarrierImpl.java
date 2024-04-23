@@ -16,8 +16,7 @@ public class MyCyclicBarrierImpl implements MyCyclicBarrier {
 
     @Override
     public void setup(final int parties) {
-        final Runnable runnable = this.masterWorker::actionBreakBarrier;
-        this.cyclicBarrier = new CyclicBarrier(parties, runnable);
+        this.cyclicBarrier = new CyclicBarrier(parties, this.masterWorker::breakBarrierAction);
     }
 
     @Override

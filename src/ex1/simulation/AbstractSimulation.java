@@ -72,6 +72,7 @@ public abstract class AbstractSimulation extends Thread implements InspectorSimu
 
         this.toBeInSyncWithWallTime = false;
         this.setupModelListener();
+        this.startStopMonitor.pause();
         this.start();
     }
 
@@ -141,9 +142,6 @@ public abstract class AbstractSimulation extends Thread implements InspectorSimu
             /* make a step */
             this.env.step(this.dt);
             this.masterWorker.execute(this.dt);
-            System.out.println("AWAIT SIMULATION");
-            this.startStopMonitor.pauseAndWaitUntilPlay();
-            System.out.println("PLAY SIMULATION");
 
             t += this.dt;
 
