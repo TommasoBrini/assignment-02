@@ -19,7 +19,9 @@ public class StartStopView extends JPanel {
     private final JButton resetButton;
     private final JButton stopButton;
     private final FlowLayout layoutManager;
+
     private final List<StartStopViewListener> listeners;
+    private InspectorSimulation inspectorSimulation;
     private boolean isSetup;
 
     public StartStopView() {
@@ -41,6 +43,7 @@ public class StartStopView extends JPanel {
 
         this.isSetup = false;
         this.resetButton.setVisible(false);
+        this.initSimulation();
     }
 
     private void activateStartButton() {
@@ -76,63 +79,50 @@ public class StartStopView extends JPanel {
         this.stopButton.setBackground(Color.red);
     }
 
-    private void switchStop() {
-        this.deactivateStartButton();
-        this.activatePauseButton();
-        this.activateStopButton();
-    }
-
-
-//    private void switchStart() {
-//        this.deactivatePauseButton();
-//        this.activateStartButton();
-//    }
-
-
-    public void addListener(final StartStopViewListener listener) {
-        this.listeners.add(listener);
-    }
-
-    public void setupSimulation(final InspectorSimulation simulation) {
+    private void initSimulation() {
         this.startButton.addActionListener(e -> {
             if (!this.isSetup) {
                 this.isSetup = true;
-                if (this.listeners.stream().map(listener -> listener.conditionToStart(simulation)).toList().contains(false)) return;
-                this.listeners.forEach(listener -> listener.onStart(simulation));
-                simulation.setup();
+                if (this.listeners.stream().map(listener -> listener.conditionToStart(this.inspectorSimulation)).toList().contains(false)) return;
+                this.listeners.forEach(listener -> listener.onStart(this.inspectorSimulation));
+                this.inspectorSimulation.setup();
             }
-            simulation.startStopMonitor().play();
+            this.inspectorSimulation.startStopMonitor().play();
             System.out.println("PLAY");
             this.switchStop();
         });
         this.pauseResumeButton.addActionListener(e -> {
             if (this.pauseResumeButton.getText().equals(PAUSE)) {
-                simulation.startStopMonitor().pause();
+                this.inspectorSimulation.startStopMonitor().pause();
                 this.pauseResumeButton.setText(RESUME);
             } else {
-                //esegue come se fosse start
-                simulation.startStopMonitor().play();
+                this.inspectorSimulation.startStopMonitor().play();
                 this.pauseResumeButton.setText(PAUSE);
             }
         });
-//        this.resetButton.addActionListener(e -> {
-//            this.isSetup = false;
-//            this.listeners.forEach(listener -> listener.reset(simulation));
-//            this.switchStart();
-//            this.resetButton.setVisible(false);
-//        });
         this.stopButton.addActionListener(e -> {
-            simulation.startStopMonitor().pause();
+            this.inspectorSimulation.startStopMonitor().pause();
             this.onEndSimulation();
             JOptionPane.showMessageDialog(this, "Simulation closed");
             System.exit(0);
         });
     }
 
+    private void switchStop() {
+        this.deactivateStartButton();
+        this.activatePauseButton();
+        this.activateStopButton();
+    }
+
+    public void setupSimulation(final InspectorSimulation simulation) {
+        this.inspectorSimulation = simulation;
+    }
+
+    public void addListener(final StartStopViewListener listener) {
+        this.listeners.add(listener);
+    }
+
     public void onEndSimulation() {
-//        this.startButton.setEnabled(false);
-//        this.pauseButton.setEnabled(false);
-//        this.resetButton.setVisible(true);
         this.deactivatePauseButton();
         this.deactivateStartButton();
         this.deactivateStopButton();

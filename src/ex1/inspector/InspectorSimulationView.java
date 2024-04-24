@@ -2,7 +2,7 @@ package ex1.inspector;
 
 import ex1.simulation.AbstractSimulation;
 import ex1.simulation.InspectorSimulation;
-import ex1.simulation.SimulationSingleton;
+import ex1.simulation.SimulationManager;
 import ex1.trafficexamples.TrafficSimulationSingleRoadSeveralCars;
 import ex1.trafficexamples.TrafficSimulationSingleRoadWithTrafficLightTwoCars;
 import ex1.trafficexamples.TrafficSimulationWithCrossRoads;
@@ -29,11 +29,13 @@ enum SimulationType {
     }
 }
 
-public class SimulationView extends JPanel implements StartStopViewListener {
+public class InspectorSimulationView extends JPanel implements StartStopViewListener {
     private final DefaultComboBoxModel<String> comboBoxModel;
     private final JComboBox<String> comboBox;
+    private final SimulationManager simulationManager;
 
-    public SimulationView() {
+    public InspectorSimulationView(final SimulationManager simulationManager) {
+        this.simulationManager = simulationManager;
         this.comboBoxModel = new DefaultComboBoxModel<>();
         this.comboBoxModel.addElement(SimulationType.SINGLE_ROAD.getName());
         this.comboBoxModel.addElement(SimulationType.SINGLE_ROAD_TRAFFIC_LIGHT.getName());
@@ -46,7 +48,12 @@ public class SimulationView extends JPanel implements StartStopViewListener {
         this.setBackground(ViewUtils.GUI_BACKGROUND_COLOR);
         this.setOpaque(false);
 
-        this.comboBox.addActionListener(this.comboBoxActionListener);
+        this.comboBox.addActionListener(e -> {
+            final JComboBox<String> comboBox = (JComboBox<String>) e.getSource();
+            final String selectedOption = (String) comboBox.getSelectedItem();
+            System.out.println("Opzione selezionata: " + selectedOption);
+            this.simulationManager.setSimulation(this.createSimulation());
+        });
     }
 
     private SimulationType simulationType() {
@@ -61,17 +68,6 @@ public class SimulationView extends JPanel implements StartStopViewListener {
             throw new IllegalStateException("Simulation type not found");
         }
     }
-
-
-    private final ActionListener comboBoxActionListener = e -> {
-        JComboBox<String> comboBox = (JComboBox<String>) e.getSource();
-        String selectedOption = (String) comboBox.getSelectedItem();
-        System.out.println("Opzione selezionata: " + selectedOption);
-
-        SimulationSingleton.simulation = this.createSimulation();
-        SimulationSingleton.simulation.addViewListener(SimulationSingleton.simulationView);
-        SimulationSingleton.simulationView.setupCommandsSimulation(SimulationSingleton.simulation);
-    };
 
     private AbstractSimulation createSimulation() {
         return switch (this.simulationType()) {
