@@ -16,10 +16,10 @@ public class SimulationView extends JFrame implements ViewSimulationListener {
     private final BorderLayout layoutManager;
     private final JPanel glassPane;
 
-    public SimulationView() {
+    public SimulationView(final SimulationManager simulationManager) {
         super("RoadSim View");
         this.setSize(ViewUtils.GUI_WIDTH, ViewUtils.GUI_HEIGHT);
-        this.inspectorPanelView = new InspectorPanelView();
+        this.inspectorPanelView = new InspectorPanelView(simulationManager);
         this.roadPanelView = new RoadPanelView(ViewUtils.ROAD_WIDTH, ViewUtils.ROAD_HEIGHT);
         this.layoutManager = new BorderLayout();
         this.glassPane = new JPanel();

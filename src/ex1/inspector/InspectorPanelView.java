@@ -3,10 +3,8 @@ package ex1.inspector;
 import ex1.inspector.road.RoadStatisticView;
 import ex1.inspector.stepper.StepperView;
 import ex1.inspector.timeStatistics.TimeStatisticsView;
-import ex1.inspector.road.RoadStatisticView;
-import ex1.inspector.stepper.StepperView;
-import ex1.inspector.timeStatistics.TimeStatisticsView;
 import ex1.simulation.InspectorSimulation;
+import ex1.simulation.SimulationManager;
 import utils.ViewUtils;
 
 import javax.swing.*;
@@ -19,16 +17,16 @@ public class InspectorPanelView extends JPanel {
     private final TimeStatisticsView timeStatisticsView;
     private final RoadStatisticView roadStatisticView;
     private final MasterWorkerView masterWorkerView;
-    private final SimulationView simulationView;
+    private final InspectorSimulationView simulationView;
     private final BorderLayout layoutManager;
 
-    public InspectorPanelView() {
+    public InspectorPanelView(final SimulationManager simulationManager) {
         this.startStopView = new StartStopView();
         this.stepperView = new StepperView();
         this.timeStatisticsView = new TimeStatisticsView();
         this.roadStatisticView = new RoadStatisticView();
         this.masterWorkerView = new MasterWorkerView();
-        this.simulationView = new SimulationView();
+        this.simulationView = new InspectorSimulationView(simulationManager);
 
         this.layoutManager = new BorderLayout();
         this.setLayout(this.layoutManager);
