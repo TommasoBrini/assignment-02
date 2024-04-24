@@ -17,7 +17,10 @@ import java.util.List;
 
 public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorker {
     private final List<List<Worker>> carsWorkersList;
+
     private final List<CarCommand> commands;
+    private int indexCommand;
+
     private final MyCyclicBarrier senseCycleBarrier;
     private final MyCyclicBarrier decideCycleBarrier;
     private final MyCyclicBarrier actionCycleBarrier;
@@ -35,6 +38,7 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
         this.senseDivisor = 5;
         this.decideDivisor = 5;
         this.actionDivisor = 5;
+        this.indexCommand = 0;
     }
 
     public MultiWorkerSpecific(final StartStopMonitor starStopMonitorSimulation, final int sense, final int decide, final int action) {
@@ -62,14 +66,32 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
         this.carsWorkersList.add(actionWorkers);
     }
 
+
+    @Override
+    public void breakBarrierAction() {
+        if (this.indexCommand < this.commands.size()) {
+            if (this.indexCommand - 1 >= 0) {
+                this.carsWorkersList.get(this.indexCommand - 1).forEach(Worker::pause);
+            }
+            final CarCommand command = this.commands.get(this.indexCommand);
+            final List<Worker> workers = this.carsWorkersList.get(this.indexCommand++);
+            System.out.println("\nRUN COMMAND: " + command);
+            workers.forEach(worker -> worker.setCarCommand(command));
+            workers.forEach(Worker::play);
+        } else {
+            System.out.println("\nWEAK UP SIMULATION");
+            this.carsWorkersList.get(this.indexCommand - 1).forEach(Worker::pause);
+            this.startStopMonitorSimulation().play();
+        }
+    }
+
     @Override
     public void execute(final int dt) {
+        this.startStopMonitorSimulation().pause();
+        this.indexCommand = 0;
         this.setDtToCarAgents(dt);
-        int index = 0;
-        for (final var command : this.commands) {
-            this.carsWorkersList.get(index++).forEach(worker -> worker.setCarCommand(command));
-//            this.startStopMonitorSimulation().pauseAndWaitUntilPlay();
-        }
+        this.breakBarrierAction();
+        this.startStopMonitorSimulation().awaitUntilPlay();
     }
 
     @Override
@@ -77,8 +99,4 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
         this.carsWorkersList.forEach(workers -> workers.forEach(Worker::terminate));
     }
 
-    @Override
-    public void breakBarrierAction() {
-
-    }
 }
