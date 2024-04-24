@@ -7,13 +7,13 @@ import ex1.car.command.concrete.DecideCommand;
 import ex1.car.command.concrete.SenseCommand;
 import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrier;
 import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrierImpl;
-import ex1.synchronizers.monitor.startStop.StartStopMonitor;
 import ex1.synchronizers.worker.slave.Worker;
 import ex1.synchronizers.worker.slave.WorkerCarBarrier;
 import utils.ListUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker {
     private final MyCyclicBarrier cycleBarrier;
@@ -22,8 +22,7 @@ public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker
     private int indexCommand;
     private int divisor;
 
-    public MultiWorkerGeneric(final StartStopMonitor starStopMonitorSimulation) {
-        super(starStopMonitorSimulation);
+    public MultiWorkerGeneric() {
         this.carsWorkers = new ArrayList<>();
         this.carCommands = List.of(new SenseCommand(), new DecideCommand(), new ActionCommand());
         this.cycleBarrier = new MyCyclicBarrierImpl(this);
@@ -31,8 +30,8 @@ public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker
         this.divisor = 5;
     }
 
-    public MultiWorkerGeneric(final StartStopMonitor starStopMonitorSimulation, final int divisor) {
-        this(starStopMonitorSimulation);
+    public MultiWorkerGeneric(final int divisor) {
+        this();
         this.divisor = divisor;
     }
 

@@ -25,8 +25,7 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
     private final List<CarCommand> commands;
     private int indexCommand;
 
-    public MultiWorkerSpecific(final StartStopMonitor starStopMonitorSimulation) {
-        super(starStopMonitorSimulation);
+    public MultiWorkerSpecific() {
         this.carsWorkersMap = new HashMap<>();
         this.commands = List.of(new SenseCommand(), new DecideCommand(), new ActionCommand());
         this.commandDivisorMap = this.commands.stream().collect(Collectors.toMap(command -> command, command -> 5));
@@ -34,8 +33,8 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
         this.indexCommand = 0;
     }
 
-    public MultiWorkerSpecific(final StartStopMonitor starStopMonitorSimulation, final int sense, final int decide, final int action) {
-        this(starStopMonitorSimulation);
+    public MultiWorkerSpecific(final int sense, final int decide, final int action) {
+        this();
         final List<Integer> divisor = List.of(sense, decide, action);
         IntStream.range(0, Math.min(3, this.commands.size())).forEach(i -> this.commandDivisorMap.put(this.commands.get(i), divisor.get(i)));
     }

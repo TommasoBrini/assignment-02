@@ -9,16 +9,9 @@ import ex1.synchronizers.monitor.startStop.StartStopMonitor;
 import ex1.synchronizers.monitor.startStop.StartStopMonitorImpl;
 import ex1.synchronizers.worker.master.MasterWorker;
 import ex1.synchronizers.worker.master.MultiWorkerGeneric;
-import ex1.synchronizers.worker.master.MasterWorker;
-import ex1.inspector.road.RoadSimStatistics;
-import ex1.synchronizers.monitor.startStop.StartStopMonitor;
-import ex1.synchronizers.monitor.startStop.StartStopMonitorImpl;
-import ex1.inspector.stepper.Stepper;
-import ex1.inspector.timeStatistics.TimeStatistics;
 import ex1.road.AbstractEnvironment;
 import ex1.simulation.listener.ModelSimulationListener;
 import ex1.simulation.listener.ViewSimulationListener;
-import ex1.synchronizers.worker.master.MultiWorkerGeneric;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +45,8 @@ public abstract class AbstractSimulation extends Thread implements InspectorSimu
     private MasterWorker masterWorker;
 
     // Model
+    private final StartStopMonitor startStopMonitorSimulation;
     private final RoadSimStatistics roadStatistics;
-    private final StartStopMonitor startStopMonitor;
     private final TimeStatistics timeStatistics;
     private final Stepper stepper;
 
@@ -63,16 +56,16 @@ public abstract class AbstractSimulation extends Thread implements InspectorSimu
         this.modelListeners = new ArrayList<>();
         this.viewListeners = new ArrayList<>();
 
-        this.startStopMonitor = new StartStopMonitorImpl();
+        this.startStopMonitorSimulation = new StartStopMonitorImpl();
         this.roadStatistics = new RoadSimStatistics();
         this.timeStatistics = new TimeStatistics();
         this.stepper = new Stepper();
 
-        this.masterWorker = new MultiWorkerGeneric(this.startStopMonitor, 13);
+        this.masterWorker = new MultiWorkerGeneric(13);
 
         this.toBeInSyncWithWallTime = false;
         this.setupModelListener();
-        this.startStopMonitor.pause();
+        this.startStopMonitorSimulation.pause();
         this.start();
     }
 
@@ -99,7 +92,7 @@ public abstract class AbstractSimulation extends Thread implements InspectorSimu
     }
     @Override
     public StartStopMonitor startStopMonitor() {
-        return this.startStopMonitor;
+        return this.startStopMonitorSimulation;
     }
     @Override
     public TimeStatistics timeStatistics() {
@@ -120,7 +113,7 @@ public abstract class AbstractSimulation extends Thread implements InspectorSimu
      */
     @Override
     public void run() {
-        this.startStopMonitor.awaitUntilPlay();
+        this.startStopMonitorSimulation.awaitUntilPlay();
         this.timeStatistics.setStartWallTime();
 
         /* initialize the env and the agents inside */
@@ -136,7 +129,7 @@ public abstract class AbstractSimulation extends Thread implements InspectorSimu
         long timePerStep = 0;
 
         while (this.stepper.hasMoreSteps()) {
-            this.startStopMonitor.awaitUntilPlay();
+            this.startStopMonitorSimulation.awaitUntilPlay();
             this.timeStatistics.setCurrentWallTime(System.currentTimeMillis());
 
             /* make a step */

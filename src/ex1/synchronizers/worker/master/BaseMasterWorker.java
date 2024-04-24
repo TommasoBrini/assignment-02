@@ -2,7 +2,7 @@ package ex1.synchronizers.worker.master;
 
 import ex1.car.CarAgent;
 import ex1.synchronizers.monitor.startStop.StartStopMonitor;
-import ex1.synchronizers.monitor.startStop.StartStopMonitor;
+import ex1.synchronizers.monitor.startStop.StartStopMonitorImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ public abstract class BaseMasterWorker {
     private final StartStopMonitor starStopMonitorSimulation;
     private final List<CarAgent> carAgents;
 
-    public BaseMasterWorker(final StartStopMonitor starStopMonitorSimulation) {
-        this.starStopMonitorSimulation = starStopMonitorSimulation;
+    public BaseMasterWorker() {
+        this.starStopMonitorSimulation = new StartStopMonitorImpl();
         this.carAgents = new ArrayList<>();
     }
 
