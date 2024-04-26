@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public abstract class BaseMasterWorker {
+public abstract class BaseMasterWorker implements MasterWorker {
     private final StartStopMonitor starStopMonitorSimulation;
     private final List<CarCommand> carCommands;
     private final List<CarAgent> carAgents;
@@ -28,6 +28,14 @@ public abstract class BaseMasterWorker {
         this.starStopMonitorSimulation = new StartStopMonitorImpl();
         this.executor = Executors.newScheduledThreadPool(7);
         this.carCommands = List.of(new SenseCommand(), new DecideCommand(), new ActionCommand());
+    }
+
+    public void execute(final int dt) {
+        this.startStopMonitorSimulation().pause();
+        this.resetIndexCommand();
+        this.setDtToCarAgents(dt);
+        this.callNextTaskCommand();
+        this.startStopMonitorSimulation().awaitUntilPlay();
     }
 
     public List<? extends Future<?>> runTask(final List<Worker> workers) {
@@ -74,4 +82,5 @@ public abstract class BaseMasterWorker {
     public void terminateExecution() {
         this.executor.shutdown();
     }
+
 }

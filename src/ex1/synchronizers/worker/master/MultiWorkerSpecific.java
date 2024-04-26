@@ -3,6 +3,7 @@ package ex1.synchronizers.worker.master;
 import ex1.car.CarAgent;
 import ex1.car.command.CarCommand;
 import ex1.synchronizers.service.CommandService;
+import ex1.synchronizers.service.CommandServiceImpl;
 import ex1.synchronizers.worker.slave.Worker;
 import ex1.synchronizers.worker.slave.WorkerCarBarrier;
 import utils.ListUtils;
@@ -21,7 +22,7 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
     public MultiWorkerSpecific() {
         this.carsWorkersMap = new HashMap<>();
         this.commandDivisorMap = this.carCommands().stream().collect(Collectors.toMap(command -> command, command -> 5));
-        this.commandServiceMap = this.carCommands().stream().collect(Collectors.toMap(command -> command, command -> new CommandService(this)));
+        this.commandServiceMap = this.carCommands().stream().collect(Collectors.toMap(command -> command, command -> new CommandServiceImpl(this)));
     }
 
     public MultiWorkerSpecific(final int sense, final int decide, final int action) {
@@ -48,15 +49,6 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
         System.out.println("\nRUN COMMAND: " + command.getClass().getSimpleName());
         workers.forEach(worker -> worker.setCarCommand(command));
         this.commandServiceMap.get(command).runTask(this.runTask(workers));
-    }
-
-    @Override
-    public void execute(final int dt) {
-        this.startStopMonitorSimulation().pause();
-        this.resetIndexCommand();
-        this.setDtToCarAgents(dt);
-        this.callNextTaskCommand();
-        this.startStopMonitorSimulation().awaitUntilPlay();
     }
 
 }

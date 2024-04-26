@@ -9,9 +9,9 @@ public class WorkerCarBarrier implements Worker {
     private final List<CarAgent> agents;
     private CarCommand command;
 
-    public WorkerCarBarrier(final List<CarAgent> agents) {
+    public WorkerCarBarrier(final List<CarAgent> carAgents) {
         super();
-        this.agents = agents;
+        this.agents = carAgents;
     }
 
     @Override

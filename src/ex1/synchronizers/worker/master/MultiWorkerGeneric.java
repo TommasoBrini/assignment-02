@@ -3,13 +3,13 @@ package ex1.synchronizers.worker.master;
 import ex1.car.CarAgent;
 import ex1.car.command.CarCommand;
 import ex1.synchronizers.service.CommandService;
+import ex1.synchronizers.service.CommandServiceImpl;
 import ex1.synchronizers.worker.slave.Worker;
 import ex1.synchronizers.worker.slave.WorkerCarBarrier;
 import utils.ListUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker {
     private final List<Worker> carsWorkers;
@@ -18,7 +18,7 @@ public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker
 
     public MultiWorkerGeneric() {
         this.carsWorkers = new ArrayList<>();
-        this.commandService = new CommandService(this);
+        this.commandService = new CommandServiceImpl(this);
         this.divisor = 5;
     }
 
@@ -40,15 +40,6 @@ public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker
         System.out.println("\nRUN COMMAND: " + command.getClass().getSimpleName());
         this.carsWorkers.forEach(worker -> worker.setCarCommand(command));
         this.commandService.runTask(this.runTask(this.carsWorkers));
-    }
-
-    @Override
-    public void execute(final int dt) {
-        this.startStopMonitorSimulation().pause();
-        this.resetIndexCommand();
-        this.setDtToCarAgents(dt);
-        this.callNextTaskCommand();
-        this.startStopMonitorSimulation().awaitUntilPlay();
     }
 
 }
