@@ -107,17 +107,17 @@ public class MasterWorkerView extends JPanel implements StartStopViewListener {
     }
 
     private void setupSimulation(final InspectorSimulation simulation) {
-//        switch (this.workerType()) {
-//            case GENERIC:
-//                simulation.setMasterWorker(
-//                        new MultiWorkerGeneric(this.getGenericWorker()));
-//                break;
-//            case SPECIFIC:
-//                simulation.setMasterWorker(
-//                        new MultiWorkerSpecific(this.getSense(), this.getDecide(), this.getAction()));
-//                break;
-//        }
-        simulation.setMasterWorker(new MultiServiceGeneric(this.getGenericWorker(), 1));
+        switch (this.workerType()) {
+            case GENERIC:
+                simulation.setMasterWorker(
+                        new MultiWorkerGeneric(this.getGenericWorker()));
+                break;
+            case SPECIFIC:
+                simulation.setMasterWorker(
+                        new MultiWorkerSpecific(this.getSense(), this.getDecide(), this.getAction()));
+                break;
+        }
+//        simulation.setMasterWorker(new MultiServiceGeneric(this.getGenericWorker(), 1));
     }
 
     private boolean checkValue() {

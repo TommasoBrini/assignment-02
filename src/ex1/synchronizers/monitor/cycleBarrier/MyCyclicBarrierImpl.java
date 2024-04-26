@@ -3,14 +3,13 @@ package ex1.synchronizers.monitor.cycleBarrier;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
-import ex1.synchronizers.service.master.MasterService;
 import ex1.synchronizers.worker.master.MasterWorker;
 
 public class MyCyclicBarrierImpl implements MyCyclicBarrier {
-    private final MasterService masterWorker;
+    private final MasterWorker masterWorker;
     private CyclicBarrier cyclicBarrier;
 
-    public MyCyclicBarrierImpl(final MasterService masterService) {
+    public MyCyclicBarrierImpl(final MasterWorker masterService) {
         this.masterWorker = masterService;
     }
 
