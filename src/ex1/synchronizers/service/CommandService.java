@@ -8,10 +8,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class CommandService {
     private final MasterWorker masterWorker;
-    private final int total;
+    private int total;
 
-    public CommandService(final MasterWorker masterWorker, final int total) {
+    public CommandService(final MasterWorker masterWorker) {
         this.masterWorker = masterWorker;
+    }
+
+    public void setup(final int total) {
         this.total = total;
     }
 

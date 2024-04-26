@@ -18,13 +18,14 @@ import java.util.concurrent.Future;
 public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker {
     private final List<CarCommand> carCommands;
     private final List<Worker> carsWorkers;
-    private CommandService taskCount;
+    private final CommandService commandService;
     private int indexCommand;
     private int divisor;
 
     public MultiWorkerGeneric() {
         this.carsWorkers = new ArrayList<>();
         this.carCommands = List.of(new SenseCommand(), new DecideCommand(), new ActionCommand());
+        this.commandService = new CommandService(this);
         this.indexCommand = 0;
         this.divisor = 5;
     }
@@ -37,7 +38,7 @@ public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker
     @Override
     public void setup() {
         final List<List<CarAgent>> carDividedList = ListUtils.divideEqually(this.carAgents(), this.divisor);
-        this.taskCount = new CommandService(this, carDividedList.size());
+        this.commandService.setup(this.carCommands.size());
         carDividedList.forEach(car -> this.carsWorkers.add(new WorkerCarBarrier(null, car)));
     }
 
@@ -51,7 +52,6 @@ public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker
 
     @Override
     public List<? extends Future<?>> callNextTaskCommand() {
-//        this.indexCommand += 1;
         final CarCommand command = this.carCommands.get(this.indexCommand++);
         System.out.println("\nRUN COMMAND: " + command.getClass().getSimpleName());
         this.carsWorkers.forEach(worker -> worker.setCarCommand(command));
@@ -63,7 +63,7 @@ public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker
         this.startStopMonitorSimulation().pause();
         this.indexCommand = 0;
         this.setDtToCarAgents(dt);
-        this.taskCount.runTask(this.callNextTaskCommand());
+        this.commandService.runTask(this.callNextTaskCommand());
         this.startStopMonitorSimulation().awaitUntilPlay();
     }
 

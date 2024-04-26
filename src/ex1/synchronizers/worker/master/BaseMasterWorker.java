@@ -19,9 +19,8 @@ public abstract class BaseMasterWorker {
     public BaseMasterWorker() {
         this.starStopMonitorSimulation = new StartStopMonitorImpl();
         this.carAgents = new ArrayList<>();
-        this.executor = Executors.newSingleThreadExecutor();
         // TODO: varie strategie da cambiare
-//        Executors.newFixedThreadPool(6);
+        this.executor = Executors.newScheduledThreadPool(7);
     }
 
     public List<? extends Future<?>> runTask(final List<Worker> workers) {

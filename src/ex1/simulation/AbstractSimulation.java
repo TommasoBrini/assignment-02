@@ -61,7 +61,7 @@ public abstract class AbstractSimulation extends Thread implements InspectorSimu
         this.timeStatistics = new TimeStatistics();
         this.stepper = new Stepper();
 
-        this.masterWorker = new MultiWorkerGeneric(13);
+        this.masterWorker = new MultiWorkerGeneric(20);
 
         this.toBeInSyncWithWallTime = false;
         this.setupModelListener();
