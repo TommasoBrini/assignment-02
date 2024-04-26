@@ -214,7 +214,7 @@ public abstract class AbstractSimulation extends Thread implements InspectorSimu
         for (final var listener : this.viewListeners) {
             listener.notifyEnd(this);
         }
-        this.masterWorker.terminateWorkers();
+        this.masterWorker.terminateExecution();
     }
 
     /* method to sync with wall time at a specified step rate */

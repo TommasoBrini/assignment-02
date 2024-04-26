@@ -7,8 +7,9 @@ import ex1.synchronizers.worker.slave.Worker;
 import ex1.synchronizers.worker.slave.WorkerCarBarrier;
 import utils.ListUtils;
 
-import java.util.*;
-import java.util.concurrent.Future;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -41,14 +42,12 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
     }
 
     @Override
-    public List<? extends Future<?>> callNextTaskCommand() {
+    public void callNextTaskCommand() {
         final CarCommand command = this.nextCommand();
         final List<Worker> workers = this.carsWorkersMap.get(command);
         System.out.println("\nRUN COMMAND: " + command.getClass().getSimpleName());
         workers.forEach(worker -> worker.setCarCommand(command));
-        final List<?extends Future<?>> futures = this.runTask(workers);
-        this.commandServiceMap.get(command).runTask(futures);
-        return futures;
+        this.commandServiceMap.get(command).runTask(this.runTask(workers));
     }
 
     @Override

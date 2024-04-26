@@ -17,17 +17,17 @@ import java.util.concurrent.Future;
 
 public abstract class BaseMasterWorker {
     private final StartStopMonitor starStopMonitorSimulation;
-    private final ExecutorService executor;
     private final List<CarCommand> carCommands;
-    private int indexCommand;
     private final List<CarAgent> carAgents;
+    private final ExecutorService executor;
+    private int indexCommand;
 
     public BaseMasterWorker() {
+        this.indexCommand = 0;
+        this.carAgents = new ArrayList<>();
         this.starStopMonitorSimulation = new StartStopMonitorImpl();
         this.executor = Executors.newScheduledThreadPool(7);
-        this.carAgents = new ArrayList<>();
         this.carCommands = List.of(new SenseCommand(), new DecideCommand(), new ActionCommand());
-        this.indexCommand = 0;
     }
 
     public List<? extends Future<?>> runTask(final List<Worker> workers) {
@@ -58,7 +58,7 @@ public abstract class BaseMasterWorker {
         return this.carCommands.get(index);
     }
     protected CarCommand nextCommand() {
-        return this.carCommands.get(this.indexCommand++);
+        return this.command(this.indexCommand++);
     }
 
     protected void resetIndexCommand() {
@@ -71,7 +71,7 @@ public abstract class BaseMasterWorker {
         return this.indexCommand < this.totalCommands();
     }
 
-    public void terminateWorkers() {
+    public void terminateExecution() {
         this.executor.shutdown();
     }
 }

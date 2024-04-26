@@ -18,7 +18,6 @@ public class CommandService {
         this.total = total;
     }
 
-
     public void runTask(final List<? extends Future<?>> futures) {
         final AtomicInteger count = new AtomicInteger(0);
         futures.forEach(future -> {
@@ -29,7 +28,7 @@ public class CommandService {
             }
 
             if (this.masterWorker.hasCommands() && count.incrementAndGet() >= this.total) {
-                this.runTask(this.masterWorker.callNextTaskCommand());
+                this.masterWorker.callNextTaskCommand();
             } else {
                 this.masterWorker.startSimulation();
             }

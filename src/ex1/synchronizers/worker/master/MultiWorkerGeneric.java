@@ -9,7 +9,6 @@ import utils.ListUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Future;
 
 
 public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker {
@@ -36,11 +35,11 @@ public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker
     }
 
     @Override
-    public List<? extends Future<?>> callNextTaskCommand() {
+    public void callNextTaskCommand() {
         final CarCommand command = this.nextCommand();
         System.out.println("\nRUN COMMAND: " + command.getClass().getSimpleName());
         this.carsWorkers.forEach(worker -> worker.setCarCommand(command));
-        return this.runTask(this.carsWorkers);
+        this.commandService.runTask(this.runTask(this.carsWorkers));
     }
 
     @Override
@@ -48,7 +47,7 @@ public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker
         this.startStopMonitorSimulation().pause();
         this.resetIndexCommand();
         this.setDtToCarAgents(dt);
-        this.commandService.runTask(this.callNextTaskCommand());
+        this.callNextTaskCommand();
         this.startStopMonitorSimulation().awaitUntilPlay();
     }
 
