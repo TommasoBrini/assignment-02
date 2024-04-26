@@ -6,21 +6,18 @@ import ex1.car.command.concrete.ActionCommand;
 import ex1.car.command.concrete.DecideCommand;
 import ex1.car.command.concrete.SenseCommand;
 import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrier;
-import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrierImpl;
-import ex1.synchronizers.monitor.startStop.StartStopMonitor;
+import ex1.synchronizers.service.CommandService;
 import ex1.synchronizers.worker.slave.Worker;
 import ex1.synchronizers.worker.slave.WorkerCarBarrier;
 import utils.ListUtils;
 
 import java.util.*;
 import java.util.concurrent.Future;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorker {
-    private Map<CarCommand, MyCyclicBarrier> commandCycleBarrierMap;
+    private Map<CarCommand, CommandService> commandServiceMap;
     private final Map<CarCommand, List<Worker>> carsWorkersMap;
     private final Map<CarCommand, Integer> commandDivisorMap;
     private final List<CarCommand> commands;
@@ -30,7 +27,7 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
         this.carsWorkersMap = new HashMap<>();
         this.commands = List.of(new SenseCommand(), new DecideCommand(), new ActionCommand());
         this.commandDivisorMap = this.commands.stream().collect(Collectors.toMap(command -> command, command -> 5));
-        //this.commandCycleBarrierMap = this.commands.stream().collect(Collectors.toMap(command -> command, command -> new MyCyclicBarrierImpl(this)));
+        this.commandServiceMap = this.commands.stream().collect(Collectors.toMap(command -> command, command -> new CommandService(this)));
         this.indexCommand = 0;
     }
 
@@ -44,9 +41,11 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
     public void setup() {
         this.commands.forEach(command -> {
             final List<List<CarAgent>> carDividedSenseList = ListUtils.divideEqually(this.carAgents(), this.commandDivisorMap.get(command));
-            final MyCyclicBarrier cyclicBarrier = this.commandCycleBarrierMap.get(command);
-            cyclicBarrier.setup(carDividedSenseList.size());
-            final List<Worker> workers = carDividedSenseList.stream().map(car -> (Worker) new WorkerCarBarrier(cyclicBarrier, car)).toList();
+            final CommandService commandService = this.commandServiceMap.get(command);
+            commandService.setup(carDividedSenseList.size());
+
+
+            final List<Worker> workers = carDividedSenseList.stream().map(car -> (Worker) new WorkerCarBarrier(null, car)).toList();
             this.carsWorkersMap.put(command, workers);
         });
     }
@@ -72,11 +71,12 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
 
     @Override
     public boolean hasCommands() {
-        return false;
+        return this.indexCommand < this.commands.size();
     }
 
     @Override
     public List<? extends Future<?>> callNextTaskCommand() {
+
         return List.of();
     }
 
