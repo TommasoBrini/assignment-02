@@ -15,6 +15,15 @@ public class StartStopMonitorImpl implements StartStopMonitor {
         this.isAwaiting = false;
     }
 
+    private void setAwaiting(final boolean isAwaiting) {
+        try {
+            this.mutex.lock();
+            this.isAwaiting = isAwaiting;
+        } finally {
+            this.mutex.unlock();
+        }
+    }
+
     @Override
     public void play() {
         try {

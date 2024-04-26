@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorker {
-    private final Map<CarCommand, MyCyclicBarrier> commandCycleBarrierMap;
+    private Map<CarCommand, MyCyclicBarrier> commandCycleBarrierMap;
     private final Map<CarCommand, List<Worker>> carsWorkersMap;
     private final Map<CarCommand, Integer> commandDivisorMap;
     private final List<CarCommand> commands;
@@ -29,7 +29,7 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
         this.carsWorkersMap = new HashMap<>();
         this.commands = List.of(new SenseCommand(), new DecideCommand(), new ActionCommand());
         this.commandDivisorMap = this.commands.stream().collect(Collectors.toMap(command -> command, command -> 5));
-        this.commandCycleBarrierMap = this.commands.stream().collect(Collectors.toMap(command -> command, command -> new MyCyclicBarrierImpl(this)));
+        //this.commandCycleBarrierMap = this.commands.stream().collect(Collectors.toMap(command -> command, command -> new MyCyclicBarrierImpl(this)));
         this.indexCommand = 0;
     }
 

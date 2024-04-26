@@ -7,14 +7,16 @@ import ex1.inspector.stepper.Stepper;
 import ex1.inspector.timeStatistics.TimeStatistics;
 import ex1.synchronizers.monitor.startStop.StartStopMonitor;
 import ex1.synchronizers.monitor.startStop.StartStopMonitorImpl;
-import ex1.synchronizers.worker.master.MasterWorker;
-import ex1.synchronizers.worker.master.MultiWorkerGeneric;
+import ex1.synchronizers.service.master.MasterService;
+import ex1.synchronizers.service.master.MultiServiceGeneric;
 import ex1.road.AbstractEnvironment;
 import ex1.simulation.listener.ModelSimulationListener;
 import ex1.simulation.listener.ViewSimulationListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Base class for defining concrete simulations
@@ -42,14 +44,13 @@ public abstract class AbstractSimulation extends Thread implements InspectorSimu
     private final List<ViewSimulationListener> viewListeners;
 
     // Master Worker
-    private MasterWorker masterWorker;
+    private MasterService masterWorker;
 
     // Model
     private final StartStopMonitor startStopMonitorSimulation;
     private final RoadSimStatistics roadStatistics;
     private final TimeStatistics timeStatistics;
     private final Stepper stepper;
-
 
     protected AbstractSimulation() {
         this.agents = new ArrayList<>();
@@ -61,7 +62,7 @@ public abstract class AbstractSimulation extends Thread implements InspectorSimu
         this.timeStatistics = new TimeStatistics();
         this.stepper = new Stepper();
 
-        this.masterWorker = new MultiWorkerGeneric(13);
+        this.masterWorker = new MultiServiceGeneric(13, this.dt);
 
         this.toBeInSyncWithWallTime = false;
         this.setupModelListener();
@@ -103,7 +104,7 @@ public abstract class AbstractSimulation extends Thread implements InspectorSimu
         return this.roadStatistics;
     }
     @Override
-    public void setMasterWorker(final MasterWorker masterWorker) {
+    public void setMasterWorker(final MasterService masterWorker) {
         this.masterWorker = masterWorker;
     }
 
@@ -134,7 +135,7 @@ public abstract class AbstractSimulation extends Thread implements InspectorSimu
 
             /* make a step */
             this.env.step(this.dt);
-            this.masterWorker.execute(this.dt);
+            this.masterWorker.execute();
 
             t += this.dt;
 
