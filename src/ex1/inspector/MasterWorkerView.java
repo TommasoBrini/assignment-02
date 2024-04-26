@@ -1,7 +1,6 @@
 package ex1.inspector;
 
 import ex1.simulation.InspectorSimulation;
-import ex1.synchronizers.service.master.MultiServiceGeneric;
 import ex1.synchronizers.worker.master.MultiWorkerGeneric;
 import ex1.synchronizers.worker.master.MultiWorkerSpecific;
 import utils.ViewUtils;
@@ -107,17 +106,17 @@ public class MasterWorkerView extends JPanel implements StartStopViewListener {
     }
 
     private void setupSimulation(final InspectorSimulation simulation) {
-//        switch (this.workerType()) {
-//            case GENERIC:
-//                simulation.setMasterWorker(
-//                        new MultiWorkerGeneric(this.getGenericWorker()));
-//                break;
-//            case SPECIFIC:
-//                simulation.setMasterWorker(
-//                        new MultiWorkerSpecific(this.getSense(), this.getDecide(), this.getAction()));
-//                break;
-//        }
-        simulation.setMasterWorker(new MultiServiceGeneric(this.getGenericWorker(), 1));
+        switch (this.workerType()) {
+            case GENERIC:
+                simulation.setMasterWorker(
+                        new MultiWorkerGeneric(this.getGenericWorker()));
+                break;
+            case SPECIFIC:
+                simulation.setMasterWorker(
+                        new MultiWorkerSpecific(this.getSense(), this.getDecide(), this.getAction()));
+                break;
+        }
+//        simulation.setMasterWorker(new MultiServiceGeneric(this.getGenericWorker(), 1));
     }
 
     private boolean checkValue() {

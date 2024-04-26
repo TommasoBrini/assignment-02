@@ -13,6 +13,7 @@ import ex1.synchronizers.worker.slave.WorkerCarBarrier;
 import utils.ListUtils;
 
 import java.util.*;
+import java.util.concurrent.Future;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -67,6 +68,16 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
             this.carsWorkersMap.get(this.commands.get(this.indexCommand - 1)).forEach(Worker::pause);
             this.startStopMonitorSimulation().play();
         }
+    }
+
+    @Override
+    public boolean hasCommands() {
+        return false;
+    }
+
+    @Override
+    public List<? extends Future<?>> callNextTaskCommand() {
+        return List.of();
     }
 
     @Override
