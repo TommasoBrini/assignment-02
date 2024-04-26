@@ -1,6 +1,10 @@
 package ex1.synchronizers.worker.master;
 
 import ex1.car.CarAgent;
+import ex1.car.command.CarCommand;
+import ex1.car.command.concrete.ActionCommand;
+import ex1.car.command.concrete.DecideCommand;
+import ex1.car.command.concrete.SenseCommand;
 import ex1.synchronizers.monitor.startStop.StartStopMonitor;
 import ex1.synchronizers.monitor.startStop.StartStopMonitorImpl;
 import ex1.synchronizers.worker.slave.Worker;
@@ -13,39 +17,61 @@ import java.util.concurrent.Future;
 
 public abstract class BaseMasterWorker {
     private final StartStopMonitor starStopMonitorSimulation;
+    private final ExecutorService executor;
+    private final List<CarCommand> carCommands;
+    private int indexCommand;
     private final List<CarAgent> carAgents;
-    protected final ExecutorService executor;
 
     public BaseMasterWorker() {
         this.starStopMonitorSimulation = new StartStopMonitorImpl();
-        this.carAgents = new ArrayList<>();
-        // TODO: varie strategie da cambiare
         this.executor = Executors.newScheduledThreadPool(7);
+        this.carAgents = new ArrayList<>();
+        this.carCommands = List.of(new SenseCommand(), new DecideCommand(), new ActionCommand());
+        this.indexCommand = 0;
     }
 
     public List<? extends Future<?>> runTask(final List<Worker> workers) {
         return workers.stream().map(this.executor::submit).toList();
-//        workers.forEach(this.executor::submit);
     }
 
     protected StartStopMonitor startStopMonitorSimulation() {
         return this.starStopMonitorSimulation;
     }
+    public void startSimulation() {
+        this.startStopMonitorSimulation().play();
+    }
 
     protected List<CarAgent> carAgents() {
         return this.carAgents;
     }
-
+    public void addCarAgent(final CarAgent carAgent) {
+        this.carAgents.add(carAgent);
+    }
     protected void setDtToCarAgents(final int dt) {
         this.carAgents.forEach(carAgent -> carAgent.setTimeDt(dt));
     }
 
-    public void addCarAgent(final CarAgent carAgent) {
-        this.carAgents.add(carAgent);
+    protected List<CarCommand> carCommands() {
+        return this.carCommands;
+    }
+    protected CarCommand command(final int index) {
+        return this.carCommands.get(index);
+    }
+    protected CarCommand nextCommand() {
+        return this.carCommands.get(this.indexCommand++);
     }
 
-    public void startSimulation() {
-        this.starStopMonitorSimulation.play();
+    protected void resetIndexCommand() {
+        this.indexCommand = 0;
+    }
+    protected int totalCommands() {
+        return this.carCommands.size();
+    }
+    public boolean hasCommands() {
+        return this.indexCommand < this.totalCommands();
     }
 
+    public void terminateWorkers() {
+        this.executor.shutdown();
+    }
 }

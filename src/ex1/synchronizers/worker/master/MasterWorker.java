@@ -13,8 +13,6 @@ public interface MasterWorker {
 
     void terminateWorkers();
 
-    void breakBarrierAction();
-
     void addCarAgent(final CarAgent carAgent);
 
     boolean hasCommands();

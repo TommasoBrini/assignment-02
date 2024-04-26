@@ -8,10 +8,4 @@ public interface Worker extends Callable<Void> {
 
     void setCarCommand(CarCommand command);
 
-    void play();
-
-    void pause();
-
-    void terminate();
-
 }
