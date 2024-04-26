@@ -11,6 +11,7 @@ import utils.ListUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -19,16 +20,27 @@ public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorke
     private final Map<CarCommand, List<Worker>> carsWorkersMap;
     private final Map<CarCommand, Integer> commandDivisorMap;
 
-    public MultiWorkerSpecific() {
+    public MultiWorkerSpecific(final ExecutorService executorService, final int sense, final int decide, final int action) {
+        super(executorService);
         this.carsWorkersMap = new HashMap<>();
         this.commandDivisorMap = this.carCommands().stream().collect(Collectors.toMap(command -> command, command -> 5));
         this.commandServiceMap = this.carCommands().stream().collect(Collectors.toMap(command -> command, command -> new CommandServiceImpl(this)));
+
+        final List<Integer> divisor = List.of(sense, decide, action);
+        IntStream.range(0, Math.min(3, this.totalCommands())).forEach(i -> this.commandDivisorMap.put(this.command(i), divisor.get(i)));
     }
 
     public MultiWorkerSpecific(final int sense, final int decide, final int action) {
-        this();
+        this.carsWorkersMap = new HashMap<>();
+        this.commandDivisorMap = this.carCommands().stream().collect(Collectors.toMap(command -> command, command -> 5));
+        this.commandServiceMap = this.carCommands().stream().collect(Collectors.toMap(command -> command, command -> new CommandServiceImpl(this)));
+
         final List<Integer> divisor = List.of(sense, decide, action);
         IntStream.range(0, Math.min(3, this.totalCommands())).forEach(i -> this.commandDivisorMap.put(this.command(i), divisor.get(i)));
+    }
+
+    public MultiWorkerSpecific() {
+        this(5, 5, 5);
     }
 
     @Override

@@ -14,10 +14,12 @@ public class CommandServiceImpl implements CommandService {
         this.masterWorker = masterWorker;
     }
 
+    @Override
     public void setup(final int total) {
         this.total = total;
     }
 
+    @Override
     public void runTask(final List<? extends Future<?>> futures) {
         final AtomicInteger count = new AtomicInteger(0);
         futures.forEach(future -> {

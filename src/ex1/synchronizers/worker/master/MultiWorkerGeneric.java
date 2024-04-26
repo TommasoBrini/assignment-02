@@ -10,21 +10,28 @@ import utils.ListUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 public class MultiWorkerGeneric extends BaseMasterWorker implements MasterWorker {
     private final List<Worker> carsWorkers;
     private final CommandService commandService;
-    private int divisor;
+    private final int divisor;
 
-    public MultiWorkerGeneric() {
+    public MultiWorkerGeneric(final ExecutorService executorService, final int divisor) {
+        super(executorService);
         this.carsWorkers = new ArrayList<>();
         this.commandService = new CommandServiceImpl(this);
-        this.divisor = 5;
+        this.divisor = divisor;
     }
 
     public MultiWorkerGeneric(final int divisor) {
-        this();
+        this.carsWorkers = new ArrayList<>();
+        this.commandService = new CommandServiceImpl(this);
         this.divisor = divisor;
+    }
+
+    public MultiWorkerGeneric() {
+        this(5);
     }
 
     @Override

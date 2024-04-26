@@ -22,12 +22,16 @@ public abstract class BaseMasterWorker implements MasterWorker {
     private final ExecutorService executor;
     private int indexCommand;
 
-    public BaseMasterWorker() {
+    public BaseMasterWorker(final ExecutorService executor) {
         this.indexCommand = 0;
+        this.executor = executor;
         this.carAgents = new ArrayList<>();
         this.starStopMonitorSimulation = new StartStopMonitorImpl();
-        this.executor = Executors.newScheduledThreadPool(7);
         this.carCommands = List.of(new SenseCommand(), new DecideCommand(), new ActionCommand());
+    }
+
+    public BaseMasterWorker() {
+        this(Executors.newScheduledThreadPool(7));
     }
 
     public void execute(final int dt) {
