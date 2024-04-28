@@ -9,9 +9,7 @@ public class HistoryArea extends JPanel {
     private static final String WORD = "Word";
     private static final String DEPTH = "Depth";
     private static final String CLEAR = "Clear";
-    private static final Dimension SITE_AREA_SIZE = new Dimension(200, 350);
-    private static final Dimension WORD_AREA_SIZE = new Dimension(50, 350);
-    private static final Dimension DEPTH_AREA_SIZE = new Dimension(50, 350);
+    private static final Dimension AREA_SIZE = new Dimension(300, 350);
 
     private final JTextArea siteArea;
     private final JTextArea wordArea;
@@ -28,36 +26,32 @@ public class HistoryArea extends JPanel {
         this.wordArea.setEditable(false);
         this.depthArea.setEditable(false);
 
-        this.siteArea.setPreferredSize(SITE_AREA_SIZE);
-        this.wordArea.setPreferredSize(WORD_AREA_SIZE);
-        this.depthArea.setPreferredSize(DEPTH_AREA_SIZE);
-        this.clearButton.setPreferredSize(new Dimension(200, 30));
+        final JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(this.siteArea);
+        panel.add(this.wordArea);
+        panel.add(this.depthArea);
 
-        final JScrollPane siteScrollPane = new JScrollPane(this.siteArea);
-        final JScrollPane wordScrollPane = new JScrollPane(this.wordArea);
-        final JScrollPane depthScrollPane = new JScrollPane(this.depthArea);
+        final JScrollPane scrollPane = new JScrollPane(panel);
+        scrollPane.setPreferredSize(AREA_SIZE);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
         final TitledBorder titleSite = BorderFactory.createTitledBorder(SITE);
         titleSite.setTitleJustification(TitledBorder.CENTER);
-        siteScrollPane.setBorder(titleSite);
+        this.siteArea.setBorder(titleSite);
 
         final TitledBorder titleWord = BorderFactory.createTitledBorder(WORD);
         titleWord.setTitleJustification(TitledBorder.CENTER);
-        wordScrollPane.setBorder(titleWord);
+        this.wordArea.setBorder(titleWord);
 
         final TitledBorder titleDepth = BorderFactory.createTitledBorder(DEPTH);
         titleDepth.setTitleJustification(TitledBorder.CENTER);
-        depthScrollPane.setBorder(titleDepth);
+        this.depthArea.setBorder(titleDepth);
+
 
         this.setBackground(Color.WHITE);
         this.setLayout(new BorderLayout());
-        final JPanel areaPanel = new JPanel();
-        areaPanel.setLayout(new BoxLayout(areaPanel, BoxLayout.X_AXIS));
-        areaPanel.setBackground(Color.WHITE);
-        areaPanel.add(siteScrollPane);
-        areaPanel.add(wordScrollPane);
-        areaPanel.add(depthScrollPane);
-        this.add(areaPanel, BorderLayout.CENTER);
+        this.add(scrollPane, BorderLayout.CENTER);
         this.add(this.clearButton, BorderLayout.SOUTH);
 
         this.setupListener();
