@@ -21,4 +21,8 @@ public class TextBox extends JPanel {
     public String getText() {
         return this.textField.getText();
     }
+
+    public void clear() {
+        this.textField.setText("");
+    }
 }

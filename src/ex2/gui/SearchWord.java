@@ -8,11 +8,22 @@ public class SearchWord extends JFrame {
     private static final Dimension FIND_WORD_AREA_SIZE = new Dimension(430, 380);
     private static final Dimension FRAME_SIZE = new Dimension(800, 500);
     private static final String TITLE_FIND_WORD_AREA = "Find Word";
+    private static final String SITE = "Site:";
+    private static final String WORD = "Word:";
+    private static final String DEPTH = "Depth:";
+    private static final String START = "Start";
+    private static final String STOP = "Stop";
+    private static final String CLEAR = "Clear";
+    private static final int SITE_COLUMNS_TEXT = 15;
+    private static final int WORD_COLUMNS_TEXT = 5;
+    private static final int DEPTH_COLUMNS_TEXT = 3;
+
     private final TextBox boxSite;
     private final TextBox boxWord;
     private final TextBox boxDepth;
     private final JButton startButton;
     private final JButton stopButton;
+    private final JButton clearButton;
     private final JTextArea FindWordArea;
     private final HistoryArea historyArea;
 
@@ -21,11 +32,12 @@ public class SearchWord extends JFrame {
         this.setSize(FRAME_SIZE);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        this.boxSite = new TextBox("Site:", 15);
-        this.boxWord = new TextBox("Word:", 5);
-        this.boxDepth = new TextBox("Depth:", 3);
-        this.startButton = new JButton("Start");
-        this.stopButton = new JButton("Stop");
+        this.boxSite = new TextBox(SITE, SITE_COLUMNS_TEXT);
+        this.boxWord = new TextBox(WORD, WORD_COLUMNS_TEXT);
+        this.boxDepth = new TextBox(DEPTH, DEPTH_COLUMNS_TEXT);
+        this.startButton = new JButton(START);
+        this.stopButton = new JButton(STOP);
+        this.clearButton = new JButton(CLEAR);
         this.FindWordArea = new JTextArea();
         this.historyArea = new HistoryArea();
 
@@ -48,6 +60,7 @@ public class SearchWord extends JFrame {
         northPanel.add(this.boxDepth);
         northPanel.add(this.startButton);
         northPanel.add(this.stopButton);
+        northPanel.add(this.clearButton);
 
         final JScrollPane scrollPane = new JScrollPane(this.FindWordArea);
         final TitledBorder titleDepth = BorderFactory.createTitledBorder(TITLE_FIND_WORD_AREA);
@@ -61,6 +74,13 @@ public class SearchWord extends JFrame {
 
     private void setupListener() {
         this.startButton.addActionListener(l -> this.appendSiteInHistory());
+        this.clearButton.addActionListener(l -> this.clearText());
+    }
+
+    private void clearText() {
+        this.boxSite.clear();
+        this.boxWord.clear();
+        this.boxDepth.clear();
     }
 
     private void appendSiteInHistory() {
