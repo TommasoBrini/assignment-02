@@ -93,7 +93,8 @@ public class SearchWord extends JFrame implements ViewListener {
             MessageUtils.createError(this, "All fields must be filled");
             return;
         }
-        this.historyArea.append(this.boxSite.getText(), this.boxWord.getText(), this.boxDepth.getText());
+        this.historyArea.append(
+                this, this.boxSite.getText(), this.boxWord.getText(), this.boxDepth.getText());
     }
 
 
@@ -113,5 +114,21 @@ public class SearchWord extends JFrame implements ViewListener {
             this.findWordArea.setText("");
             this.findWordArea.append(STR."ERROR: \{message}");
         });
+    }
+
+    public void setSiteBoxText(final String text) {
+        this.boxSite.setText(text);
+    }
+
+    public void setWordBoxText(final String word) {
+        this.boxWord.setText(word);
+    }
+
+    public void setDepthBoxText(final String depth) {
+        this.boxDepth.setText(depth);
+    }
+
+    public static void main(final String[] args) {
+        final SearchWord gui = new SearchWord();
     }
 }
