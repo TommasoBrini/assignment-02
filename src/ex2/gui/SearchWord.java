@@ -24,7 +24,7 @@ public class SearchWord extends JFrame {
     private final JButton startButton;
     private final JButton stopButton;
     private final JButton clearButton;
-    private final JTextArea FindWordArea;
+    private final JTextArea findWordArea;
     private final HistoryArea historyArea;
 
     public SearchWord() {
@@ -38,7 +38,7 @@ public class SearchWord extends JFrame {
         this.startButton = new JButton(START);
         this.stopButton = new JButton(STOP);
         this.clearButton = new JButton(CLEAR);
-        this.FindWordArea = new JTextArea();
+        this.findWordArea = new JTextArea();
         this.historyArea = new HistoryArea();
 
         this.setupGraphics();
@@ -50,8 +50,8 @@ public class SearchWord extends JFrame {
     private void setupGraphics() {
         this.setLayout(new BorderLayout());
 
-        this.FindWordArea.setEditable(false);
-        this.FindWordArea.setPreferredSize(FIND_WORD_AREA_SIZE);
+        this.findWordArea.setEditable(false);
+        this.findWordArea.setPreferredSize(FIND_WORD_AREA_SIZE);
 
         final JPanel northPanel = new JPanel(new FlowLayout());
         northPanel.setBackground(Color.WHITE);
@@ -62,10 +62,10 @@ public class SearchWord extends JFrame {
         northPanel.add(this.stopButton);
         northPanel.add(this.clearButton);
 
-        final JScrollPane scrollPane = new JScrollPane(this.FindWordArea);
-        final TitledBorder titleDepth = BorderFactory.createTitledBorder(TITLE_FIND_WORD_AREA);
-        titleDepth.setTitleJustification(TitledBorder.CENTER);
-        scrollPane.setBorder(titleDepth);
+        final JScrollPane scrollPane = new JScrollPane(this.findWordArea);
+        final TitledBorder titleFindWordArea = BorderFactory.createTitledBorder(TITLE_FIND_WORD_AREA);
+        titleFindWordArea.setTitleJustification(TitledBorder.CENTER);
+        scrollPane.setBorder(titleFindWordArea);
 
         this.add(BorderLayout.NORTH, northPanel);
         this.add(BorderLayout.EAST, this.historyArea);
