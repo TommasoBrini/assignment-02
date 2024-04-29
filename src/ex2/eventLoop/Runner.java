@@ -16,8 +16,14 @@ public class Runner {
         this.eventLoop.addViewListener(this.gui);
     }
 
+    public void stop() {
+        this.eventLoop.stop();
+    }
 
 
+    public void requestWebClient(final String url) {
+        this.eventLoop.requestWebClient(url);
+    }
 
 
 

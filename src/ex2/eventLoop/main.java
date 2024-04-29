@@ -1,8 +1,7 @@
-import ex2.eventLoop.core.EventLoopImpl;
+import ex2.eventLoop.Runner;
 
 public static void main(final String[] args) {
-    final EventLoopImpl eventLoop = new EventLoopImpl();
-//        eventLoop.createServer();
+    final Runner runner = new Runner();
 
     try {
         Thread.sleep(1000);
@@ -10,7 +9,6 @@ public static void main(final String[] args) {
         e.printStackTrace();
     }
 
-    eventLoop.requestWebClient("https://en.wikipedia.org/wiki/Ubaldo_Ricci");
-//        eventLoop.addEvent(null);
+    runner.requestWebClient("https://en.wikipedia.org/wiki/Ubaldo_Ricci");
 
 }
