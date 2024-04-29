@@ -1,10 +1,12 @@
 package ex2.gui;
 
+import ex2.eventLoop.filter.UrlFilter;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-public class SearchWord extends JFrame {
+public class SearchWord extends JFrame implements ViewListener {
     private static final Dimension FIND_WORD_AREA_SIZE = new Dimension(380, 380);
     private static final Dimension FRAME_SIZE = new Dimension(800, 500);
     private static final String TITLE_FIND_WORD_AREA = "Find Word";
@@ -73,8 +75,8 @@ public class SearchWord extends JFrame {
     }
 
     private void setupListener() {
-        this.startButton.addActionListener(l -> this.appendSiteInHistory());
-        this.clearButton.addActionListener(l -> this.clearText());
+        this.startButton.addActionListener(_ -> this.appendSiteInHistory());
+        this.clearButton.addActionListener(_ -> this.clearText());
     }
 
     private void clearText() {
@@ -95,8 +97,17 @@ public class SearchWord extends JFrame {
     }
 
 
-    public static void main(final String[] args) {
-        new SearchWord();
+    @Override
+    public void onResponse(final UrlFilter urlFilter) {
+        this.findWordArea.setForeground(Color.BLACK);
+        this.findWordArea.setText("");
+        this.findWordArea.append("trovato");
     }
 
+    @Override
+    public void onError(final String message) {
+        this.findWordArea.setForeground(Color.RED);
+        this.findWordArea.setText("");
+        this.findWordArea.append(STR."ERROR: \{message}");
+    }
 }
