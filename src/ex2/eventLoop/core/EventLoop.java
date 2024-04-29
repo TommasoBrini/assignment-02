@@ -1,4 +1,4 @@
-package ex2.eventLoop;
+package ex2.eventLoop.core;
 
 import ex2.gui.ViewListener;
 import io.vertx.core.Verticle;

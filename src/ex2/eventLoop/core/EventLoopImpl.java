@@ -1,4 +1,4 @@
-package ex2.eventLoop;
+package ex2.eventLoop.core;
 
 import ex2.eventLoop.filter.UrlFilter;
 import ex2.eventLoop.filter.UrlFilterImpl;
