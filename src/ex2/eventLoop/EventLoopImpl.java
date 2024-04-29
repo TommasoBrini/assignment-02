@@ -1,5 +1,7 @@
 package ex2.eventLoop;
 
+import ex2.eventLoop.filter.UrlFilter;
+import ex2.eventLoop.filter.UrlFilterImpl;
 import ex2.gui.ViewListener;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
@@ -73,7 +75,9 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop {
                         System.out.println("Response status code: " + handler.result().statusCode());
                         System.out.println("Response body:");
                         System.out.println(handler.result().body());
-                        this.viewListeners.forEach(viewListener -> viewListener.onResponse(handler.result().bodyAsString()));
+
+                        final UrlFilter urlFilter = new UrlFilterImpl(handler.result().bodyAsString());
+                        this.viewListeners.forEach(listener -> listener.onResponse(urlFilter));
                     } else {
                         // Gestione degli errori
                         System.err.println("Request failed: " + handler.cause().getMessage());
@@ -82,18 +86,4 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop {
                 });
     }
 
-    public static void main(final String[] args) {
-        final EventLoopImpl eventLoop = new EventLoopImpl();
-//        eventLoop.createServer();
-
-        try {
-            Thread.sleep(1000);
-        } catch (final InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        eventLoop.requestWebClient("https://en.wikipedia.org/wiki/Ubaldo_Ricci");
-//        eventLoop.addEvent(null);
-
-    }
 }

@@ -5,6 +5,10 @@ import java.util.List;
 public class UrlFilterImpl implements UrlFilter {
     private String urlBody;
 
+    public UrlFilterImpl(final String body) {
+        this.urlBody = body;
+    }
+
     @Override
     public void setBodyUrl(final String bodyUrl) {
         this.urlBody = bodyUrl;
