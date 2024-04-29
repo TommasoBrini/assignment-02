@@ -99,15 +99,19 @@ public class SearchWord extends JFrame implements ViewListener {
 
     @Override
     public void onResponse(final UrlFilter urlFilter) {
-        this.findWordArea.setForeground(Color.BLACK);
-        this.findWordArea.setText("");
-        this.findWordArea.append("trovato");
+        SwingUtilities.invokeLater(() -> {
+            this.findWordArea.setForeground(Color.BLACK);
+            this.findWordArea.setText("");
+            this.findWordArea.append("trovato");
+        });
     }
 
     @Override
     public void onError(final String message) {
-        this.findWordArea.setForeground(Color.RED);
-        this.findWordArea.setText("");
-        this.findWordArea.append(STR."ERROR: \{message}");
+        SwingUtilities.invokeLater(() -> {
+            this.findWordArea.setForeground(Color.RED);
+            this.findWordArea.setText("");
+            this.findWordArea.append(STR."ERROR: \{message}");
+        });
     }
 }
