@@ -5,7 +5,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class SearchWord extends JFrame {
-    private static final Dimension FIND_WORD_AREA_SIZE = new Dimension(430, 380);
+    private static final Dimension FIND_WORD_AREA_SIZE = new Dimension(380, 380);
     private static final Dimension FRAME_SIZE = new Dimension(800, 500);
     private static final String TITLE_FIND_WORD_AREA = "Find Word";
     private static final String SITE = "Site:";

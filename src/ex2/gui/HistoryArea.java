@@ -11,42 +11,21 @@ public class HistoryArea extends JPanel {
     private static final String CLEAR = "Clear";
     private static final Dimension AREA_SIZE = new Dimension(300, 350);
 
-    private final JTextArea siteArea;
-    private final JTextArea wordArea;
-    private final JTextArea depthArea;
+//    private final JTextArea siteArea;
+//    private final JTextArea wordArea;
+//    private final JTextArea depthArea;
+//    private final JPanel buttonPanel;
+    private final JPanel recordPanel;
     private final JButton clearButton;
 
     public HistoryArea() {
-        this.siteArea = new JTextArea();
-        this.wordArea = new JTextArea();
-        this.depthArea = new JTextArea();
         this.clearButton = new JButton(CLEAR);
 
-        this.siteArea.setEditable(false);
-        this.wordArea.setEditable(false);
-        this.depthArea.setEditable(false);
+        this.recordPanel = new JPanel();
+        final JScrollPane scrollPane = new JScrollPane(this.recordPanel);
+        this.recordPanel.setLayout(new BoxLayout(this.recordPanel, BoxLayout.Y_AXIS));
 
-        final JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(this.siteArea);
-        panel.add(this.wordArea);
-        panel.add(this.depthArea);
-
-        final JScrollPane scrollPane = new JScrollPane(panel);
         scrollPane.setPreferredSize(AREA_SIZE);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
-
-        final TitledBorder titleSite = BorderFactory.createTitledBorder(SITE);
-        titleSite.setTitleJustification(TitledBorder.CENTER);
-        this.siteArea.setBorder(titleSite);
-
-        final TitledBorder titleWord = BorderFactory.createTitledBorder(WORD);
-        titleWord.setTitleJustification(TitledBorder.CENTER);
-        this.wordArea.setBorder(titleWord);
-
-        final TitledBorder titleDepth = BorderFactory.createTitledBorder(DEPTH);
-        titleDepth.setTitleJustification(TitledBorder.CENTER);
-        this.depthArea.setBorder(titleDepth);
 
 
         this.setBackground(Color.WHITE);
@@ -62,14 +41,24 @@ public class HistoryArea extends JPanel {
     }
 
     private void clear() {
-        this.siteArea.setText("");
-        this.wordArea.setText("");
-        this.depthArea.setText("");
+        this.recordPanel.removeAll();
+        this.recordPanel.revalidate();
+        this.recordPanel.repaint();
     }
 
     public void append(final String site, final String word, final String depth) {
-        this.siteArea.append(site + "\n");
-        this.wordArea.append(word + "\n");
-        this.depthArea.append(depth + "\n");
+        final JButton button = new JButton();
+        button.setMaximumSize(new Dimension(AREA_SIZE.width, button.getPreferredSize().height)); // Imposta larghezza massima
+
+        final JPanel panel = new JPanel(new BorderLayout());
+        panel.add(new JLabel(site), BorderLayout.WEST);
+        panel.add(new JLabel(word), BorderLayout.CENTER);
+        panel.add(new JLabel(depth), BorderLayout.EAST);
+
+        button.add(panel);
+
+        this.recordPanel.add(button);
+        this.recordPanel.revalidate();
+        this.recordPanel.repaint();
     }
 }
