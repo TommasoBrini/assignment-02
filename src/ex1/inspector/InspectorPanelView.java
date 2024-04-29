@@ -5,7 +5,7 @@ import ex1.inspector.stepper.StepperView;
 import ex1.inspector.timeStatistics.TimeStatisticsView;
 import ex1.simulation.InspectorSimulation;
 import ex1.simulation.SimulationManager;
-import utils.ViewUtils;
+import ex1.utils.ViewUtils;
 
 import javax.swing.*;
 import java.awt.*;

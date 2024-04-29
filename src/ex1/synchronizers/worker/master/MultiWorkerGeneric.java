@@ -6,7 +6,7 @@ import ex1.synchronizers.service.CommandService;
 import ex1.synchronizers.service.CommandServiceImpl;
 import ex1.synchronizers.worker.slave.Worker;
 import ex1.synchronizers.worker.slave.WorkerCarBarrier;
-import utils.ListUtils;
+import ex1.utils.ListUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,10 +2,9 @@ package ex1.simulation;
 
 import ex1.inspector.InspectorPanelView;
 import ex1.road.RoadsEnv;
-import ex1.inspector.InspectorPanelView;
 import ex1.road.RoadPanelView;
 import ex1.simulation.listener.ViewSimulationListener;
-import utils.ViewUtils;
+import ex1.utils.ViewUtils;
 
 import javax.swing.*;
 import java.awt.*;

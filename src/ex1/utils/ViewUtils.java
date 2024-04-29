@@ -1,4 +1,4 @@
-package utils;
+package ex1.utils;
 
 import java.awt.*;
 

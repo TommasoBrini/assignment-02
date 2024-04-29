@@ -1,9 +1,8 @@
 package ex1.inspector.road;
 
-import utils.ViewUtils;
+import ex1.utils.ViewUtils;
 
 import javax.swing.*;
-import java.awt.*;
 import java.text.DecimalFormat;
 
 public class RoadStatisticView extends JPanel {
