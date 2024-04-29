@@ -76,8 +76,8 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop {
                         this.viewListeners.forEach(viewListener -> viewListener.onResponse(handler.result().bodyAsString()));
                     } else {
                         // Gestione degli errori
-                        this.viewListeners.forEach(viewListener -> viewListener.onError(handler.cause().getMessage()));
                         System.err.println("Request failed: " + handler.cause().getMessage());
+                        this.viewListeners.forEach(viewListener -> viewListener.onError(handler.cause().getMessage()));
                     }
                 });
     }
