@@ -1,9 +1,11 @@
 package ex2.gui.area;
 
+import ex2.Utils;
 import ex2.eventLoop.CommandListener;
 import ex2.gui.MessageUtils;
 import ex2.gui.PanelUtils;
 import ex2.gui.components.TextBox;
+import io.vertx.uritemplate.UriTemplate;
 
 import javax.swing.*;
 import java.awt.*;
@@ -97,7 +99,8 @@ public class CommandArea extends JPanel {
     }
 
     private boolean isSiteValid() {
-        return !this.boxSite.getText().isBlank();
+        final String url = this.boxSite.getText();
+        return !url.isBlank() && Utils.isValidURL(url);
     }
 
     private boolean isWordValid() {
