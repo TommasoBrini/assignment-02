@@ -1,19 +1,20 @@
 package ex2.gui.area;
 
 import ex2.eventLoop.CommandListener;
+import ex2.gui.PanelUtils;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class HistoryArea extends JPanel implements CommandListener {
-    private static final String SITE = "Site";
-    private static final String WORD = "Word";
-    private static final String DEPTH = "Depth";
-    private static final String SPACE = "     ";
+    private static final String SITE = "Site: ";
+    private static final String WORD = "Word: ";
+    private static final String DEPTH = "Depth: ";
+    private static final String HISTORY = "History";
     private static final String CLEAR = "Clear";
-    private static final Dimension AREA_SIZE = new Dimension(500, 450);
-    private static final int BUTTON_HEIGHT = 30;
+    private static final Dimension AREA_SIZE = new Dimension(350, 450);
+    private static final int BUTTON_HEIGHT = 45;
 
     private final JPanel recordPanel;
     private final JButton clearButton;
@@ -30,7 +31,7 @@ public class HistoryArea extends JPanel implements CommandListener {
         final JScrollPane scrollPane = new JScrollPane(this.recordPanel);
         this.recordPanel.setLayout(new BoxLayout(this.recordPanel, BoxLayout.Y_AXIS));
 
-        final TitledBorder titleRecord = BorderFactory.createTitledBorder(SITE + SPACE + WORD + SPACE + DEPTH);
+        final TitledBorder titleRecord = BorderFactory.createTitledBorder(HISTORY);
         titleRecord.setTitleJustification(TitledBorder.CENTER);
         scrollPane.setBorder(titleRecord);
 
@@ -58,14 +59,19 @@ public class HistoryArea extends JPanel implements CommandListener {
         final JButton button = new JButton();
         button.setMaximumSize(new Dimension(AREA_SIZE.width, BUTTON_HEIGHT));
 
-        final JPanel panel = new JPanel(new GridLayout(1, 3));
-        panel.setMaximumSize(new Dimension(AREA_SIZE.width, BUTTON_HEIGHT));
-        panel.setOpaque(false);
-        panel.add(new JLabel(site, SwingConstants.LEFT));
-        panel.add(new JLabel(word, SwingConstants.CENTER));
-        panel.add(new JLabel(depth, SwingConstants.RIGHT));
+        final JPanel mainPanel = PanelUtils.createPanelWithBorderLayout();
+        final JPanel southPanel = PanelUtils.createPanelWithBorderLayout();
+        final JPanel panel = PanelUtils.createPanelWithFlowLayout(FlowLayout.CENTER, 20, 0);
 
-        button.add(panel);
+        panel.add(new JLabel(WORD + word));
+        panel.add(new JLabel(DEPTH + depth));
+        southPanel.add(panel, BorderLayout.CENTER);
+
+        mainPanel.setMaximumSize(new Dimension(AREA_SIZE.width, BUTTON_HEIGHT));
+        mainPanel.add(new JLabel(SITE + site), BorderLayout.NORTH);
+        mainPanel.add(southPanel, BorderLayout.SOUTH);
+
+        button.add(mainPanel);
 
         button.addActionListener(l -> {
             commandArea.setSiteBoxText(site);
