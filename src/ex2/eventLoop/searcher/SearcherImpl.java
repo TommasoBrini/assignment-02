@@ -45,9 +45,7 @@ public class SearcherImpl implements Searcher {
         final int counter = 0;
         final List<String> findUrls = new ArrayList<>();
         // TODO: ricerca url
-
 //        this.eventLoop.addEventUrl(new DataEventImpl(___, this.word(), this.currentDepth() - 1));
-
 //        findUrls.forEach(url -> this.eventLoop.searchUrl(url, this.word, this.currentDepth - 1));
         return findUrls.size();
     }
