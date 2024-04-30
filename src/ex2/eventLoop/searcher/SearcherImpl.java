@@ -13,15 +13,15 @@ public class SearcherImpl implements Searcher {
     private final String urlBody;
     private final DataEvent data;
 
-    public SearcherImpl(final WorkerLoop workerLoop, final String url, final String body, final String word, final int depth) {
+    public SearcherImpl(final WorkerLoop workerLoop, final DataEvent dataEvent, final String body) {
         this.eventLoop = workerLoop;
-        this.data = new DataEventImpl(url, word, depth);
+        this.data = dataEvent;
         this.urlBody = body;
     }
 
     @Override
-    public int depth() {
-        return this.data.depth();
+    public int currentDepth() {
+        return this.data.currentDepth();
     }
 
     @Override
@@ -46,9 +46,9 @@ public class SearcherImpl implements Searcher {
         final List<String> findUrls = new ArrayList<>();
         // TODO: ricerca url
 
-//        this.eventLoop.addEventUrl(new DataEventImpl(___, this.word(), this.depth() - 1));
+//        this.eventLoop.addEventUrl(new DataEventImpl(___, this.word(), this.currentDepth() - 1));
 
-//        findUrls.forEach(url -> this.eventLoop.searchUrl(url, this.word, this.depth - 1));
+//        findUrls.forEach(url -> this.eventLoop.searchUrl(url, this.word, this.currentDepth - 1));
         return findUrls.size();
     }
 }

@@ -60,7 +60,7 @@ public class GUISearchWord extends JFrame implements ViewListener {
     public void onResponse(final Searcher filter) {
         SwingUtilities.invokeLater(() -> {
             this.findWordArea.setForeground(Color.BLACK);
-            final String row = "Depth[%d] %s: %s=%d \n".formatted(filter.depth(), filter.url(), filter.word(), filter.countWord());
+            final String row = "Depth[%d] %s: %s=%d \n".formatted(filter.currentDepth(), filter.url(), filter.word(), filter.countWord());
             this.findWordArea.append(row);
         });
     }

@@ -85,8 +85,8 @@ public class HistoryArea extends JPanel implements CommandListener {
     }
 
     @Override
-    public void onSearch(final CommandArea commandArea, final String site, final String word, final int depth) {
-        this.append(commandArea, site, word, String.valueOf(depth));
+    public void onSearch(final CommandArea commandArea, final String site, final String word, final int maxDepth) {
+        this.append(commandArea, site, word, String.valueOf(maxDepth));
     }
 
     @Override

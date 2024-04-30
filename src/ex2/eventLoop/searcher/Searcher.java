@@ -2,7 +2,7 @@ package ex2.eventLoop.searcher;
 
 public interface Searcher {
 
-    int depth();
+    int currentDepth();
 
     String url();
 

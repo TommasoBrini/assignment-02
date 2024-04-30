@@ -25,7 +25,7 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Worker
     private void setupConsumers() {
         this.vertx.eventBus().consumer(EVENT_URL, handler -> {
             final DataEvent dataEvent = (DataEvent) handler.body();
-            this.searchUrl(dataEvent.url(), dataEvent.word(), dataEvent.depth());
+            this.searchUrl(dataEvent);
         });
     }
 
@@ -45,10 +45,10 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Worker
     }
 
     @Override
-    public void searchUrl(final String url, final String word, final int depth) {
+    public void searchUrl(final DataEvent dataEvent) {
         final WebClient webClient = WebClient.create(this.vertx);
 
-        webClient.getAbs(UriTemplate.of(url))
+        webClient.getAbs(UriTemplate.of(dataEvent.url()))
                 .send(handler -> {
                     if (handler.succeeded()) {
                         // Gestione della risposta ricevuta
@@ -56,7 +56,7 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Worker
                         System.out.println("Response body:");
                         System.out.println(handler.result().body());
 
-                        final Searcher searcher = new SearcherImpl(this, url, handler.result().bodyAsString(), word, depth);
+                        final Searcher searcher = new SearcherImpl(this, dataEvent, handler.result().bodyAsString());
                         this.viewListeners.forEach(listener -> listener.onResponse(searcher));
                         searcher.findUrls();
                     } else {

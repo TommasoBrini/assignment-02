@@ -5,7 +5,6 @@ import ex2.eventLoop.CommandListener;
 import ex2.gui.MessageUtils;
 import ex2.gui.PanelUtils;
 import ex2.gui.components.TextBox;
-import io.vertx.uritemplate.UriTemplate;
 
 import javax.swing.*;
 import java.awt.*;
@@ -72,7 +71,8 @@ public class CommandArea extends JPanel {
                 this.commandListeners.forEach(listener -> listener.onSearch(
                         this,
                         this.boxSite.getText(),
-                        this.boxWord.getText(), Integer.parseInt(this.boxDepth.getText())));
+                        this.boxWord.getText(),
+                        Integer.parseInt(this.boxDepth.getText())));
 
             } else {
                 MessageUtils.createError(this, "Invalid input");

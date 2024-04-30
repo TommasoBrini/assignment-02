@@ -6,5 +6,7 @@ public interface DataEvent {
 
     String word();
 
-    int depth();
+    int currentDepth();
+
+    int maxDepth();
 }
