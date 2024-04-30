@@ -7,6 +7,7 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.client.WebClient;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop {
         this.vertx.close();
     }
 
-    @Override
+//    @Override
     public void addEvent(final Runnable runnable) {
         this.vertx.eventBus().consumer("event", message -> {
             System.out.println("Received message: " + message.body());
@@ -31,8 +32,7 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop {
         // add event in bus
         this.vertx.eventBus().send("event", "/hello");
     }
-
-    @Override
+//    @Override
     public void createServer() {
         this.vertx.createHttpServer()
                 .requestHandler(request -> {
@@ -66,7 +66,9 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop {
     }
 
     @Override
-    public void requestWebClient(final String url) {
+    public void requestWebClient(final String url, final String word, final int depth) {
+//        throw new MalformedURLException();
+
         final WebClient webClient = WebClient.create(this.vertx);
         webClient.getAbs(url)
                 .send(handler -> {

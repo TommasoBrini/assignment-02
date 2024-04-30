@@ -84,7 +84,7 @@ public class HistoryArea extends JPanel implements CommandListener {
     }
 
     @Override
-    public void onStop() {
+    public void onExit() {
 
     }
 }

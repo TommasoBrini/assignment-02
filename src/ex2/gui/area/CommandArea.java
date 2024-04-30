@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class CommandArea extends JPanel {
     private static final String SEARCH = "Search";
-    private static final String STOP = "Stop";
+    private static final String EXIT = "Exit";
     private static final String CLEAR = "Clear";
 
     private static final String SITE = "Site:";
@@ -28,7 +28,7 @@ public class CommandArea extends JPanel {
     private final TextBox boxDepth;
 
     private final JButton searchButton;
-    private final JButton stopButton;
+    private final JButton exitButton;
     private final JButton clearButton;
 
     private final List<CommandListener> commandListeners;
@@ -41,7 +41,7 @@ public class CommandArea extends JPanel {
         this.boxDepth = new TextBox(DEPTH, DEPTH_COLUMNS_TEXT);
 
         this.searchButton = new JButton(SEARCH);
-        this.stopButton = new JButton(STOP);
+        this.exitButton = new JButton(EXIT);
         this.clearButton = new JButton(CLEAR);
 
         this.commandListeners = new ArrayList<>();
@@ -50,7 +50,7 @@ public class CommandArea extends JPanel {
         this.add(this.boxWord);
         this.add(this.boxDepth);
         this.add(this.searchButton);
-        this.add(this.stopButton);
+        this.add(this.exitButton);
         this.add(this.clearButton);
 
         this.setupListener();
@@ -68,7 +68,7 @@ public class CommandArea extends JPanel {
                 MessageUtils.createError(this, "Invalid input");
             }
         });
-        this.stopButton.addActionListener(l -> this.commandListeners.forEach(CommandListener::onStop));
+        this.exitButton.addActionListener(l -> this.commandListeners.forEach(CommandListener::onExit));
         this.clearButton.addActionListener(l -> this.clearText());
     }
 

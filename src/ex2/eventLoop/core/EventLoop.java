@@ -7,12 +7,8 @@ public interface EventLoop extends Verticle {
 
     void addViewListener(final ViewListener viewListener);
 
-    void requestWebClient(final String url);
+    void requestWebClient(final String url, final String word, final int depth);
 
     void stop();
-
-    void addEvent(final Runnable runnable);
-
-    void createServer();
 
 }

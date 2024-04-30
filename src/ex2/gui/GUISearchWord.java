@@ -9,7 +9,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-public class SearchWord extends JFrame implements ViewListener {
+public class GUISearchWord extends JFrame implements ViewListener {
     private static final Dimension FIND_WORD_AREA_SIZE = new Dimension(380, 380);
     private static final Dimension FRAME_SIZE = new Dimension(800, 500);
     private static final String TITLE_FIND_WORD_AREA = "Find Word";
@@ -19,7 +19,7 @@ public class SearchWord extends JFrame implements ViewListener {
     private final HistoryArea historyArea;
 
 
-    public SearchWord() {
+    public GUISearchWord() {
         super("Search Word");
         this.commandArea = new CommandArea();
         this.findWordArea = new JTextArea();

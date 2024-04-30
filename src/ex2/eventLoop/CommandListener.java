@@ -6,5 +6,5 @@ public interface CommandListener {
 
     void onSearch(CommandArea commandArea, String site, String word, int depth);
 
-    void onStop();
+    void onExit();
 }
