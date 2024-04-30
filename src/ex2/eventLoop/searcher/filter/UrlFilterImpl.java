@@ -1,12 +1,14 @@
-package ex2.eventLoop.filter;
+package ex2.eventLoop.searcher.filter;
 
 import java.util.List;
 
 public class UrlFilterImpl implements UrlFilter {
     private String urlBody;
+    private String word;
 
-    public UrlFilterImpl(final String body) {
+    public UrlFilterImpl(final String body, final String word) {
         this.urlBody = body;
+        this.word = word;
     }
 
     @Override

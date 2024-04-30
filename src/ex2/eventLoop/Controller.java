@@ -19,7 +19,7 @@ public class Controller implements CommandListener {
 
     @Override
     public void onSearch(final CommandArea commandArea, final String site, final String word, final int depth) {
-        this.eventLoop.requestWebClient(site, word, depth);
+        this.eventLoop.searchUrl(site, word, depth);
     }
 
     @Override

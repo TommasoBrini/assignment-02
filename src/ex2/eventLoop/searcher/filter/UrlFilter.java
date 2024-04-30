@@ -1,4 +1,4 @@
-package ex2.eventLoop.filter;
+package ex2.eventLoop.searcher.filter;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package ex2.gui;
 
 import ex2.eventLoop.CommandListener;
-import ex2.eventLoop.filter.UrlFilter;
+import ex2.eventLoop.searcher.filter.UrlFilter;
 import ex2.gui.area.CommandArea;
 import ex2.gui.area.HistoryArea;
 
@@ -57,7 +57,7 @@ public class GUISearchWord extends JFrame implements ViewListener {
     }
 
     @Override
-    public void onResponse(final UrlFilter urlFilter) {
+    public void onResponse(final UrlFilter filter) {
         SwingUtilities.invokeLater(() -> {
             this.findWordArea.setForeground(Color.BLACK);
             this.findWordArea.setText("");

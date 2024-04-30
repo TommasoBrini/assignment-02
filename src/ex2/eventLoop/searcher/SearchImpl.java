@@ -1,12 +1,13 @@
 package ex2.eventLoop.searcher;
 
-import ex2.eventLoop.filter.UrlFilter;
+import ex2.eventLoop.searcher.filter.UrlFilter;
+import ex2.eventLoop.searcher.filter.UrlFilterImpl;
 
 public class SearchImpl implements Searcher {
     private final UrlFilter urlFilter;
 
-    public SearchImpl(final UrlFilter urlFilter) {
-        this.urlFilter = urlFilter;
+    public SearchImpl(final String body) {
+        this.urlFilter = new UrlFilterImpl(body);
     }
 
     @Override
