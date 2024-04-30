@@ -7,6 +7,8 @@
 # sbt
 target/
 
+# doc java
+res/docs/
 
 # Log file
 *.log
