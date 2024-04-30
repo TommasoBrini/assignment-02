@@ -4,9 +4,13 @@ import java.util.List;
 
 public interface UrlFilter {
 
-    void setBodyUrl(final String bodyUrl);
+    int depth();
 
-    int countWord(final String word);
+    String url();
+
+    String word();
+
+    int countWord();
 
     List<String> findUrls();
 }

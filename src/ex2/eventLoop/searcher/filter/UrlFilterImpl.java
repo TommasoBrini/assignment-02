@@ -12,12 +12,22 @@ public class UrlFilterImpl implements UrlFilter {
     }
 
     @Override
-    public void setBodyUrl(final String bodyUrl) {
-        this.urlBody = bodyUrl;
+    public int depth() {
+        return 0;
     }
 
     @Override
-    public int countWord(final String word) {
+    public String url() {
+        return "https://en.wikipedia.org/wiki/Ricci";
+    }
+
+    @Override
+    public String word() {
+        return "ciao";
+    }
+
+    @Override
+    public int countWord() {
         return 0;
     }
 
