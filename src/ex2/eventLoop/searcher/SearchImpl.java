@@ -7,7 +7,7 @@ public class SearchImpl implements Searcher {
     private final UrlFilter urlFilter;
 
     public SearchImpl(final String body) {
-        this.urlFilter = new UrlFilterImpl(body);
+        this.urlFilter = new UrlFilterImpl(body, "");
     }
 
     @Override
