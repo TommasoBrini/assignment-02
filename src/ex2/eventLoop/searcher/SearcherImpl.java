@@ -1,6 +1,8 @@
 package ex2.eventLoop.searcher;
 
 import ex2.eventLoop.core.WorkerLoop;
+import ex2.eventLoop.searcher.dataEvent.DataEvent;
+import ex2.eventLoop.searcher.dataEvent.DataEventImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,31 +11,27 @@ import java.util.List;
 public class SearcherImpl implements Searcher {
     private final WorkerLoop eventLoop;
     private final String urlBody;
-    private final String url;
-    private final String word;
-    private final int depth;
+    private final DataEvent data;
 
     public SearcherImpl(final WorkerLoop workerLoop, final String url, final String body, final String word, final int depth) {
         this.eventLoop = workerLoop;
-        this.url = url;
+        this.data = new DataEventImpl(url, word, depth);
         this.urlBody = body;
-        this.word = word;
-        this.depth = depth;
     }
 
     @Override
     public int depth() {
-        return this.depth;
+        return this.data.depth();
     }
 
     @Override
     public String url() {
-        return this.url;
+        return this.data.url();
     }
 
     @Override
     public String word() {
-        return this.word;
+        return this.data.word();
     }
 
     @Override
@@ -44,10 +42,13 @@ public class SearcherImpl implements Searcher {
 
     @Override
     public int findUrls() {
+        final int counter = 0;
         final List<String> findUrls = new ArrayList<>();
         // TODO: ricerca url
 
-        findUrls.forEach(url -> this.eventLoop.searchUrl(url, this.word, this.depth - 1));
+//        this.eventLoop.addEventUrl(new DataEventImpl(___, this.word(), this.depth() - 1));
+
+//        findUrls.forEach(url -> this.eventLoop.searchUrl(url, this.word, this.depth - 1));
         return findUrls.size();
     }
 }

@@ -2,6 +2,7 @@ package ex2.eventLoop.core;
 
 import ex2.eventLoop.searcher.Searcher;
 import ex2.eventLoop.searcher.SearcherImpl;
+import ex2.eventLoop.searcher.dataEvent.DataEvent;
 import ex2.gui.ViewListener;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
@@ -12,11 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventLoopImpl extends AbstractVerticle implements EventLoop, WorkerLoop {
+    private static final String EVENT_URL = "searchUrls";
     private final List<ViewListener> viewListeners;
 
     public EventLoopImpl() {
         this.init(Vertx.vertx(), null);
         this.viewListeners = new ArrayList<>();
+        this.setupConsumers();
+    }
+
+    private void setupConsumers() {
+        this.vertx.eventBus().consumer(EVENT_URL, handler -> {
+            final DataEvent dataEvent = (DataEvent) handler.body();
+            this.searchUrl(dataEvent.url(), dataEvent.word(), dataEvent.depth());
+        });
     }
 
     @Override
@@ -27,6 +37,11 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Worker
     @Override
     public void addViewListener(final ViewListener viewListener) {
         this.viewListeners.add(viewListener);
+    }
+
+    @Override
+    public void addEventUrl(final DataEvent dataEvent) {
+        this.vertx.eventBus().send(EVENT_URL, dataEvent);
     }
 
     @Override
@@ -41,8 +56,9 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Worker
                         System.out.println("Response body:");
                         System.out.println(handler.result().body());
 
-                        final Searcher filter = new SearcherImpl(this, url, handler.result().bodyAsString(), word, depth);
-                        this.viewListeners.forEach(listener -> listener.onResponse(filter));
+                        final Searcher searcher = new SearcherImpl(this, url, handler.result().bodyAsString(), word, depth);
+                        this.viewListeners.forEach(listener -> listener.onResponse(searcher));
+                        searcher.findUrls();
                     } else {
                         // Gestione degli errori
                         System.err.println("Request failed: " + handler.cause().getMessage());

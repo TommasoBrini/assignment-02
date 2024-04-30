@@ -1,7 +1,9 @@
 package ex2.eventLoop.core;
 
+import ex2.eventLoop.searcher.dataEvent.DataEvent;
+
 public interface WorkerLoop {
 
-    void searchUrl(final String url, final String word, final int depth);
+    void addEventUrl(final DataEvent dataEvent);
 
 }
