@@ -66,9 +66,9 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop {
         this.viewListeners.add(viewListener);
     }
 
-    private UrlFilter readUrl(final String url, final String word) {
-
-    }
+//    private UrlFilter readUrl(final String url, final String word) {
+//        return null;
+//    }
 
     @Override
     public void searchUrl(final String url, final String word, final int depth) {
