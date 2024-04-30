@@ -2,6 +2,7 @@ package ex2.gui.area;
 
 import ex2.eventLoop.CommandListener;
 import ex2.gui.MessageUtils;
+import ex2.gui.PanelUtils;
 import ex2.gui.components.TextBox;
 
 import javax.swing.*;
@@ -19,7 +20,7 @@ public class CommandArea extends JPanel {
     private static final String WORD = "Word:";
     private static final String DEPTH = "Depth:";
 
-    private static final int SITE_COLUMNS_TEXT = 15;
+    private static final int SITE_COLUMNS_TEXT = 30;
     private static final int WORD_COLUMNS_TEXT = 5;
     private static final int DEPTH_COLUMNS_TEXT = 3;
 
@@ -34,7 +35,7 @@ public class CommandArea extends JPanel {
     private final List<CommandListener> commandListeners;
 
     public CommandArea() {
-        super(new FlowLayout());
+        super(new BorderLayout());
         this.setBackground(Color.WHITE);
         this.boxSite = new TextBox(SITE, SITE_COLUMNS_TEXT);
         this.boxWord = new TextBox(WORD, WORD_COLUMNS_TEXT);
@@ -46,12 +47,19 @@ public class CommandArea extends JPanel {
 
         this.commandListeners = new ArrayList<>();
 
-        this.add(this.boxSite);
-        this.add(this.boxWord);
-        this.add(this.boxDepth);
-        this.add(this.searchButton);
-        this.add(this.exitButton);
-        this.add(this.clearButton);
+        final JPanel northPanel = PanelUtils.createPanelWithFlowLayout();
+        northPanel.add(this.boxSite);
+        final JPanel centerPanel = PanelUtils.createPanelWithFlowLayout();
+        centerPanel.add(this.boxWord);
+        centerPanel.add(this.boxDepth);
+        final JPanel southPanel = PanelUtils.createPanelWithFlowLayout();
+        southPanel.add(this.searchButton);
+        southPanel.add(this.clearButton);
+        southPanel.add(this.exitButton);
+
+        this.add(northPanel, BorderLayout.NORTH);
+        this.add(centerPanel, BorderLayout.CENTER);
+        this.add(southPanel, BorderLayout.SOUTH);
 
         this.setupListener();
     }
