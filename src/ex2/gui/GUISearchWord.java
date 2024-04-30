@@ -31,7 +31,7 @@ public class GUISearchWord extends JFrame implements ViewListener {
         this.commandArea.addInputListener(this.historyArea);
 
         this.setupGraphics();
-        this.setResizable(false);
+        this.setResizable(true);
         this.setVisible(true);
     }
 

@@ -3,9 +3,11 @@ package ex2.eventLoop.core;
 import ex2.eventLoop.searcher.Searcher;
 import ex2.eventLoop.searcher.SearcherImpl;
 import ex2.eventLoop.searcher.dataEvent.DataEvent;
+import ex2.eventLoop.searcher.dataEvent.DataEventImpl;
 import ex2.gui.ViewListener;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.uritemplate.UriTemplate;
 
@@ -24,7 +26,9 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Worker
 
     private void setupConsumers() {
         this.vertx.eventBus().consumer(EVENT_URL, handler -> {
-            final DataEvent dataEvent = (DataEvent) handler.body();
+            //TODO spacchettare il json object in dataevent
+            JsonObject jsonObject = (JsonObject) handler.body();
+            final DataEvent dataEvent = new DataEventImpl(jsonObject.getString("url"), jsonObject.getString("word"), jsonObject.getInteger("maxDepth"), jsonObject.getInteger("currentDepth"));
             this.searchUrl(dataEvent);
         });
     }
@@ -41,11 +45,21 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Worker
 
     @Override
     public void addEventUrl(final DataEvent dataEvent) {
-        this.vertx.eventBus().send(EVENT_URL, dataEvent);
+        // TODO impacchettare il dataevent in json object
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.put("url", dataEvent.url());
+        jsonObject.put("word", dataEvent.word());
+        jsonObject.put("maxDepth", dataEvent.maxDepth());
+        jsonObject.put("currentDepth", dataEvent.currentDepth());
+        this.vertx.eventBus().send(EVENT_URL, jsonObject);
     }
 
     @Override
     public void searchUrl(final DataEvent dataEvent) {
+        if (dataEvent.currentDepth() > dataEvent.maxDepth()) {
+            this.stop();
+            return;
+        }
         final WebClient webClient = WebClient.create(this.vertx);
 
         webClient.getAbs(UriTemplate.of(dataEvent.url()))
@@ -54,7 +68,7 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Worker
                         // Gestione della risposta ricevuta
                         System.out.println("Response status code: " + handler.result().statusCode());
                         System.out.println("Response body:");
-                        System.out.println(handler.result().body());
+                        System.out.println(dataEvent.url());
 
                         final Searcher searcher = new SearcherImpl(this, dataEvent, handler.result().bodyAsString());
                         this.viewListeners.forEach(listener -> listener.onResponse(searcher));

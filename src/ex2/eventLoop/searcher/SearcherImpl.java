@@ -5,7 +5,10 @@ import ex2.eventLoop.searcher.dataEvent.DataEvent;
 import ex2.eventLoop.searcher.dataEvent.DataEventImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class SearcherImpl implements Searcher {
@@ -36,17 +39,23 @@ public class SearcherImpl implements Searcher {
 
     @Override
     public int countWord() {
-        // TODO: ricerca parola
-        return 0;
+        return (int) Arrays.stream(this.urlBody.split(" ")).filter(s -> s.contains(this.word())).count();
     }
 
     @Override
     public int findUrls() {
         final int counter = 0;
         final List<String> findUrls = new ArrayList<>();
-        // TODO: ricerca url
-//        this.eventLoop.addEventUrl(new DataEventImpl(___, this.word(), this.currentDepth() - 1));
-//        findUrls.forEach(url -> this.eventLoop.searchUrl(url, this.word, this.currentDepth - 1));
+        //cerca href all'interno del body
+        final Pattern pattern = Pattern.compile("href=\"(http.*?)\"");
+        final Matcher matcher = pattern.matcher(this.urlBody);
+        while (matcher.find() && this.currentDepth() < this.data.maxDepth()) {
+            DataEvent dt = new DataEventImpl(matcher.group(1), this.word(), this.data.maxDepth(), this.currentDepth() + 1);
+            System.out.println(dt);
+            this.eventLoop.addEventUrl(dt);
+            System.out.println(matcher.group(1));
+            findUrls.add(matcher.group(1));
+        }
         return findUrls.size();
     }
 }
