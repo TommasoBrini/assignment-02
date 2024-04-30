@@ -1,30 +1,18 @@
 package ex2.eventLoop;
 
-import ex2.eventLoop.core.EventLoop;
-import ex2.eventLoop.core.EventLoopImpl;
-import ex2.gui.SearchWord;
-import ex2.gui.ViewListener;
 
-public class Runner {
-    final private ViewListener gui;
-    final private EventLoop eventLoop;
+public final class Runner {
 
-    public Runner() {
-        this.gui = new SearchWord();
-        this.eventLoop = new EventLoopImpl();
+    public static void main(final String[] args) {
+        final Controller controller = new Controller();
 
-        this.eventLoop.addViewListener(this.gui);
+        try {
+            Thread.sleep(1000);
+        } catch (final InterruptedException e) {
+            e.printStackTrace();
+        }
+
+//        controller.requestWebClient("https://en.wikipedia.org/wiki/Ubaldo_Ricci");
+
     }
-
-    public void stop() {
-        this.eventLoop.stop();
-    }
-
-
-    public void requestWebClient(final String url) {
-        this.eventLoop.requestWebClient(url);
-    }
-
-
-
 }

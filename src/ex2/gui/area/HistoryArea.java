@@ -1,10 +1,12 @@
-package ex2.gui;
+package ex2.gui.area;
+
+import ex2.eventLoop.CommandListener;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-public class HistoryArea extends JPanel {
+public class HistoryArea extends JPanel implements CommandListener {
     private static final String SITE = "Site";
     private static final String WORD = "Word";
     private static final String DEPTH = "Depth";
@@ -43,7 +45,7 @@ public class HistoryArea extends JPanel {
     }
 
     private void setupListener() {
-        this.clearButton.addActionListener(_ -> this.clear());
+        this.clearButton.addActionListener(l -> this.clear());
     }
 
     private void clear() {
@@ -52,7 +54,7 @@ public class HistoryArea extends JPanel {
         this.recordPanel.repaint();
     }
 
-    public void append(final SearchWord searchWord, final String site, final String word, final String depth) {
+    public void append(final CommandArea commandArea, final String site, final String word, final String depth) {
         final JButton button = new JButton();
         button.setMaximumSize(new Dimension(AREA_SIZE.width, BUTTON_HEIGHT));
 
@@ -65,14 +67,24 @@ public class HistoryArea extends JPanel {
 
         button.add(panel);
 
-        button.addActionListener(_ -> {
-            searchWord.setSiteBoxText(site);
-            searchWord.setWordBoxText(word);
-            searchWord.setDepthBoxText(depth);
+        button.addActionListener(l -> {
+            commandArea.setSiteBoxText(site);
+            commandArea.setWordBoxText(word);
+            commandArea.setDepthBoxText(depth);
         });
 
         this.recordPanel.add(button);
         this.recordPanel.revalidate();
         this.recordPanel.repaint();
+    }
+
+    @Override
+    public void onSearch(final CommandArea commandArea, final String site, final String word, final int depth) {
+        this.append(commandArea, site, word, String.valueOf(depth));
+    }
+
+    @Override
+    public void onStop() {
+
     }
 }

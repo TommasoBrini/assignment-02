@@ -1,4 +1,4 @@
-package ex2.gui;
+package ex2.gui.components;
 
 import javax.swing.*;
 import java.awt.*;
