@@ -26,9 +26,8 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Worker
 
     private void setupConsumers() {
         this.vertx.eventBus().consumer(EVENT_URL, handler -> {
-            //TODO spacchettare il json object in dataevent
-            JsonObject jsonObject = (JsonObject) handler.body();
-            final DataEvent dataEvent = new DataEventImpl(jsonObject.getString("url"), jsonObject.getString("word"), jsonObject.getInteger("maxDepth"), jsonObject.getInteger("currentDepth"));
+            final JsonObject jsonObject = (JsonObject) handler.body();
+            final DataEvent dataEvent = new DataEventImpl(jsonObject);
             this.searchUrl(dataEvent);
         });
     }
@@ -45,13 +44,7 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Worker
 
     @Override
     public void addEventUrl(final DataEvent dataEvent) {
-        // TODO impacchettare il dataevent in json object
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.put("url", dataEvent.url());
-        jsonObject.put("word", dataEvent.word());
-        jsonObject.put("maxDepth", dataEvent.maxDepth());
-        jsonObject.put("currentDepth", dataEvent.currentDepth());
-        this.vertx.eventBus().send(EVENT_URL, jsonObject);
+        this.vertx.eventBus().send(EVENT_URL, dataEvent.toJson());
     }
 
     @Override

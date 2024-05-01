@@ -1,5 +1,7 @@
 package ex2.eventLoop.searcher.dataEvent;
 
+import io.vertx.core.json.JsonObject;
+
 public interface DataEvent {
 
     String url();
@@ -9,4 +11,6 @@ public interface DataEvent {
     int currentDepth();
 
     int maxDepth();
+
+    JsonObject toJson();
 }
