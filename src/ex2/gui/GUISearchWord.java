@@ -1,7 +1,7 @@
 package ex2.gui;
 
 import ex2.gui.area.PrintArea;
-import ex2.listener.CommandListener;
+import ex2.listener.InputGuiListener;
 import ex2.eventLoop.searcher.Searcher;
 import ex2.gui.area.CommandArea;
 import ex2.gui.area.HistoryArea;
@@ -43,8 +43,8 @@ public class GUISearchWord extends JFrame implements ViewListener {
     }
 
     @Override
-    public void addInputListener(final CommandListener commandListener) {
-        this.commandArea.addInputListener(commandListener);
+    public void addInputGuiListener(final InputGuiListener inputGuiListener) {
+        this.commandArea.addInputListener(inputGuiListener);
     }
 
     @Override

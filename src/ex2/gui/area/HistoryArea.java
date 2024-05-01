@@ -1,6 +1,6 @@
 package ex2.gui.area;
 
-import ex2.listener.CommandListener;
+import ex2.listener.InputGuiListener;
 import ex2.utils.PanelUtils;
 
 import javax.swing.*;
@@ -9,7 +9,7 @@ import java.awt.*;
 
 import static ex2.gui.GuiConstants.*;
 
-public class HistoryArea extends JPanel implements CommandListener {
+public class HistoryArea extends JPanel implements InputGuiListener {
     private static final String HISTORY = "History";
     private static final String CLEAR = "Clear";
 

@@ -1,6 +1,6 @@
 package ex2.gui.area;
 
-import ex2.listener.CommandListener;
+import ex2.listener.InputGuiListener;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -8,7 +8,7 @@ import java.awt.*;
 
 import static ex2.gui.GuiConstants.PRINT_AREA_DIMENSION;
 
-public class PrintArea extends JScrollPane implements CommandListener {
+public class PrintArea extends JScrollPane implements InputGuiListener {
     private static final String TITLE_PRINT_AREA = "Print Area";
     private final JTextArea printArea;
 

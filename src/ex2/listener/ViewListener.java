@@ -4,7 +4,7 @@ import ex2.eventLoop.searcher.Searcher;
 
 public interface ViewListener {
 
-    void addInputListener(final CommandListener commandListener);
+    void addInputGuiListener(final InputGuiListener inputGuiListener);
 
     void onResponse(final Searcher filter);
 

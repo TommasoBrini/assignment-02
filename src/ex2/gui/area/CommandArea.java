@@ -1,7 +1,7 @@
 package ex2.gui.area;
 
 import ex2.utils.UrlUtils;
-import ex2.listener.CommandListener;
+import ex2.listener.InputGuiListener;
 import ex2.utils.MessageDialogUtils;
 import ex2.utils.PanelUtils;
 import ex2.gui.components.TextBox;
@@ -31,7 +31,7 @@ public class CommandArea extends JPanel {
     private final JButton exitButton;
     private final JButton clearButton;
 
-    private final List<CommandListener> commandListeners;
+    private final List<InputGuiListener> inputGuiListeners;
 
     public CommandArea() {
         super(new BorderLayout());
@@ -44,7 +44,7 @@ public class CommandArea extends JPanel {
         this.exitButton = new JButton(EXIT);
         this.clearButton = new JButton(CLEAR);
 
-        this.commandListeners = new ArrayList<>();
+        this.inputGuiListeners = new ArrayList<>();
 
         final JPanel northPanel = PanelUtils.createPanelWithFlowLayout();
         northPanel.add(this.boxSite);
@@ -66,7 +66,7 @@ public class CommandArea extends JPanel {
     private void setupListener() {
         this.searchButton.addActionListener(l -> {
             if (this.isInputValid()) {
-                this.commandListeners.forEach(listener -> listener.onSearch(
+                this.inputGuiListeners.forEach(listener -> listener.onSearch(
                         this,
                         this.boxSite.getText(),
                         this.boxWord.getText(),
@@ -76,12 +76,12 @@ public class CommandArea extends JPanel {
                 MessageDialogUtils.createError(this, "Invalid input");
             }
         });
-        this.exitButton.addActionListener(l -> this.commandListeners.forEach(CommandListener::onExit));
+        this.exitButton.addActionListener(l -> this.inputGuiListeners.forEach(InputGuiListener::onExit));
         this.clearButton.addActionListener(l -> this.clearText());
     }
 
-    public void addInputListener(final CommandListener commandListener) {
-        if (Objects.nonNull(commandListener)) this.commandListeners.add(commandListener);
+    public void addInputListener(final InputGuiListener commandListener) {
+        if (Objects.nonNull(commandListener)) this.inputGuiListeners.add(commandListener);
     }
 
     public void setSiteBoxText(final String text) {
