@@ -1,11 +1,9 @@
 package ex2.eventLoop;
 
-import ex2.eventLoop.core.EventLoop;
-import ex2.eventLoop.core.EventLoopImpl;
-import ex2.eventLoop.dataEvent.DataEventImpl;
+import ex2.core.dataEvent.DataEventImpl;
 import ex2.gui.GUISearchWord;
 import ex2.gui.area.CommandArea;
-import ex2.listener.InputGuiListener;
+import ex2.core.listener.InputGuiListener;
 
 public class Controller implements InputGuiListener {
     final private GUISearchWord gui;

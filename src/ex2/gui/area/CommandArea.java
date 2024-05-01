@@ -1,7 +1,7 @@
 package ex2.gui.area;
 
 import ex2.utils.UrlUtils;
-import ex2.listener.InputGuiListener;
+import ex2.core.listener.InputGuiListener;
 import ex2.utils.MessageDialogUtils;
 import ex2.utils.PanelUtils;
 import ex2.gui.components.TextBox;

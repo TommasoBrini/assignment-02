@@ -1,7 +1,7 @@
-package ex2.eventLoop.searcher;
+package ex2.core.searcher;
 
-import ex2.eventLoop.dataEvent.DataEvent;
-import ex2.eventLoop.dataEvent.DataEventImpl;
+import ex2.core.dataEvent.DataEvent;
+import ex2.core.dataEvent.DataEventImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;

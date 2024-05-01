@@ -1,11 +1,11 @@
-package ex2.eventLoop.core;
+package ex2.eventLoop;
 
-import ex2.eventLoop.searcher.Searcher;
-import ex2.eventLoop.searcher.SearcherImpl;
-import ex2.eventLoop.dataEvent.DataEvent;
-import ex2.eventLoop.dataEvent.DataEventImpl;
-import ex2.eventLoop.searcher.WorkerLoop;
-import ex2.listener.ViewListener;
+import ex2.core.searcher.Searcher;
+import ex2.core.searcher.SearcherImpl;
+import ex2.core.dataEvent.DataEvent;
+import ex2.core.dataEvent.DataEventImpl;
+import ex2.core.searcher.WorkerLoop;
+import ex2.core.listener.ViewListener;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;

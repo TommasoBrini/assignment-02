@@ -1,6 +1,6 @@
-package ex2.listener;
+package ex2.core.listener;
 
-import ex2.eventLoop.searcher.Searcher;
+import ex2.core.searcher.Searcher;
 
 public interface ViewListener {
 

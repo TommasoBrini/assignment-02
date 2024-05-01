@@ -1,4 +1,4 @@
-package ex2.listener;
+package ex2.core.listener;
 
 import ex2.gui.area.CommandArea;
 

@@ -1,11 +1,11 @@
 package ex2.gui;
 
 import ex2.gui.area.PrintArea;
-import ex2.listener.InputGuiListener;
-import ex2.eventLoop.searcher.Searcher;
+import ex2.core.listener.InputGuiListener;
+import ex2.core.searcher.Searcher;
 import ex2.gui.area.CommandArea;
 import ex2.gui.area.HistoryArea;
-import ex2.listener.ViewListener;
+import ex2.core.listener.ViewListener;
 import ex2.utils.MessageDialogUtils;
 
 import javax.swing.*;

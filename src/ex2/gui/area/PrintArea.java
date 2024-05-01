@@ -1,6 +1,6 @@
 package ex2.gui.area;
 
-import ex2.listener.InputGuiListener;
+import ex2.core.listener.InputGuiListener;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

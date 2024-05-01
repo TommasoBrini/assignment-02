@@ -1,4 +1,4 @@
-package ex2.eventLoop.searcher;
+package ex2.core.searcher;
 
 public interface Searcher {
 
