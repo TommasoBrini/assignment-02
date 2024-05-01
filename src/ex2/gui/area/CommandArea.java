@@ -22,8 +22,8 @@ public class CommandArea extends JPanel {
     private static final String DEPTH = "Depth:";
 
     private static final int SITE_COLUMNS_TEXT = 30;
-    private static final int WORD_COLUMNS_TEXT = 5;
-    private static final int DEPTH_COLUMNS_TEXT = 3;
+    private static final int WORD_COLUMNS_TEXT = 15;
+    private static final int DEPTH_COLUMNS_TEXT = 4;
 
     private final TextBox boxSite;
     private final TextBox boxWord;

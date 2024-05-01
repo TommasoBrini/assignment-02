@@ -1,5 +1,6 @@
 package ex2.gui;
 
+import ex2.gui.area.PrintArea;
 import ex2.listener.CommandListener;
 import ex2.eventLoop.searcher.Searcher;
 import ex2.gui.area.CommandArea;
@@ -8,28 +9,26 @@ import ex2.listener.ViewListener;
 import ex2.utils.MessageDialogUtils;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class GUISearchWord extends JFrame implements ViewListener {
-    private static final Dimension FIND_WORD_AREA_SIZE = new Dimension(380, 380);
     private static final Dimension FRAME_SIZE = new Dimension(800, 500);
-    private static final String TITLE_FIND_WORD_AREA = "Find Word";
 
     private final CommandArea commandArea;
-    private final JTextArea findWordArea;
+    private final PrintArea printArea;
     private final HistoryArea historyArea;
 
 
     public GUISearchWord() {
         super("Search Word");
         this.commandArea = new CommandArea();
-        this.findWordArea = new JTextArea();
+        this.printArea = new PrintArea();
         this.historyArea = new HistoryArea();
 
         this.setSize(FRAME_SIZE);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        this.commandArea.addInputListener(this.printArea);
         this.commandArea.addInputListener(this.historyArea);
 
         this.setupGraphics();
@@ -39,18 +38,9 @@ public class GUISearchWord extends JFrame implements ViewListener {
 
     private void setupGraphics() {
         this.setLayout(new BorderLayout());
-
-        this.findWordArea.setEditable(false);
-        this.findWordArea.setPreferredSize(FIND_WORD_AREA_SIZE);
-
-        final JScrollPane scrollPane = new JScrollPane(this.findWordArea);
-        final TitledBorder titleFindWordArea = BorderFactory.createTitledBorder(TITLE_FIND_WORD_AREA);
-        titleFindWordArea.setTitleJustification(TitledBorder.CENTER);
-        scrollPane.setBorder(titleFindWordArea);
-
         this.add(BorderLayout.NORTH, this.commandArea);
         this.add(BorderLayout.EAST, this.historyArea);
-        this.add(BorderLayout.CENTER, scrollPane);
+        this.add(BorderLayout.CENTER, this.printArea);
     }
 
     @Override
@@ -61,9 +51,9 @@ public class GUISearchWord extends JFrame implements ViewListener {
     @Override
     public void onResponse(final Searcher filter) {
         SwingUtilities.invokeLater(() -> {
-            this.findWordArea.setForeground(Color.BLACK);
-            final String row = "Depth[%d] %s: %s=%d \n".formatted(filter.currentDepth(), filter.url(), filter.word(), filter.countWord());
-            this.findWordArea.append(row);
+            final String url = "URL: %s\n".formatted(filter.url());
+            final String info = "Depth[%d] -------- Word = %d\n".formatted(filter.currentDepth(), filter.countWord());
+            this.printArea.append(url + info + "--------------------\n");
         });
     }
 
