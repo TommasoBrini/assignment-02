@@ -1,6 +1,5 @@
 package ex2.eventLoop.searcher;
 
-import ex2.eventLoop.loop.WorkerLoop;
 import ex2.eventLoop.dataEvent.DataEvent;
 import ex2.eventLoop.dataEvent.DataEventImpl;
 

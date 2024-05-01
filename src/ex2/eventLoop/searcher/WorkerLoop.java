@@ -1,4 +1,4 @@
-package ex2.eventLoop.loop;
+package ex2.eventLoop.searcher;
 
 import ex2.eventLoop.dataEvent.DataEvent;
 

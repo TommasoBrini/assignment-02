@@ -1,7 +1,7 @@
 package ex2.eventLoop;
 
-import ex2.eventLoop.loop.EventLoop;
-import ex2.eventLoop.loop.EventLoopImpl;
+import ex2.eventLoop.core.EventLoop;
+import ex2.eventLoop.core.EventLoopImpl;
 import ex2.eventLoop.dataEvent.DataEventImpl;
 import ex2.gui.GUISearchWord;
 import ex2.gui.area.CommandArea;

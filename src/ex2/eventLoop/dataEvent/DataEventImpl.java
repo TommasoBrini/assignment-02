@@ -16,8 +16,8 @@ public record DataEventImpl(String url, String word, int maxDepth, int currentDe
                 jsonObject.getInteger(CURRENT_DEPTH));
     }
 
-    public boolean isMaxDepth() {
-        return this.currentDepth == this.maxDepth;
+    public boolean isOverMaxDepth() {
+        return this.currentDepth > this.maxDepth;
     }
 
     @Override

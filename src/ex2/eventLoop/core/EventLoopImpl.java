@@ -1,9 +1,10 @@
-package ex2.eventLoop.loop;
+package ex2.eventLoop.core;
 
 import ex2.eventLoop.searcher.Searcher;
 import ex2.eventLoop.searcher.SearcherImpl;
 import ex2.eventLoop.dataEvent.DataEvent;
 import ex2.eventLoop.dataEvent.DataEventImpl;
+import ex2.eventLoop.searcher.WorkerLoop;
 import ex2.listener.ViewListener;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
@@ -49,7 +50,7 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Worker
 
     @Override
     public void searchUrl(final DataEvent dataEvent) {
-        if (dataEvent.currentDepth() > dataEvent.maxDepth()) {
+        if (dataEvent.isOverMaxDepth()) {
             this.stop();
             return;
         }
