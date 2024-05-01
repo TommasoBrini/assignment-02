@@ -29,10 +29,12 @@ public class GUISearchWord extends JFrame implements ViewListener {
         this.historyArea = new HistoryArea();
 
         this.setSize(FRAME_DIMENSION);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         this.commandArea.addInputListener(this.printArea);
         this.commandArea.addInputListener(this.historyArea);
+
 
         this.setupGraphics();
         this.setResizable(true);
