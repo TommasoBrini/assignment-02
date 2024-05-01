@@ -1,24 +1,23 @@
 package ex2.gui.area;
 
-import ex2.eventLoop.searcher.Searcher;
 import ex2.listener.CommandListener;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-public class PrintArea extends JScrollPane implements CommandListener {
-    private static final Dimension FIND_WORD_AREA_SIZE = new Dimension(380, 380);
-    private static final String TITLE_FIND_WORD_AREA = "Find Word";
+import static ex2.gui.GuiConstants.PRINT_AREA_DIMENSION;
 
+public class PrintArea extends JScrollPane implements CommandListener {
+    private static final String TITLE_PRINT_AREA = "Print Area";
     private final JTextArea printArea;
 
     public PrintArea() {
         this.printArea = new JTextArea();
         this.printArea.setEditable(false);
-        this.printArea.setPreferredSize(FIND_WORD_AREA_SIZE);
+        this.printArea.setPreferredSize(PRINT_AREA_DIMENSION);
 
-        final TitledBorder titleFindWordArea = BorderFactory.createTitledBorder(TITLE_FIND_WORD_AREA);
+        final TitledBorder titleFindWordArea = BorderFactory.createTitledBorder(TITLE_PRINT_AREA);
         titleFindWordArea.setTitleJustification(TitledBorder.CENTER);
         this.setBorder(titleFindWordArea);
 

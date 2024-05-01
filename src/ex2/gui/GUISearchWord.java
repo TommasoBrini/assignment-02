@@ -11,13 +11,12 @@ import ex2.utils.MessageDialogUtils;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUISearchWord extends JFrame implements ViewListener {
-    private static final Dimension FRAME_SIZE = new Dimension(800, 500);
+import static ex2.gui.GuiConstants.FRAME_DIMENSION;
 
+public class GUISearchWord extends JFrame implements ViewListener {
     private final CommandArea commandArea;
     private final PrintArea printArea;
     private final HistoryArea historyArea;
-
 
     public GUISearchWord() {
         super("Search Word");
@@ -25,7 +24,7 @@ public class GUISearchWord extends JFrame implements ViewListener {
         this.printArea = new PrintArea();
         this.historyArea = new HistoryArea();
 
-        this.setSize(FRAME_SIZE);
+        this.setSize(FRAME_DIMENSION);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         this.commandArea.addInputListener(this.printArea);

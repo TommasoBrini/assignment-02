@@ -7,14 +7,11 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
+import static ex2.gui.GuiConstants.*;
+
 public class HistoryArea extends JPanel implements CommandListener {
-    private static final String SITE = "Site: ";
-    private static final String WORD = "Word: ";
-    private static final String DEPTH = "Depth: ";
     private static final String HISTORY = "History";
     private static final String CLEAR = "Clear";
-    private static final Dimension AREA_SIZE = new Dimension(350, 450);
-    private static final int BUTTON_HEIGHT = 45;
 
     private final JPanel recordPanel;
     private final JButton clearButton;
@@ -35,7 +32,7 @@ public class HistoryArea extends JPanel implements CommandListener {
         titleRecord.setTitleJustification(TitledBorder.CENTER);
         scrollPane.setBorder(titleRecord);
 
-        scrollPane.setPreferredSize(AREA_SIZE);
+        scrollPane.setPreferredSize(HISTORY_AREA_DIMENSION);
 
         this.recordPanel.setBackground(Color.WHITE);
         this.setBackground(Color.WHITE);
@@ -57,7 +54,7 @@ public class HistoryArea extends JPanel implements CommandListener {
 
     public void append(final CommandArea commandArea, final String site, final String word, final String depth) {
         final JButton button = new JButton();
-        button.setMaximumSize(new Dimension(AREA_SIZE.width, BUTTON_HEIGHT));
+        button.setMaximumSize(new Dimension(HISTORY_AREA_DIMENSION.width, HISTORY_BUTTON_HEIGHT));
 
         final JPanel mainPanel = PanelUtils.createPanelWithBorderLayout();
         final JPanel southPanel = PanelUtils.createPanelWithBorderLayout();
@@ -67,8 +64,8 @@ public class HistoryArea extends JPanel implements CommandListener {
         panel.add(new JLabel(DEPTH + depth));
         southPanel.add(panel, BorderLayout.CENTER);
 
-        mainPanel.setMaximumSize(new Dimension(AREA_SIZE.width, BUTTON_HEIGHT));
-        mainPanel.add(new JLabel(SITE + site), BorderLayout.NORTH);
+        mainPanel.setMaximumSize(new Dimension(HISTORY_AREA_DIMENSION.width, HISTORY_BUTTON_HEIGHT));
+        mainPanel.add(new JLabel(URL + site), BorderLayout.NORTH);
         mainPanel.add(southPanel, BorderLayout.SOUTH);
 
         button.add(mainPanel);

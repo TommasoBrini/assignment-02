@@ -12,14 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static ex2.gui.GuiConstants.*;
+
 public class CommandArea extends JPanel {
     private static final String SEARCH = "Search";
     private static final String EXIT = "Exit";
     private static final String CLEAR = "Clear";
-
-    private static final String SITE = "Site:";
-    private static final String WORD = "Word:";
-    private static final String DEPTH = "Depth:";
 
     private static final int SITE_COLUMNS_TEXT = 30;
     private static final int WORD_COLUMNS_TEXT = 15;
@@ -38,7 +36,7 @@ public class CommandArea extends JPanel {
     public CommandArea() {
         super(new BorderLayout());
         this.setBackground(Color.WHITE);
-        this.boxSite = new TextBox(SITE, SITE_COLUMNS_TEXT);
+        this.boxSite = new TextBox(URL, SITE_COLUMNS_TEXT);
         this.boxWord = new TextBox(WORD, WORD_COLUMNS_TEXT);
         this.boxDepth = new TextBox(DEPTH, DEPTH_COLUMNS_TEXT);
 
