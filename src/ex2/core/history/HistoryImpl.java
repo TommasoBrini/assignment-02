@@ -2,11 +2,11 @@ package ex2.core.history;
 
 import ex2.core.dataEvent.DataEvent;
 import ex2.core.dataEvent.DataEventImpl;
-import io.vertx.core.Vertx;
-import io.vertx.core.file.FileSystem;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,38 +29,43 @@ public class HistoryImpl implements History {
 
         this.saveJSON();
 
+        System.out.println("CCCCC");
         this.readJSON().forEach(System.out::println);
 
     }
 
     private List<DataEvent> readJSON() {
         final List<DataEvent> dataEvents = new ArrayList<>();
-        final Vertx vertx = Vertx.vertx();
-        final FileSystem fileSystem = vertx.fileSystem();
 
-        // Leggi il contenuto del file persona.json
-        fileSystem.readFile(HISTORY_PATH, result -> {
-            if (result.succeeded()) {
-                final JsonObject jsonObject = result.result().toJsonObject();
-                final List jsonArray = jsonObject.getJsonArray(HISTORY_KEY).getList();
+        try {
+            // Leggi il contenuto del file come array di byte
+            byte[] fileData = Files.readAllBytes(Paths.get(HISTORY_PATH));
 
-//                jsonArray.forEach(json -> dataEvents.add(new DataEventImpl((JsonObject) json)));
-//                jsonArray.forEach(json -> dataEvents.add(new DataEventImpl(json)));
+            // Converti i byte in una stringa JSON
+            String jsonString = new String(fileData);
 
-                for (final Object obj : jsonArray) {
+            // Converti la stringa JSON in un JsonObject
+            JsonObject jsonObject = new JsonObject(jsonString);
+
+            // Estrai il JsonArray dalla chiave "people"
+            JsonArray peopleArray = jsonObject.getJsonArray(HISTORY_KEY);
+
+            if (peopleArray != null && !peopleArray.isEmpty()) {
+                // Itera su ciascun elemento nel JsonArray
+                for (final Object obj : peopleArray) {
                     if (obj instanceof JsonObject) {
-                        final JsonObject dataEventJson = (JsonObject) obj;
-                        dataEvents.add(new DataEventImpl(dataEventJson));
+                        dataEvents.add(new DataEventImpl((JsonObject) obj));
                     }
                 }
-
-
+                // Stampa le persone lette da JSON
+                System.out.println("Persone lette da JSON:");
             } else {
-                System.err.println("Errore durante la lettura del file persona.json");
-                result.cause().printStackTrace();
+                System.err.println("Il JsonArray 'people' è vuoto o non presente nel file persona.json");
             }
-            vertx.close();
-        });
+        } catch (Exception e) {
+            System.err.println("Errore durante la lettura del file persona.json");
+            e.printStackTrace();
+        }
 
         return dataEvents;
     }
@@ -81,18 +86,14 @@ public class HistoryImpl implements History {
     public void saveJSON() {
         final JsonObject jsonObject = new JsonObject().put(HISTORY_KEY, this.historyJson);
 
-        final Vertx vertx = Vertx.vertx();
-        final FileSystem fileSystem = vertx.fileSystem();
-
-        fileSystem.writeFile(HISTORY_PATH, jsonObject.toBuffer(), result -> {
-            if (result.succeeded()) {
-                System.out.println("File salvato correttamente");
-            } else {
-                System.err.println("Errore durante il salvataggio del file persona.json");
-                result.cause().printStackTrace();
-            }
-            vertx.close();
-        });
+        try {
+            String jsonString = jsonObject.encodePrettily();
+            Files.write(Paths.get(HISTORY_PATH), jsonString.getBytes());
+            System.out.println("File persona.json salvato correttamente");
+        } catch (Exception e) {
+            System.err.println("Errore durante la scrittura del file persona.json");
+            e.printStackTrace();
+        }
     }
 }
 

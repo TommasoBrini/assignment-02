@@ -1,1 +1,18 @@
-{"history":[{"url":"Ciao","word":"dd","maxDepth":0,"currentDepth":3},{"url":"come","word":"dd","maxDepth":0,"currentDepth":3},{"url":"stai","word":"dd","maxDepth":0,"currentDepth":3}]}
+{
+  "history" : [ {
+    "url" : "Ciao",
+    "word" : "dd",
+    "maxDepth" : 0,
+    "currentDepth" : 3
+  }, {
+    "url" : "come",
+    "word" : "dd",
+    "maxDepth" : 0,
+    "currentDepth" : 3
+  }, {
+    "url" : "stai",
+    "word" : "dd",
+    "maxDepth" : 0,
+    "currentDepth" : 3
+  } ]
+}
