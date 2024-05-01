@@ -1,5 +1,6 @@
 package ex2.gui;
 
+import ex2.core.dataEvent.DataEvent;
 import ex2.gui.area.PrintArea;
 import ex2.core.listener.InputGuiListener;
 import ex2.core.searcher.Searcher;
@@ -10,10 +11,13 @@ import ex2.utils.MessageDialogUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static ex2.gui.GuiConstants.FRAME_DIMENSION;
 
 public class GUISearchWord extends JFrame implements ViewListener {
+    private static final int MAX_SET_HISTORY_DATA = 5;
     private final CommandArea commandArea;
     private final PrintArea printArea;
     private final HistoryArea historyArea;
@@ -32,7 +36,6 @@ public class GUISearchWord extends JFrame implements ViewListener {
 
         this.setupGraphics();
         this.setResizable(true);
-        this.setVisible(true);
     }
 
     private void setupGraphics() {
@@ -40,6 +43,13 @@ public class GUISearchWord extends JFrame implements ViewListener {
         this.add(BorderLayout.NORTH, this.commandArea);
         this.add(BorderLayout.EAST, this.historyArea);
         this.add(BorderLayout.CENTER, this.printArea);
+    }
+
+    public void start(final List<DataEvent> history) {
+        final AtomicInteger count = new AtomicInteger();
+        history.stream().filter(data -> count.getAndIncrement() < MAX_SET_HISTORY_DATA)
+                        .forEach(data -> this.historyArea.append(this.commandArea, data.url(), data.word(), "" + data.maxDepth()));
+        this.setVisible(true);
     }
 
     @Override

@@ -7,6 +7,7 @@ import io.vertx.core.json.JsonObject;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,36 +22,32 @@ public class HistoryImpl implements History {
     public HistoryImpl() {
         this.historyJson = new JsonArray();
         this.history = new ArrayList<>();
-
-        final DataEvent data = new DataEventImpl("Ciao", "dd", 0, 3);
-        final DataEvent data1 = new DataEventImpl("come", "dd", 0, 3);
-        final DataEvent data2 = new DataEventImpl("stai", "dd", 0, 3);
-
-        List.of(data, data1, data2).forEach(this::append);
-
-        this.saveJSON();
-
-        System.out.println("CCCCC");
-        this.readJSON().forEach(System.out::println);
-
+        this.createJSON();
+        this.readJSON();
     }
 
-    private List<DataEvent> readJSON() {
-        final List<DataEvent> dataEvents = new ArrayList<>();
+    private void createJSON() {
+        final Path path = Paths.get(HISTORY_PATH);
+        try {
+            if (!Files.exists(path)) Files.createFile(path);
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void readJSON() {
         try {
             final String jsonString = Files.readString(Paths.get(HISTORY_PATH));
+            if (jsonString.isBlank()) return;
             final JsonObject jsonObject = new JsonObject(jsonString);
             final JsonArray history = jsonObject.getJsonArray(HISTORY_KEY);
 
-            history.forEach(System.out::println);
             history.stream()
                     .filter(obj -> obj instanceof JsonObject)
-                    .forEach(obj -> dataEvents.add(new DataEventImpl((JsonObject) obj)));
+                    .forEach(obj -> this.append(new DataEventImpl((JsonObject) obj)));
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
-
-        return dataEvents;
     }
 
     @Override
@@ -63,7 +60,6 @@ public class HistoryImpl implements History {
     public List<DataEvent> history() {
         return this.history;
     }
-
 
     @Override
     public void saveJSON() {

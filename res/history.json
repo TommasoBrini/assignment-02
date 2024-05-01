@@ -1,18 +1,23 @@
 {
   "history" : [ {
-    "url" : "Ciao",
-    "word" : "dd",
-    "maxDepth" : 0,
-    "currentDepth" : 3
+    "url" : "https://en.wikipedia.org/wiki/Buongiorno#",
+    "word" : "Buongiorno",
+    "maxDepth" : 1,
+    "currentDepth" : 0
   }, {
-    "url" : "come",
-    "word" : "dd",
-    "maxDepth" : 0,
-    "currentDepth" : 3
+    "url" : "https://en.wikipedia.org/wiki/Buongiorno#",
+    "word" : "ciao",
+    "maxDepth" : 1,
+    "currentDepth" : 0
   }, {
-    "url" : "stai",
-    "word" : "dd",
-    "maxDepth" : 0,
-    "currentDepth" : 3
+    "url" : "https://en.wikipedia.org/wiki/Buongiorno#",
+    "word" : "laber",
+    "maxDepth" : 1,
+    "currentDepth" : 0
+  }, {
+    "url" : "https://en.wikipedia.org/wiki/Buongiorno#",
+    "word" : "href",
+    "maxDepth" : 1,
+    "currentDepth" : 0
   } ]
 }
