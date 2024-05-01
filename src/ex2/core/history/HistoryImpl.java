@@ -5,6 +5,7 @@ import ex2.core.dataEvent.DataEventImpl;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -36,35 +37,17 @@ public class HistoryImpl implements History {
 
     private List<DataEvent> readJSON() {
         final List<DataEvent> dataEvents = new ArrayList<>();
-
         try {
-            // Leggi il contenuto del file come array di byte
-            byte[] fileData = Files.readAllBytes(Paths.get(HISTORY_PATH));
+            final String jsonString = Files.readString(Paths.get(HISTORY_PATH));
+            final JsonObject jsonObject = new JsonObject(jsonString);
+            final JsonArray history = jsonObject.getJsonArray(HISTORY_KEY);
 
-            // Converti i byte in una stringa JSON
-            String jsonString = new String(fileData);
-
-            // Converti la stringa JSON in un JsonObject
-            JsonObject jsonObject = new JsonObject(jsonString);
-
-            // Estrai il JsonArray dalla chiave "people"
-            JsonArray peopleArray = jsonObject.getJsonArray(HISTORY_KEY);
-
-            if (peopleArray != null && !peopleArray.isEmpty()) {
-                // Itera su ciascun elemento nel JsonArray
-                for (final Object obj : peopleArray) {
-                    if (obj instanceof JsonObject) {
-                        dataEvents.add(new DataEventImpl((JsonObject) obj));
-                    }
-                }
-                // Stampa le persone lette da JSON
-                System.out.println("Persone lette da JSON:");
-            } else {
-                System.err.println("Il JsonArray 'people' è vuoto o non presente nel file persona.json");
-            }
-        } catch (Exception e) {
-            System.err.println("Errore durante la lettura del file persona.json");
-            e.printStackTrace();
+            history.forEach(System.out::println);
+            history.stream()
+                    .filter(obj -> obj instanceof JsonObject)
+                    .forEach(obj -> dataEvents.add(new DataEventImpl((JsonObject) obj)));
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
         }
 
         return dataEvents;
@@ -85,14 +68,11 @@ public class HistoryImpl implements History {
     @Override
     public void saveJSON() {
         final JsonObject jsonObject = new JsonObject().put(HISTORY_KEY, this.historyJson);
-
+        final String jsonString = jsonObject.encodePrettily();
         try {
-            String jsonString = jsonObject.encodePrettily();
             Files.write(Paths.get(HISTORY_PATH), jsonString.getBytes());
-            System.out.println("File persona.json salvato correttamente");
-        } catch (Exception e) {
-            System.err.println("Errore durante la scrittura del file persona.json");
-            e.printStackTrace();
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
