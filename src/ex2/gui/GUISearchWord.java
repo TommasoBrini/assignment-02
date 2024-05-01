@@ -1,9 +1,11 @@
 package ex2.gui;
 
-import ex2.eventLoop.CommandListener;
+import ex2.listener.CommandListener;
 import ex2.eventLoop.searcher.Searcher;
 import ex2.gui.area.CommandArea;
 import ex2.gui.area.HistoryArea;
+import ex2.listener.ViewListener;
+import ex2.utils.MessageDialogUtils;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -67,7 +69,7 @@ public class GUISearchWord extends JFrame implements ViewListener {
 
     @Override
     public void onError(final String message) {
-        SwingUtilities.invokeLater(() -> MessageUtils.createError(this, "ERROR: %s".formatted(message)));
+        SwingUtilities.invokeLater(() -> MessageDialogUtils.createError(this, "ERROR: %s".formatted(message)));
     }
 
 }

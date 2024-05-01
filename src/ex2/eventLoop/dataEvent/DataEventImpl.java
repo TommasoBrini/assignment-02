@@ -1,4 +1,4 @@
-package ex2.eventLoop.searcher.dataEvent;
+package ex2.eventLoop.dataEvent;
 
 import io.vertx.core.json.JsonObject;
 
@@ -19,7 +19,6 @@ public record DataEventImpl(String url, String word, int maxDepth, int currentDe
     public boolean isMaxDepth() {
         return this.currentDepth == this.maxDepth;
     }
-
 
     @Override
     public JsonObject toJson() {

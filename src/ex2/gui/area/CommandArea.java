@@ -1,9 +1,9 @@
 package ex2.gui.area;
 
-import ex2.Utils;
-import ex2.eventLoop.CommandListener;
-import ex2.gui.MessageUtils;
-import ex2.gui.PanelUtils;
+import ex2.utils.UrlUtils;
+import ex2.listener.CommandListener;
+import ex2.utils.MessageDialogUtils;
+import ex2.utils.PanelUtils;
 import ex2.gui.components.TextBox;
 
 import javax.swing.*;
@@ -75,7 +75,7 @@ public class CommandArea extends JPanel {
                         Integer.parseInt(this.boxDepth.getText())));
 
             } else {
-                MessageUtils.createError(this, "Invalid input");
+                MessageDialogUtils.createError(this, "Invalid input");
             }
         });
         this.exitButton.addActionListener(l -> this.commandListeners.forEach(CommandListener::onExit));
@@ -100,7 +100,7 @@ public class CommandArea extends JPanel {
 
     private boolean isSiteValid() {
         final String url = this.boxSite.getText();
-        return !url.isBlank() && Utils.isValidURL(url);
+        return !url.isBlank() && UrlUtils.isValidURL(url);
     }
 
     private boolean isWordValid() {

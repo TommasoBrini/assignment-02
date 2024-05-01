@@ -1,8 +1,8 @@
 package ex2.eventLoop.searcher;
 
-import ex2.eventLoop.core.WorkerLoop;
-import ex2.eventLoop.searcher.dataEvent.DataEvent;
-import ex2.eventLoop.searcher.dataEvent.DataEventImpl;
+import ex2.eventLoop.loop.WorkerLoop;
+import ex2.eventLoop.dataEvent.DataEvent;
+import ex2.eventLoop.dataEvent.DataEventImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;

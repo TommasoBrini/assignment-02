@@ -1,7 +1,7 @@
-package ex2.eventLoop.core;
+package ex2.eventLoop.loop;
 
-import ex2.eventLoop.searcher.dataEvent.DataEvent;
-import ex2.gui.ViewListener;
+import ex2.eventLoop.dataEvent.DataEvent;
+import ex2.listener.ViewListener;
 import io.vertx.core.Verticle;
 
 public interface EventLoop extends Verticle {

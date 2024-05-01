@@ -1,6 +1,6 @@
-package ex2.eventLoop.core;
+package ex2.eventLoop.loop;
 
-import ex2.eventLoop.searcher.dataEvent.DataEvent;
+import ex2.eventLoop.dataEvent.DataEvent;
 
 public interface WorkerLoop {
 

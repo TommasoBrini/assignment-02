@@ -1,6 +1,5 @@
-package ex2.gui;
+package ex2.listener;
 
-import ex2.eventLoop.CommandListener;
 import ex2.eventLoop.searcher.Searcher;
 
 public interface ViewListener {

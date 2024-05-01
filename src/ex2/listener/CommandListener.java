@@ -1,4 +1,4 @@
-package ex2.eventLoop;
+package ex2.listener;
 
 import ex2.gui.area.CommandArea;
 

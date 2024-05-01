@@ -1,10 +1,10 @@
-package ex2.eventLoop.core;
+package ex2.eventLoop.loop;
 
 import ex2.eventLoop.searcher.Searcher;
 import ex2.eventLoop.searcher.SearcherImpl;
-import ex2.eventLoop.searcher.dataEvent.DataEvent;
-import ex2.eventLoop.searcher.dataEvent.DataEventImpl;
-import ex2.gui.ViewListener;
+import ex2.eventLoop.dataEvent.DataEvent;
+import ex2.eventLoop.dataEvent.DataEventImpl;
+import ex2.listener.ViewListener;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
@@ -53,8 +53,8 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Worker
             this.stop();
             return;
         }
-        final WebClient webClient = WebClient.create(this.vertx);
 
+        final WebClient webClient = WebClient.create(this.vertx);
         webClient.getAbs(UriTemplate.of(dataEvent.url()))
                 .send(handler -> {
                     if (handler.succeeded()) {

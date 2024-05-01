@@ -1,4 +1,4 @@
-package ex2.eventLoop.searcher.dataEvent;
+package ex2.eventLoop.dataEvent;
 
 import io.vertx.core.json.JsonObject;
 

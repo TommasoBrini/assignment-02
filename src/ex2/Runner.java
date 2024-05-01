@@ -1,5 +1,7 @@
-package ex2.eventLoop;
+package ex2;
 
+
+import ex2.eventLoop.Controller;
 
 public final class Runner {
 

@@ -1,7 +1,7 @@
 package ex2.gui.area;
 
-import ex2.eventLoop.CommandListener;
-import ex2.gui.PanelUtils;
+import ex2.listener.CommandListener;
+import ex2.utils.PanelUtils;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
