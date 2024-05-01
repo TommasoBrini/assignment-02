@@ -4,7 +4,7 @@ import ex2.core.searcher.Searcher;
 import ex2.core.searcher.SearcherImpl;
 import ex2.core.dataEvent.DataEvent;
 import ex2.core.dataEvent.DataEventImpl;
-import ex2.core.searcher.WorkerLoop;
+import ex2.core.searcher.WorkerThread;
 import ex2.core.listener.ViewListener;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
@@ -15,7 +15,7 @@ import io.vertx.uritemplate.UriTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventLoopImpl extends AbstractVerticle implements EventLoop, WorkerLoop {
+public class EventLoopImpl extends AbstractVerticle implements EventLoop, WorkerThread {
     private static final String EVENT_URL = "searchUrls";
     private final List<ViewListener> viewListeners;
 

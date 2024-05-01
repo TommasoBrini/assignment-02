@@ -11,12 +11,12 @@ import java.util.regex.Pattern;
 
 
 public class SearcherImpl implements Searcher {
-    private final WorkerLoop eventLoop;
+    private final WorkerThread eventLoop;
     private final String urlBody;
     private final DataEvent data;
 
-    public SearcherImpl(final WorkerLoop workerLoop, final DataEvent dataEvent, final String body) {
-        this.eventLoop = workerLoop;
+    public SearcherImpl(final WorkerThread workerThread, final DataEvent dataEvent, final String body) {
+        this.eventLoop = workerThread;
         this.data = dataEvent;
         this.urlBody = body;
     }
