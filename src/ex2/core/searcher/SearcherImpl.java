@@ -2,6 +2,10 @@ package ex2.core.searcher;
 
 import ex2.core.dataEvent.DataEvent;
 import ex2.core.dataEvent.DataEventImpl;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,17 +54,12 @@ public class SearcherImpl implements Searcher {
 
     @Override
     public int findUrls() {
-        final int counter = 0;
-        final List<String> findUrls = new ArrayList<>();
-        //cerca href all'interno del body
-        final Pattern pattern = Pattern.compile("href=\"(http.*?)\"");
-        final Matcher matcher = pattern.matcher(this.urlBody);
-        while (matcher.find() && this.currentDepth() < this.data.maxDepth()) {
-            DataEvent dt = new DataEventImpl(matcher.group(1), this.word(), this.data.maxDepth(), this.currentDepth() + 1);
-            System.out.println(dt);
+        Document doc = Jsoup.parse(this.urlBody);
+        Elements links = doc.select("body a");
+        final List<String> findUrls = links.stream().map(l -> l.attr("href")).filter(l -> l.startsWith("https")).toList();
+        for (String link : findUrls){
+            DataEvent dt = new DataEventImpl(link, this.word(), this.data.maxDepth(), this.currentDepth() + 1, this.duration);
             this.eventLoop.addEventUrl(dt);
-            System.out.println(matcher.group(1));
-            findUrls.add(matcher.group(1));
         }
         return findUrls.size();
     }
