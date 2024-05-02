@@ -45,14 +45,14 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
 
     @Override
     public void addEventUrl(final DataEvent dataEvent) {
+        if (dataEvent.isOverMaxDepth()) {
+            return;
+        }
         this.vertx.eventBus().send(EVENT_URL, dataEvent.toJson());
     }
 
     @Override
     public void searchUrl(final DataEvent dataEvent) {
-        if (dataEvent.isOverMaxDepth()) {
-            return;
-        }
 
         final long startTime = System.currentTimeMillis();
         final WebClient webClient = WebClient.create(this.vertx);
