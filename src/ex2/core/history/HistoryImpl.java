@@ -81,19 +81,5 @@ public class HistoryImpl implements History {
         }
     }
 
-    @Override
-    public void addInputGuiListener(final InputGuiListener inputGuiListener) {
-
-    }
-
-    @Override
-    public void onResponse(final Searcher filter) {
-
-    }
-
-    @Override
-    public void onError(final String message) {
-
-    }
 }
 

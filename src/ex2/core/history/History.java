@@ -1,11 +1,10 @@
 package ex2.core.history;
 
 import ex2.core.dataEvent.DataEvent;
-import ex2.core.listener.ViewListener;
 
 import java.util.List;
 
-public interface History extends ViewListener {
+public interface History {
 
     void append(final DataEvent dataEvent);
 
