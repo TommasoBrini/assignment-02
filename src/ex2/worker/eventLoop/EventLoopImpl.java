@@ -1,6 +1,7 @@
 package ex2.worker.eventLoop;
 
 import ex2.core.CounterSearch;
+import ex2.core.listener.ModelListener;
 import ex2.core.searcher.Searcher;
 import ex2.core.searcher.SearcherImpl;
 import ex2.core.dataEvent.DataEvent;
@@ -19,11 +20,13 @@ import java.util.List;
 public class EventLoopImpl extends AbstractVerticle implements EventLoop, SearcherWorker {
     private static final String EVENT_URL = "searchUrls";
     private final List<ViewListener> viewListeners;
+    private final List<ModelListener> modelListeners;
     private final CounterSearch counterSearch;
 
     public EventLoopImpl() {
         this.init(Vertx.vertx(), null);
         this.viewListeners = new ArrayList<>();
+        this.modelListeners = new ArrayList<>();
         this.counterSearch = new CounterSearch();
         this.setupConsumers();
     }
@@ -37,8 +40,10 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
     }
 
     @Override
-    public void start() {
+    public void startSearch(final DataEvent dataEvent) {
+        this.modelListeners.forEach(listener -> listener.onStart(dataEvent));
         this.counterSearch.reset();
+        this.searchUrl(dataEvent);
     }
 
     @Override
@@ -52,12 +57,16 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
     }
 
     @Override
+    public void addModelListener(final ModelListener modelListener) {
+        this.modelListeners.add(modelListener);
+    }
+
+    @Override
     public void addEventUrl(final DataEvent dataEvent) {
         this.vertx.eventBus().send(EVENT_URL, dataEvent.toJson());
     }
 
-    @Override
-    public void searchUrl(final DataEvent dataEvent) {
+    private void searchUrl(final DataEvent dataEvent) {
         final long startTime = System.currentTimeMillis();
         final WebClient webClient = WebClient.create(this.vertx);
         webClient.getAbs(UriTemplate.of(dataEvent.url()))
@@ -71,6 +80,7 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
                         this.counterSearch.increaseConsumeIfMaxDepth(dataEvent);
 
                         if (this.counterSearch.isEnd()) {
+                            this.modelListeners.forEach(ModelListener::onFinish);
                             this.viewListeners.forEach(ViewListener::onFinish);
                         }
                     } else {

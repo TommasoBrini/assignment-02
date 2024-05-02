@@ -29,8 +29,7 @@ public class Controller implements InputGuiListener {
     @Override
     public void onSearch(final CommandArea commandArea, final String site, final String word, final int maxDepth) {
         final DataEvent dataEvent = new DataEventImpl(site, word, maxDepth, 0);
-        this.workerManager.start();
-        this.workerManager.searchUrl(dataEvent);
+        this.workerManager.startSearch(dataEvent);
     }
 
     @Override

@@ -3,6 +3,7 @@ package ex2.worker;
 import ex2.core.dataEvent.DataEvent;
 import ex2.core.history.History;
 import ex2.core.history.HistoryImpl;
+import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
 import ex2.worker.eventLoop.EventLoopImpl;
 
@@ -15,6 +16,8 @@ public class WorkerManagerImpl implements WorkerManager {
     public WorkerManagerImpl() {
         this.worker = new EventLoopImpl();
         this.history = new HistoryImpl();
+
+        this.worker.addModelListener(this.history);
     }
 
     @Override
@@ -28,13 +31,13 @@ public class WorkerManagerImpl implements WorkerManager {
     }
 
     @Override
-    public void searchUrl(final DataEvent dataEvent) {
-        this.worker.searchUrl(dataEvent);
+    public void addModelListener(final ModelListener modelListener) {
+        this.worker.addModelListener(modelListener);
     }
 
     @Override
-    public void start() {
-        this.worker.start();
+    public void startSearch(final DataEvent dataEvent) {
+        this.worker.startSearch(dataEvent);
     }
 
     @Override

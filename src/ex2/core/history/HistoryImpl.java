@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class HistoryImpl implements History {
     private static final String HISTORY_PATH = "res/history.json";
@@ -21,9 +22,13 @@ public class HistoryImpl implements History {
     private final JsonArray historyJson;
     private final List<DataEvent> history;
 
+    private Optional<DataEvent> searchEvent;
+    private long time;
+
     public HistoryImpl() {
         this.historyJson = new JsonArray();
         this.history = new ArrayList<>();
+        this.searchEvent = Optional.empty();
         this.createJSON();
         this.readJSON();
     }
@@ -52,8 +57,7 @@ public class HistoryImpl implements History {
         }
     }
 
-    @Override
-    public void append(final DataEvent dataEvent) {
+    private void append(final DataEvent dataEvent) {
         this.historyJson.add(POSITION_ADD_JSON, dataEvent.toJson());
         this.history.addFirst(dataEvent);
     }
@@ -79,5 +83,19 @@ public class HistoryImpl implements History {
         }
     }
 
+    @Override
+    public void onStart(final DataEvent event) {
+        this.time = System.currentTimeMillis();
+        this.searchEvent = Optional.of(event);
+    }
+
+    @Override
+    public void onFinish() {
+        this.searchEvent.ifPresent(event -> {
+            final long duration = System.currentTimeMillis() - this.time;
+            final DataEvent dataEvent = new DataEventImpl(event.url(), event.word(), event.maxDepth(), event.currentDepth(), duration);
+            this.append(dataEvent);
+        });
+    }
 }
 
