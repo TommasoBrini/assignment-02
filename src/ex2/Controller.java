@@ -3,16 +3,16 @@ package ex2;
 import ex2.core.dataEvent.DataEvent;
 import ex2.core.dataEvent.DataEventImpl;
 import ex2.core.listener.InputGuiListener;
-import ex2.server.Server;
 import ex2.worker.WorkerManager;
 import ex2.worker.WorkerManagerImpl;
 import ex2.gui.GUISearchWord;
 import ex2.gui.area.CommandArea;
+import ex2.server.Server;
 
 public class Controller implements InputGuiListener {
+    final private Server server;
     final private GUISearchWord gui;
     final private WorkerManager workerManager;
-    final private Server server;
 
     public Controller() {
         this.server = new Server();
@@ -38,6 +38,7 @@ public class Controller implements InputGuiListener {
 
     @Override
     public void onExit() {
+        this.server.stop();
         this.workerManager.stop();
         this.gui.dispose();
     }

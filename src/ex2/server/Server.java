@@ -45,6 +45,11 @@ public class Server {
         System.out.println("Server started on port 8080");
     }
 
+    public void stop() {
+        this.server.close();
+        this.vertx.close();
+    }
+
     private String getJavadoc(final String filePath) throws IOException {
         final Path path = Paths.get(JAVADOC_PATH, filePath);
         if (Files.exists(path) && Files.isRegularFile(path) && path.toString().endsWith(".html")) {
