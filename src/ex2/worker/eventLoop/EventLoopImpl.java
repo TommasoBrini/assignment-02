@@ -1,5 +1,6 @@
 package ex2.worker.eventLoop;
 
+import ex2.core.CounterFinish;
 import ex2.core.searcher.Searcher;
 import ex2.core.searcher.SearcherImpl;
 import ex2.core.dataEvent.DataEvent;
@@ -18,10 +19,12 @@ import java.util.List;
 public class EventLoopImpl extends AbstractVerticle implements EventLoop, SearcherWorker {
     private static final String EVENT_URL = "searchUrls";
     private final List<ViewListener> viewListeners;
+    private final CounterFinish counterFinish;
 
     public EventLoopImpl() {
         this.init(Vertx.vertx(), null);
         this.viewListeners = new ArrayList<>();
+        this.counterFinish = new CounterFinish();
         this.setupConsumers();
     }
 
@@ -29,6 +32,11 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
         this.vertx.eventBus().consumer(EVENT_URL, handler -> {
             final JsonObject jsonObject = (JsonObject) handler.body();
             final DataEvent dataEvent = new DataEventImpl(jsonObject);
+            this.counterFinish.increaseConsumeIfMaxDepth(dataEvent);
+
+            if (this.counterFinish.isEnd()) {
+                System.out.println("FINISH SEARCH");
+            }
             this.searchUrl(dataEvent);
         });
     }
@@ -45,6 +53,7 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
 
     @Override
     public void addEventUrl(final DataEvent dataEvent) {
+        this.counterFinish.increaseSendIfMaxDepth(dataEvent);
         this.vertx.eventBus().send(EVENT_URL, dataEvent.toJson());
     }
 
@@ -53,7 +62,6 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
         if (dataEvent.isOverMaxDepth()) {
             return;
         }
-
         final long startTime = System.currentTimeMillis();
         final WebClient webClient = WebClient.create(this.vertx);
         webClient.getAbs(UriTemplate.of(dataEvent.url()))

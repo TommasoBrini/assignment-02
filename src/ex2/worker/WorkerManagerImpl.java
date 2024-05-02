@@ -15,8 +15,6 @@ public class WorkerManagerImpl implements WorkerManager {
     public WorkerManagerImpl() {
         this.worker = new EventLoopImpl();
         this.history = new HistoryImpl();
-
-        this.worker.addViewListener(this.history);
     }
 
     @Override
@@ -31,8 +29,8 @@ public class WorkerManagerImpl implements WorkerManager {
 
     @Override
     public void searchUrl(final DataEvent dataEvent) {
+        this.history.append(dataEvent);
         this.worker.searchUrl(dataEvent);
-
     }
 
     @Override
