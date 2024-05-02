@@ -19,7 +19,10 @@ public class Controller implements InputGuiListener {
         this.history = new HistoryImpl();
         this.gui = new GUISearchWord();
         this.eventLoop = new EventLoopImpl();
+
+        this.eventLoop.addViewListener(this.history);
         this.eventLoop.addViewListener(this.gui);
+
         this.gui.addInputGuiListener(this);
 
         this.onStart();
@@ -32,7 +35,6 @@ public class Controller implements InputGuiListener {
     @Override
     public void onSearch(final CommandArea commandArea, final String site, final String word, final int maxDepth) {
         final DataEvent dataEvent = new DataEventImpl(site, word, maxDepth, 0);
-        this.history.append(dataEvent);
         this.eventLoop.searchUrl(dataEvent);
     }
 

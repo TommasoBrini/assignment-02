@@ -12,6 +12,8 @@ public interface DataEvent {
 
     int maxDepth();
 
+    long duration();
+
     boolean isOverMaxDepth();
 
     JsonObject toJson();

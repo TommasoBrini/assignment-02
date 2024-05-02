@@ -8,6 +8,8 @@ public interface Searcher {
 
     String word();
 
+    long duration();
+
     int countWord();
 
     int findUrls();

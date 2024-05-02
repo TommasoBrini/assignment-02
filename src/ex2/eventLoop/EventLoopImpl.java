@@ -53,16 +53,19 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Worker
         if (dataEvent.isOverMaxDepth()) {
             return;
         }
+
+        final long startTime = System.currentTimeMillis();
         final WebClient webClient = WebClient.create(this.vertx);
         webClient.getAbs(UriTemplate.of(dataEvent.url()))
                 .send(handler -> {
                     if (handler.succeeded()) {
                         // Gestione della risposta ricevuta
+                        final long duration = System.currentTimeMillis() - startTime;
                         System.out.println("Response status code: " + handler.result().statusCode());
                         System.out.println("Response body:");
                         System.out.println(dataEvent.url());
 
-                        final Searcher searcher = new SearcherImpl(this, dataEvent, handler.result().bodyAsString());
+                        final Searcher searcher = new SearcherImpl(this, dataEvent, handler.result().bodyAsString(), duration);
                         this.viewListeners.forEach(listener -> listener.onResponse(searcher));
                         searcher.findUrls();
                     } else {

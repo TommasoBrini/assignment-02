@@ -14,11 +14,13 @@ public class SearcherImpl implements Searcher {
     private final WorkerThread eventLoop;
     private final String urlBody;
     private final DataEvent data;
+    private final long duration;
 
-    public SearcherImpl(final WorkerThread workerThread, final DataEvent dataEvent, final String body) {
+    public SearcherImpl(final WorkerThread workerThread, final DataEvent dataEvent, final String body, final long duration) {
         this.eventLoop = workerThread;
         this.data = dataEvent;
         this.urlBody = body;
+        this.duration = duration;
     }
 
     @Override
@@ -34,6 +36,11 @@ public class SearcherImpl implements Searcher {
     @Override
     public String word() {
         return this.data.word();
+    }
+
+    @Override
+    public long duration() {
+        return this.duration;
     }
 
     @Override

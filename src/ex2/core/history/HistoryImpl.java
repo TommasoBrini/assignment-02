@@ -2,6 +2,8 @@ package ex2.core.history;
 
 import ex2.core.dataEvent.DataEvent;
 import ex2.core.dataEvent.DataEventImpl;
+import ex2.core.listener.InputGuiListener;
+import ex2.core.searcher.Searcher;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
@@ -77,6 +79,21 @@ public class HistoryImpl implements History {
         } catch (final IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void addInputGuiListener(final InputGuiListener inputGuiListener) {
+
+    }
+
+    @Override
+    public void onResponse(final Searcher filter) {
+
+    }
+
+    @Override
+    public void onError(final String message) {
+
     }
 }
 
