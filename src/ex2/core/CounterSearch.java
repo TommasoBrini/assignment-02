@@ -22,6 +22,7 @@ public class CounterSearch {
     }
 
     public void increaseSendIfMaxDepth(final Searcher searcher) {
+        System.out.println(searcher);
         final int prevDepth = searcher.maxDepth() - 1;
         if (searcher.currentDepth() == prevDepth) {
             this.countSendEvent += searcher.countUrl();

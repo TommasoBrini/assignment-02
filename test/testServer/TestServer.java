@@ -13,11 +13,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class TestServer {
-    private static final String JAVADOC_PATH = "res/docs/docs/api";
+    private static final String JAVADOC_PATH = "res/docs/api";
     public static void main(String[] args) {
         Vertx vertx = Vertx.vertx();
         HttpServer server = vertx.createHttpServer();
-
         Router router = Router.router(vertx);
 
         // Gestisce le richieste per la Javadoc
