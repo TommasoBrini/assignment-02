@@ -84,18 +84,6 @@ public class CommandArea extends JPanel {
         if (Objects.nonNull(commandListener)) this.inputGuiListeners.add(commandListener);
     }
 
-    public void setSiteBoxText(final String text) {
-        this.boxSite.setText(text);
-    }
-
-    public void setWordBoxText(final String word) {
-        this.boxWord.setText(word);
-    }
-
-    public void setDepthBoxText(final String depth) {
-        this.boxDepth.setText(depth);
-    }
-
     private boolean isSiteValid() {
         final String url = this.boxSite.getText();
         return !url.isBlank() && UrlUtils.isValidURL(url);
@@ -124,4 +112,17 @@ public class CommandArea extends JPanel {
         this.boxWord.clear();
         this.boxDepth.clear();
     }
+
+    public void setSiteBoxText(final String text) {
+        this.boxSite.setText(text);
+    }
+
+    public void setWordBoxText(final String word) {
+        this.boxWord.setText(word);
+    }
+
+    public void setDepthBoxText(final String depth) {
+        this.boxDepth.setText(depth);
+    }
+
 }

@@ -51,10 +51,8 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Worker
     @Override
     public void searchUrl(final DataEvent dataEvent) {
         if (dataEvent.isOverMaxDepth()) {
-            this.stop();
             return;
         }
-
         final WebClient webClient = WebClient.create(this.vertx);
         webClient.getAbs(UriTemplate.of(dataEvent.url()))
                 .send(handler -> {
