@@ -4,6 +4,7 @@ import ex2.core.dataEvent.DataEvent;
 import ex2.core.searcher.BaseSearcher;
 import ex2.core.searcher.Searcher;
 import ex2.core.searcher.SearcherWorker;
+import ex2.server.Server;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
@@ -20,7 +21,14 @@ public class SearchLocal extends BaseSearcher implements Searcher {
         final List<String> findUrls = new ArrayList<>();
         if (this.currentDepth() + 1 <= this.maxDepth()) {
             final Elements links = this.document().select("body a");
-            findUrls.addAll(links.stream().map(l -> l.attr("href")).filter(l -> l.startsWith("https")).toList());
+            findUrls.addAll(links.stream().map(l -> l.attr("href"))
+                    .filter(l -> !l.startsWith("https")
+                            && !l.contains("#")
+                            && !l.contains("package-summary")
+                            && !l.contains(".svg")
+                            && !l.contains("Context"))
+                    .map(url -> Server.LOCAL_PATH + url)
+                    .toList());
         }
         return findUrls;
     }

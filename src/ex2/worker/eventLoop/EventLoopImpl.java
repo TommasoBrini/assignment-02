@@ -1,13 +1,14 @@
 package ex2.worker.eventLoop;
 
 import ex2.core.CounterSearch;
-import ex2.core.listener.ModelListener;
-import ex2.core.searcher.Searcher;
-import ex2.core.searcher.concreate.SearcherWeb;
 import ex2.core.dataEvent.DataEvent;
 import ex2.core.dataEvent.DataEventImpl;
-import ex2.core.searcher.SearcherWorker;
+import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
+import ex2.core.searcher.Searcher;
+import ex2.core.searcher.SearcherFactory;
+import ex2.core.searcher.SearcherId;
+import ex2.core.searcher.SearcherWorker;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
@@ -22,13 +23,22 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
     private final List<ViewListener> viewListeners;
     private final List<ModelListener> modelListeners;
     private final CounterSearch counterSearch;
+    private final SearcherFactory searcherFactory;
+    private SearcherId searcherId;
 
     public EventLoopImpl() {
         this.init(Vertx.vertx(), null);
         this.viewListeners = new ArrayList<>();
         this.modelListeners = new ArrayList<>();
         this.counterSearch = new CounterSearch();
+        this.searcherFactory = new SearcherFactory();
+        this.searcherId = SearcherId.LOCAL;
         this.setupConsumers();
+    }
+
+    public EventLoopImpl(final SearcherId id) {
+        this();
+        this.searcherId = id;
     }
 
     private void setupConsumers() {
@@ -73,7 +83,9 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
                 .send(handler -> {
                     if (handler.succeeded()) {
                         final long duration = System.currentTimeMillis() - startTime;
-                        final Searcher searcher = new SearcherWeb(this, dataEvent, handler.result().bodyAsString(),duration);
+                        System.out.println(dataEvent.url());
+                        final Searcher searcher = this.searcherFactory.create(this.searcherId, this, dataEvent, handler.result().bodyAsString(), duration);
+//                         = new SearcherWeb(this, dataEvent, handler.result().bodyAsString(), duration);
                         this.viewListeners.forEach(listener -> listener.onResponse(searcher));
                         this.counterSearch.increaseSendIfMaxDepth(searcher);
                         searcher.addSearchFindUrls();
