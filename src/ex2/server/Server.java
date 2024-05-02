@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Server {
+    public static final String LOCAL_PATH = "http://localhost:8080";
     private static final String JAVADOC_PATH = "res/docs/api";
     private static final int PORT = 8080;
     private static final int STATUS_CODE = 404;
@@ -53,8 +54,8 @@ public class Server {
     private String getJavadoc(final String filePath) throws IOException {
         final Path path = Paths.get(JAVADOC_PATH, filePath);
         if (Files.exists(path) && Files.isRegularFile(path) && path.toString().endsWith(".html")) {
-            System.out.println("Request for " + filePath);
-            return new String(Files.readAllBytes(path));
+            System.out.println("Request for " + LOCAL_PATH + filePath);
+            return Files.readString(path);
         } else {
             throw new IOException("File not found or not valid Javadoc file.");
         }

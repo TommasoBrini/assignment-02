@@ -7,74 +7,66 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SearcherImpl implements Searcher {
-    private final SearcherWorker eventLoop;
+public abstract class BaseSearcher {
+    private final SearcherWorker searcherWorker;
     private final Document document;
     private final DataEvent data;
     private final long duration;
 
-    public SearcherImpl(final SearcherWorker searcherWorker, final DataEvent dataEvent, final String body, final long duration) {
-        this.eventLoop = searcherWorker;
+    public BaseSearcher(final SearcherWorker searcherWorker, final DataEvent dataEvent, final String body, final long duration) {
+        this.searcherWorker = searcherWorker;
         this.data = dataEvent;
         this.document = Jsoup.parse(body);
         this.duration = duration;
     }
 
-    @Override
+    protected abstract List<String> findUrls();
+
+    protected Document document() {
+        return this.document;
+    }
+
+    protected SearcherWorker searcherWorker() {
+        return this.searcherWorker;
+    }
+
     public int currentDepth() {
         return this.data.currentDepth();
     }
 
-    @Override
     public int maxDepth() {
         return this.data.maxDepth();
     }
 
-    @Override
     public String url() {
         return this.data.url();
     }
 
-    @Override
     public String word() {
         return this.data.word();
     }
 
-    @Override
     public long duration() {
         return this.duration;
     }
 
-    @Override
-    public int countWord() {
-        final Elements texts = this.document.select("body");
-        //System.out.println(texts.stream().map(Element::text).toList());
-        return (int) texts.stream().map(Element::text).flatMap(text -> Arrays.stream(text.split("\\s+"))).filter(word -> word.equals(this.word())).count();
-    }
-
-    private List<String> findUrls() {
-        final List<String> findUrls = new ArrayList<>();
-        if (this.currentDepth() + 1 <= this.maxDepth()) {
-            final Elements links = this.document.select("body a");
-            findUrls.addAll(links.stream().map(l -> l.attr("href")).filter(l -> l.startsWith("https")).toList());
-        }
-        return findUrls;
-    }
-
-    @Override
     public int countUrl() {
         return this.findUrls().size();
     }
 
-    @Override
+    public int countWord() {
+        final Elements texts = this.document().select("body");
+        //System.out.println(texts.stream().map(Element::text).toList());
+        return (int) texts.stream().map(Element::text).flatMap(text -> Arrays.stream(text.split("\\s+"))).filter(word -> word.equals(this.word())).count();
+    }
+
     public void addSearchFindUrls() {
         this.findUrls().forEach(url -> {
-            final DataEvent dt = new DataEventImpl(url, this.word(), this.data.maxDepth(), this.currentDepth() + 1, this.duration);
-            this.eventLoop.addEventUrl(dt);
+            final DataEvent dt = new DataEventImpl(url, this.word(), this.maxDepth(), this.currentDepth() + 1, this.duration());
+            this.searcherWorker().addEventUrl(dt);
         });
     }
 

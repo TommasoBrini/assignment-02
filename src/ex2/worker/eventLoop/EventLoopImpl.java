@@ -3,7 +3,7 @@ package ex2.worker.eventLoop;
 import ex2.core.CounterSearch;
 import ex2.core.listener.ModelListener;
 import ex2.core.searcher.Searcher;
-import ex2.core.searcher.SearcherImpl;
+import ex2.core.searcher.concreate.SearcherWeb;
 import ex2.core.dataEvent.DataEvent;
 import ex2.core.dataEvent.DataEventImpl;
 import ex2.core.searcher.SearcherWorker;
@@ -73,7 +73,7 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
                 .send(handler -> {
                     if (handler.succeeded()) {
                         final long duration = System.currentTimeMillis() - startTime;
-                        final Searcher searcher = new SearcherImpl(this, dataEvent, handler.result().bodyAsString(),duration);
+                        final Searcher searcher = new SearcherWeb(this, dataEvent, handler.result().bodyAsString(),duration);
                         this.viewListeners.forEach(listener -> listener.onResponse(searcher));
                         this.counterSearch.increaseSendIfMaxDepth(searcher);
                         searcher.addSearchFindUrls();
