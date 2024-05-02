@@ -4,6 +4,9 @@
 # XML files
 *.xml
 
+# IML files
+*.iml
+
 # sbt
 target/
 
