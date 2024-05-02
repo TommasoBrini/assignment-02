@@ -1,6 +1,5 @@
 package ex2.core.searcher;
 
-import ex2.core.CounterFinish;
 import ex2.core.dataEvent.DataEvent;
 import ex2.core.dataEvent.DataEventImpl;
 import org.jsoup.Jsoup;
@@ -16,14 +15,12 @@ public class SearcherImpl implements Searcher {
     private final SearcherWorker eventLoop;
     private final Document document;
     private final DataEvent data;
-    private final CounterFinish counterFinish;
     private final long duration;
 
-    public SearcherImpl(final SearcherWorker searcherWorker, final DataEvent dataEvent, final String body, final CounterFinish counterFinish, final long duration) {
+    public SearcherImpl(final SearcherWorker searcherWorker, final DataEvent dataEvent, final String body, final long duration) {
         this.eventLoop = searcherWorker;
         this.data = dataEvent;
         this.document = Jsoup.parse(body);
-        this.counterFinish = counterFinish;
         this.duration = duration;
     }
 
@@ -80,7 +77,6 @@ public class SearcherImpl implements Searcher {
 
     @Override
     public void addSearchFindUrls() {
-        this.counterFinish.increaseSendIfMaxDepth(this);
         this.findUrls().forEach(url -> {
             final DataEvent dt = new DataEventImpl(url, this.word(), this.data.maxDepth(), this.currentDepth() + 1, this.duration);
             this.eventLoop.addEventUrl(dt);

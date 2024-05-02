@@ -28,7 +28,7 @@ public class CounterFinish {
 
     public boolean isEnd() {
         System.out.println("SEND[" + this.countSendEvent + "] - CONSUME[" + this.countConsumeEvent + "]");
-        return this.countConsumeEvent == this.countSendEvent;
+        return this.countSendEvent != 0 && this.countConsumeEvent == this.countSendEvent;
     }
 
 
