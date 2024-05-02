@@ -53,9 +53,6 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
 
     @Override
     public void searchUrl(final DataEvent dataEvent) {
-        if (dataEvent.isOverMaxDepth()) {
-            return;
-        }
         final long startTime = System.currentTimeMillis();
         final WebClient webClient = WebClient.create(this.vertx);
         webClient.getAbs(UriTemplate.of(dataEvent.url()))
@@ -67,11 +64,14 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
                         System.out.println("Response body:");
                         System.out.println(dataEvent.url());
 
-                        final Searcher searcher = new SearcherImpl(this, dataEvent, handler.result().bodyAsString(), this.counterFinish, duration);
+                        final Searcher searcher = new SearcherImpl(this, dataEvent, handler.result().bodyAsString(),duration);
                         this.viewListeners.forEach(listener -> listener.onResponse(searcher));
+                        this.counterFinish.increaseSendIfMaxDepth(searcher);
                         searcher.addSearchFindUrls();
                         this.counterFinish.increaseConsumeIfMaxDepth(dataEvent);
+
                         if (this.counterFinish.isEnd()) {
+                            this.viewListeners.forEach(ViewListener::onFinish);
                             System.out.println("FINISH SEARCH");
                         }
                     } else {

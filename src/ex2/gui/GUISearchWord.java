@@ -65,6 +65,11 @@ public class GUISearchWord extends JFrame implements ViewListener {
     }
 
     @Override
+    public void onFinish() {
+
+    }
+
+    @Override
     public void onError(final String message) {
         SwingUtilities.invokeLater(() -> MessageDialogUtils.createError(this, "ERROR: %s".formatted(message)));
     }

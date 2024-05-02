@@ -8,5 +8,7 @@ public interface ViewListener {
 
     void onResponse(final Searcher filter);
 
+    void onFinish();
+
     void onError(final String message);
 }
