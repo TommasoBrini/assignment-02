@@ -32,11 +32,6 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
         this.vertx.eventBus().consumer(EVENT_URL, handler -> {
             final JsonObject jsonObject = (JsonObject) handler.body();
             final DataEvent dataEvent = new DataEventImpl(jsonObject);
-            this.counterFinish.increaseConsumeIfMaxDepth(dataEvent);
-
-            if (this.counterFinish.isEnd()) {
-                System.out.println("FINISH SEARCH");
-            }
             this.searchUrl(dataEvent);
         });
     }
@@ -53,7 +48,6 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
 
     @Override
     public void addEventUrl(final DataEvent dataEvent) {
-        this.counterFinish.increaseSendIfMaxDepth(dataEvent);
         this.vertx.eventBus().send(EVENT_URL, dataEvent.toJson());
     }
 
@@ -73,9 +67,13 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
                         System.out.println("Response body:");
                         System.out.println(dataEvent.url());
 
-                        final Searcher searcher = new SearcherImpl(this, dataEvent, handler.result().bodyAsString(), duration);
+                        final Searcher searcher = new SearcherImpl(this, dataEvent, handler.result().bodyAsString(), this.counterFinish, duration);
                         this.viewListeners.forEach(listener -> listener.onResponse(searcher));
-                        searcher.findUrls();
+                        searcher.addSearchFindUrls();
+                        this.counterFinish.increaseConsumeIfMaxDepth(dataEvent);
+                        if (this.counterFinish.isEnd()) {
+                            System.out.println("FINISH SEARCH");
+                        }
                     } else {
                         // Gestione degli errori
                         System.err.println("Request failed: " + handler.cause().getMessage());

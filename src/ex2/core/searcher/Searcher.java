@@ -4,6 +4,8 @@ public interface Searcher {
 
     int currentDepth();
 
+    int maxDepth();
+
     String url();
 
     String word();
@@ -12,5 +14,9 @@ public interface Searcher {
 
     int countWord();
 
-    int findUrls();
+    int countUrl();
+
+    boolean isOverMaxDepth();
+
+    void addSearchFindUrls();
 }

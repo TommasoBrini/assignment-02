@@ -1,31 +1,34 @@
 package ex2.core;
 
 import ex2.core.dataEvent.DataEvent;
+import ex2.core.searcher.Searcher;
 
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class CounterFinish {
-    private AtomicInteger countConsumeEvent;
-    private AtomicInteger countSendEvent;
+    private int countConsumeEvent;
+    private int countSendEvent;
 
     public CounterFinish() {
-        this.countConsumeEvent = new AtomicInteger();
-        this.countSendEvent = new AtomicInteger();
+        this.countConsumeEvent = 0;
+        this.countSendEvent = 0;
     }
 
     public void increaseConsumeIfMaxDepth(final DataEvent dataEvent) {
         if (dataEvent.currentDepth() == dataEvent.maxDepth())
-            this.countConsumeEvent.incrementAndGet();
+            this.countConsumeEvent += 1;
     }
 
-    public void increaseSendIfMaxDepth(final DataEvent dataEvent) {
-        if (dataEvent.currentDepth() == dataEvent.maxDepth())
-            this.countSendEvent.incrementAndGet();
+    public void increaseSendIfMaxDepth(final Searcher searcher) {
+        System.out.println(searcher);
+        if (searcher.currentDepth() == searcher.maxDepth() - 1) {
+            System.out.println("count " + searcher.countUrl());
+            this.countSendEvent += searcher.countUrl();
+        }
     }
 
     public boolean isEnd() {
         System.out.println("SEND[" + this.countSendEvent + "] - CONSUME[" + this.countConsumeEvent + "]");
-        return this.countConsumeEvent.get() == this.countSendEvent.get();
+        return this.countConsumeEvent == this.countSendEvent;
     }
 
 
