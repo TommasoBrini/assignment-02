@@ -7,23 +7,18 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 
 public class SearcherImpl implements Searcher {
     private final SearcherWorker eventLoop;
-    private final String urlBody;
+    private final Document document;
     private final DataEvent data;
     private final long duration;
 
     public SearcherImpl(final SearcherWorker searcherWorker, final DataEvent dataEvent, final String body, final long duration) {
         this.eventLoop = searcherWorker;
         this.data = dataEvent;
-        this.urlBody = body;
+        this.document = Jsoup.parse(body);
         this.duration = duration;
     }
 
@@ -49,13 +44,14 @@ public class SearcherImpl implements Searcher {
 
     @Override
     public int countWord() {
-        return (int) Arrays.stream(this.urlBody.split(" ")).filter(s -> s.contains(this.word())).count();
+        Elements texts = document.select("p");
+        System.out.println(texts.stream().map(Element::text).toList());
+        return (int) texts.stream().map(Element::text).filter(s -> s.contains(this.word())).count();
     }
 
     @Override
     public int findUrls() {
-        Document doc = Jsoup.parse(this.urlBody);
-        Elements links = doc.select("body a");
+        Elements links = document.select("body a");
         final List<String> findUrls = links.stream().map(l -> l.attr("href")).filter(l -> l.startsWith("https")).toList();
         for (String link : findUrls){
             DataEvent dt = new DataEventImpl(link, this.word(), this.data.maxDepth(), this.currentDepth() + 1, this.duration);
