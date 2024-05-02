@@ -10,5 +10,7 @@ lazy val root = (project in file("."))
       // https://mvnrepository.com/artifact/io.vertx/vertx-web
     libraryDependencies += "io.vertx" % "vertx-web" % "4.5.7",
     // https://mvnrepository.com/artifact/io.vertx/vertx-web-client
-    libraryDependencies += "io.vertx" % "vertx-web-client" % "4.5.7"
-  )
+    libraryDependencies += "io.vertx" % "vertx-web-client" % "4.5.7",
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    libraryDependencies += "org.jsoup" % "jsoup" % "1.17.2"
+)
