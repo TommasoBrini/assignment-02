@@ -9,6 +9,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SearcherImpl implements Searcher {
@@ -53,9 +54,9 @@ public class SearcherImpl implements Searcher {
 
     @Override
     public int countWord() {
-        final Elements texts = this.document.select("p");
-//        System.out.println(texts.stream().map(Element::text).toList());
-        return (int) texts.stream().map(Element::text).filter(s -> s.contains(this.word())).count();
+        final Elements texts = this.document.select("body");
+        //System.out.println(texts.stream().map(Element::text).toList());
+        return (int) texts.stream().map(Element::text).flatMap(text -> Arrays.stream(text.split("\\s+"))).filter(word -> word.equals(this.word())).count();
     }
 
     private List<String> findUrls() {
