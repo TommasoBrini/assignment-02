@@ -16,7 +16,5 @@ public interface Searcher {
 
     int countUrl();
 
-    boolean isOverMaxDepth();
-
     void addSearchFindUrls();
 }

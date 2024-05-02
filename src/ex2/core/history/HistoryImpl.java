@@ -2,8 +2,6 @@ package ex2.core.history;
 
 import ex2.core.dataEvent.DataEvent;
 import ex2.core.dataEvent.DataEventImpl;
-import ex2.core.listener.InputGuiListener;
-import ex2.core.searcher.Searcher;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 

@@ -37,6 +37,11 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
     }
 
     @Override
+    public void start() {
+        this.counterSearch.reset();
+    }
+
+    @Override
     public void stop() {
         this.vertx.close();
     }
@@ -58,12 +63,7 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
         webClient.getAbs(UriTemplate.of(dataEvent.url()))
                 .send(handler -> {
                     if (handler.succeeded()) {
-                        // Gestione della risposta ricevuta
                         final long duration = System.currentTimeMillis() - startTime;
-                        System.out.println("Response status code: " + handler.result().statusCode());
-//                        System.out.println("Response body:");
-//                        System.out.println(dataEvent.url());
-
                         final Searcher searcher = new SearcherImpl(this, dataEvent, handler.result().bodyAsString(),duration);
                         this.viewListeners.forEach(listener -> listener.onResponse(searcher));
                         this.counterSearch.increaseSendIfMaxDepth(searcher);
@@ -71,12 +71,9 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
                         this.counterSearch.increaseConsumeIfMaxDepth(dataEvent);
 
                         if (this.counterSearch.isEnd()) {
-                            System.out.println("FINISH SEARCH");
                             this.viewListeners.forEach(ViewListener::onFinish);
                         }
                     } else {
-                        // Gestione degli errori
-                        System.err.println("Request failed: " + handler.cause().getMessage());
                         this.viewListeners.forEach(viewListener -> viewListener.onError(handler.cause().getMessage()));
                     }
                 });

@@ -29,8 +29,12 @@ public class WorkerManagerImpl implements WorkerManager {
 
     @Override
     public void searchUrl(final DataEvent dataEvent) {
-        this.history.append(dataEvent);
         this.worker.searchUrl(dataEvent);
+    }
+
+    @Override
+    public void start() {
+        this.worker.start();
     }
 
     @Override
@@ -38,11 +42,5 @@ public class WorkerManagerImpl implements WorkerManager {
         this.history.saveJSON();
         this.worker.stop();
     }
-
-    @Override
-    public void addEventUrl(final DataEvent dataEvent) {
-        this.worker.addEventUrl(dataEvent);
-    }
-
 
 }

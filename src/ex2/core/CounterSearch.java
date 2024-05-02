@@ -11,8 +11,8 @@ public class CounterSearch {
     private int countSendEvent;
 
     public CounterSearch() {
-        this.countConsumeEvent = ZERO;
         this.countSendEvent = ZERO;
+        this.countConsumeEvent = ZERO;
     }
 
     public void increaseConsumeIfMaxDepth(final DataEvent dataEvent) {
@@ -33,4 +33,8 @@ public class CounterSearch {
     }
 
 
+    public void reset() {
+        this.countSendEvent = 0;
+        this.countConsumeEvent = 0;
+    }
 }

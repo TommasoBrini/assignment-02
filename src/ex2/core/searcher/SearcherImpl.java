@@ -71,11 +71,6 @@ public class SearcherImpl implements Searcher {
     }
 
     @Override
-    public boolean isOverMaxDepth() {
-        return this.currentDepth() > this.maxDepth();
-    }
-
-    @Override
     public void addSearchFindUrls() {
         this.findUrls().forEach(url -> {
             final DataEvent dt = new DataEventImpl(url, this.word(), this.data.maxDepth(), this.currentDepth() + 1, this.duration);

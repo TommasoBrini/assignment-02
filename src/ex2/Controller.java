@@ -3,13 +3,14 @@ package ex2;
 import ex2.core.dataEvent.DataEvent;
 import ex2.core.dataEvent.DataEventImpl;
 import ex2.core.listener.InputGuiListener;
+import ex2.worker.WorkerManager;
 import ex2.worker.WorkerManagerImpl;
 import ex2.gui.GUISearchWord;
 import ex2.gui.area.CommandArea;
 
 public class Controller implements InputGuiListener {
     final private GUISearchWord gui;
-    final private WorkerManagerImpl workerManager;
+    final private WorkerManager workerManager;
 
     public Controller() {
         this.gui = new GUISearchWord();
@@ -28,6 +29,7 @@ public class Controller implements InputGuiListener {
     @Override
     public void onSearch(final CommandArea commandArea, final String site, final String word, final int maxDepth) {
         final DataEvent dataEvent = new DataEventImpl(site, word, maxDepth, 0);
+        this.workerManager.start();
         this.workerManager.searchUrl(dataEvent);
     }
 
