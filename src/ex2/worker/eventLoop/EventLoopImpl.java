@@ -1,6 +1,6 @@
 package ex2.worker.eventLoop;
 
-import ex2.core.CounterFinish;
+import ex2.core.CounterSearch;
 import ex2.core.searcher.Searcher;
 import ex2.core.searcher.SearcherImpl;
 import ex2.core.dataEvent.DataEvent;
@@ -19,12 +19,12 @@ import java.util.List;
 public class EventLoopImpl extends AbstractVerticle implements EventLoop, SearcherWorker {
     private static final String EVENT_URL = "searchUrls";
     private final List<ViewListener> viewListeners;
-    private final CounterFinish counterFinish;
+    private final CounterSearch counterSearch;
 
     public EventLoopImpl() {
         this.init(Vertx.vertx(), null);
         this.viewListeners = new ArrayList<>();
-        this.counterFinish = new CounterFinish();
+        this.counterSearch = new CounterSearch();
         this.setupConsumers();
     }
 
@@ -61,18 +61,18 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
                         // Gestione della risposta ricevuta
                         final long duration = System.currentTimeMillis() - startTime;
                         System.out.println("Response status code: " + handler.result().statusCode());
-                        System.out.println("Response body:");
-                        System.out.println(dataEvent.url());
+//                        System.out.println("Response body:");
+//                        System.out.println(dataEvent.url());
 
                         final Searcher searcher = new SearcherImpl(this, dataEvent, handler.result().bodyAsString(),duration);
                         this.viewListeners.forEach(listener -> listener.onResponse(searcher));
-                        this.counterFinish.increaseSendIfMaxDepth(searcher);
+                        this.counterSearch.increaseSendIfMaxDepth(searcher);
                         searcher.addSearchFindUrls();
-                        this.counterFinish.increaseConsumeIfMaxDepth(dataEvent);
+                        this.counterSearch.increaseConsumeIfMaxDepth(dataEvent);
 
-                        if (this.counterFinish.isEnd()) {
-                            this.viewListeners.forEach(ViewListener::onFinish);
+                        if (this.counterSearch.isEnd()) {
                             System.out.println("FINISH SEARCH");
+                            this.viewListeners.forEach(ViewListener::onFinish);
                         }
                     } else {
                         // Gestione degli errori

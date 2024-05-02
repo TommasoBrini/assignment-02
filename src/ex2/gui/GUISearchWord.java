@@ -50,7 +50,6 @@ public class GUISearchWord extends JFrame implements ViewListener {
         this.setVisible(true);
     }
 
-    @Override
     public void addInputGuiListener(final InputGuiListener inputGuiListener) {
         this.commandArea.addInputListener(inputGuiListener);
     }
@@ -65,13 +64,13 @@ public class GUISearchWord extends JFrame implements ViewListener {
     }
 
     @Override
-    public void onFinish() {
-
+    public void onError(final String message) {
+        SwingUtilities.invokeLater(() -> MessageDialogUtils.createError(this, "ERROR: %s".formatted(message)));
     }
 
     @Override
-    public void onError(final String message) {
-        SwingUtilities.invokeLater(() -> MessageDialogUtils.createError(this, "ERROR: %s".formatted(message)));
+    public void onFinish() {
+        this.commandArea.enableCommand();
     }
 
 }
