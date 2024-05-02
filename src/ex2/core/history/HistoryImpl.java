@@ -15,6 +15,7 @@ import java.util.List;
 public class HistoryImpl implements History {
     private static final String HISTORY_PATH = "res/history.json";
     private static final String HISTORY_KEY = "history";
+    private static final int POSITION_ADD_JSON = 0;
     private static final int MAX_SIZE = 5;
 
     private final JsonArray historyJson;
@@ -53,8 +54,8 @@ public class HistoryImpl implements History {
 
     @Override
     public void append(final DataEvent dataEvent) {
-        this.historyJson.add(dataEvent.toJson());
-        this.history.add(dataEvent);
+        this.historyJson.add(POSITION_ADD_JSON, dataEvent.toJson());
+        this.history.addFirst(dataEvent);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class HistoryImpl implements History {
 
     @Override
     public List<DataEvent> lastHistory() {
-        return this.history.reversed().stream().limit(MAX_SIZE).toList();
+        return this.history.stream().limit(MAX_SIZE).toList();
     }
 
     @Override

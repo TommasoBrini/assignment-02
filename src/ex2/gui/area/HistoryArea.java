@@ -12,6 +12,7 @@ import static ex2.gui.GuiConstants.*;
 public class HistoryArea extends JPanel implements InputGuiListener {
     private static final String HISTORY = "History";
     private static final String CLEAR = "Clear";
+    private static final int INDEX_ADD_BUTTON_IN_PANEL = 0;
 
     private final JPanel recordPanel;
     private final JButton clearButton;
@@ -58,7 +59,7 @@ public class HistoryArea extends JPanel implements InputGuiListener {
 
         final JPanel mainPanel = PanelUtils.createPanelWithBorderLayout();
         final JPanel southPanel = PanelUtils.createPanelWithBorderLayout();
-        final JPanel panel = PanelUtils.createPanelWithFlowLayout(FlowLayout.CENTER, 20, 0);
+        final JPanel panel = PanelUtils.createPanelWithFlowLayout(FlowLayout.CENTER, 20, INDEX_ADD_BUTTON_IN_PANEL);
 
         panel.add(new JLabel(WORD + word));
         panel.add(new JLabel(DEPTH + depth));
@@ -76,7 +77,7 @@ public class HistoryArea extends JPanel implements InputGuiListener {
             commandArea.setDepthBoxText(depth);
         });
 
-        this.recordPanel.add(button);
+        this.recordPanel.add(button, INDEX_ADD_BUTTON_IN_PANEL);
         this.recordPanel.revalidate();
         this.recordPanel.repaint();
     }
