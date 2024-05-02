@@ -1,15 +1,14 @@
-package ex2.eventLoop;
+package ex2.worker;
 
 import ex2.core.dataEvent.DataEvent;
 import ex2.core.listener.ViewListener;
-import io.vertx.core.Verticle;
+import ex2.core.searcher.SearcherWorker;
 
-public interface EventLoop extends Verticle {
+public interface LogicWorker extends SearcherWorker {
 
     void addViewListener(final ViewListener viewListener);
 
     void searchUrl(final DataEvent dataEvent);
 
     void stop();
-
 }

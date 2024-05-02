@@ -11,7 +11,7 @@ public record DataEventImpl(String url, String word, int maxDepth, int currentDe
     private static final String DURATION = "duration";
 
     public DataEventImpl(final String url, final String word, final int maxDepth, final int currentDepth) {
-        this(url, word, maxDepth, currentDepth, 0);
+        this(url, word, maxDepth, currentDepth, 0L);
     }
 
     public DataEventImpl(final JsonObject jsonObject) {

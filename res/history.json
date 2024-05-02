@@ -1,18 +1,21 @@
 {
   "history" : [ {
     "url" : "https://en.wikipedia.org/wiki/Buongiorno#",
-    "word" : "Buongiorno",
+    "word" : "href",
     "maxDepth" : 1,
-    "currentDepth" : 0
+    "currentDepth" : 0,
+    "duration" : 0
   }, {
     "url" : "https://en.wikipedia.org/wiki/Buongiorno#",
     "word" : "label",
     "maxDepth" : 1,
-    "currentDepth" : 0
+    "currentDepth" : 0,
+    "duration" : 0
   }, {
     "url" : "https://en.wikipedia.org/wiki/Buongiorno#",
-    "word" : "href",
+    "word" : "Buongiorno",
     "maxDepth" : 1,
-    "currentDepth" : 0
+    "currentDepth" : 0,
+    "duration" : 0
   } ]
 }

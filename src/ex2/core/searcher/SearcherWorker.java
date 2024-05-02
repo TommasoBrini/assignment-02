@@ -2,7 +2,7 @@ package ex2.core.searcher;
 
 import ex2.core.dataEvent.DataEvent;
 
-public interface WorkerThread {
+public interface SearcherWorker {
 
     void addEventUrl(final DataEvent dataEvent);
 
