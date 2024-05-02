@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class TestServer {
-    private static final String DOCS_DIRECTORY = "res/docs/docs";
+    private static final String JAVADOC_PATH = "res/docs/docs/api";
     public static void main(String[] args) {
         Vertx vertx = Vertx.vertx();
         HttpServer server = vertx.createHttpServer();
@@ -22,10 +22,8 @@ public class TestServer {
 
         // Gestisce le richieste per la Javadoc
         router.get("/index.html").handler(ctx -> {
-            HttpServerRequest request = ctx.request();
-            String filePath = request.path().substring("/index.html".length());
             try {
-                String javadoc = getJavadoc(filePath);
+                String javadoc = getJavadoc();
                 ctx.response()
                         .putHeader("content-type", "text/html")
                         .end(javadoc);
@@ -41,8 +39,8 @@ public class TestServer {
         System.out.println("Server started on port 8080");
     }
 
-    private static String getJavadoc(String filePath) throws IOException {
-        Path path = Paths.get(DOCS_DIRECTORY, filePath);
+    private static String getJavadoc() throws IOException {
+        Path path = Paths.get(JAVADOC_PATH, "/index.html");
         if (Files.exists(path) && Files.isRegularFile(path) && path.toString().endsWith(".html")) {
             return new String(Files.readAllBytes(path));
         } else {
