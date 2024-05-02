@@ -11,6 +11,8 @@ import ex2.utils.MessageDialogUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -35,6 +37,21 @@ public class GUISearchWord extends JFrame implements ViewListener {
         this.commandArea.addInputListener(this.printArea);
         this.commandArea.addInputListener(this.historyArea);
 
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Codice da eseguire prima della chiusura del frame
+                int choice = JOptionPane.showConfirmDialog(GUISearchWord.this,
+                        "Sei sicuro di voler chiudere?",
+                        "Conferma Chiusura",
+                        JOptionPane.YES_NO_OPTION);
+
+                if (choice == JOptionPane.YES_OPTION) {
+                    // Chiudi il frame solo se l'utente conferma la chiusura
+                    GUISearchWord.this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                }
+            }
+        });
 
         this.setupGraphics();
         this.setResizable(true);
@@ -48,9 +65,7 @@ public class GUISearchWord extends JFrame implements ViewListener {
     }
 
     public void start(final List<DataEvent> history) {
-        final AtomicInteger count = new AtomicInteger();
-        history.stream().filter(data -> count.getAndIncrement() < MAX_SET_HISTORY_DATA)
-                        .forEach(data -> this.historyArea.append(this.commandArea, data.url(), data.word(), "" + data.maxDepth()));
+        history.forEach(data -> this.historyArea.append(this.commandArea, data.url(), data.word(), "" + data.maxDepth()));
         this.setVisible(true);
     }
 

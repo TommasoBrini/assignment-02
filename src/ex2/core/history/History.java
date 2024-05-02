@@ -10,6 +10,8 @@ public interface History {
 
     List<DataEvent> history();
 
+    List<DataEvent> lastHistory();
+
     void saveJSON();
 
 }

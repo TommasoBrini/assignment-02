@@ -26,7 +26,7 @@ public class Controller implements InputGuiListener {
     }
 
     public void onStart() {
-        this.gui.start(this.history.history());
+        this.gui.start(this.history.lastHistory());
     }
 
     @Override

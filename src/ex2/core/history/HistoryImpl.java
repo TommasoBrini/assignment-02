@@ -15,6 +15,7 @@ import java.util.List;
 public class HistoryImpl implements History {
     private static final String HISTORY_PATH = "res/history.json";
     private static final String HISTORY_KEY = "history";
+    private static final int MAX_SIZE = 5;
 
     private final JsonArray historyJson;
     private final List<DataEvent> history;
@@ -59,6 +60,11 @@ public class HistoryImpl implements History {
     @Override
     public List<DataEvent> history() {
         return this.history;
+    }
+
+    @Override
+    public List<DataEvent> lastHistory() {
+        return this.history.reversed().stream().limit(MAX_SIZE).toList();
     }
 
     @Override
