@@ -9,6 +9,7 @@ import ex2.core.searcher.Searcher;
 import ex2.core.searcher.SearcherFactory;
 import ex2.core.searcher.SearcherId;
 import ex2.core.searcher.SearcherWorker;
+import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
@@ -24,6 +25,7 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
     private final List<ModelListener> modelListeners;
     private final CounterSearch counterSearch;
     private final SearcherFactory searcherFactory;
+    private final WebClient webClient;
     private SearcherId searcherId;
 
     public EventLoopImpl() {
@@ -32,6 +34,7 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
         this.modelListeners = new ArrayList<>();
         this.counterSearch = new CounterSearch();
         this.searcherFactory = new SearcherFactory();
+        this.webClient = WebClient.create(this.vertx);
         this.searcherId = SearcherId.LOCAL;
         this.setupConsumers();
     }
@@ -78,17 +81,20 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
 
     private void searchUrl(final DataEvent dataEvent) {
         final long startTime = System.currentTimeMillis();
-        final WebClient webClient = WebClient.create(this.vertx);
-        webClient.getAbs(UriTemplate.of(dataEvent.url()))
+        this.webClient.getAbs(UriTemplate.of(dataEvent.url()))
                 .send(handler -> {
                     if (handler.succeeded()) {
                         final long duration = System.currentTimeMillis() - startTime;
-                        System.out.println(dataEvent.url());
-                        final Searcher searcher = this.searcherFactory.create(this.searcherId, this, dataEvent, handler.result().bodyAsString(), duration);
+
+                        final int statusCode = handler.result().statusCode();
+                        if (statusCode >= 200 && statusCode < 300) {
+                            System.out.println(handler.result().statusMessage());
+                            final Searcher searcher = this.searcherFactory.create(this.searcherId, this, dataEvent, handler.result().bodyAsString(), duration);
 //                         = new SearcherWeb(this, dataEvent, handler.result().bodyAsString(), duration);
-                        this.viewListeners.forEach(listener -> listener.onResponse(searcher));
-                        this.counterSearch.increaseSendIfMaxDepth(searcher);
-                        searcher.addSearchFindUrls();
+                            this.viewListeners.forEach(listener -> listener.onResponse(searcher));
+                            this.counterSearch.increaseSendIfMaxDepth(searcher);
+                            searcher.addSearchFindUrls();
+                        }
                         this.counterSearch.increaseConsumeIfMaxDepth(dataEvent);
 
                         if (this.counterSearch.isEnd()) {
