@@ -14,16 +14,16 @@ import ex2.core.component.searcher.SearcherWorker;
 import ex2.worker.LogicWorker;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
-import io.vertx.core.http.HttpClientOptions;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.WebClient;
-import io.vertx.ext.web.client.WebClientOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventLoopImpl extends AbstractVerticle implements LogicWorker, SearcherWorker {
     private static final String EVENT_URL = "searchUrls";
+    private static final int STATUS_CODE_MIN = 200;
+    private static final int STATUS_CODE_MAX = 300;
     private final List<ViewListener> viewListeners;
     private final List<ModelListener> modelListeners;
     private final CounterSearch counterSearch;
@@ -59,6 +59,7 @@ public class EventLoopImpl extends AbstractVerticle implements LogicWorker, Sear
 
     @Override
     public void stop() {
+        this.webClient.close();
         this.vertx.close();
     }
 
@@ -84,7 +85,7 @@ public class EventLoopImpl extends AbstractVerticle implements LogicWorker, Sear
                     if (handler.succeeded()) {
                         final long duration = System.currentTimeMillis() - startTime;
                         final int statusCode = handler.result().statusCode();
-                        if (statusCode >= 200 && statusCode < 300) {
+                        if (statusCode >= STATUS_CODE_MIN && statusCode < STATUS_CODE_MAX) {
                             System.out.println(handler.result().statusMessage() + " " + dataEvent.url());
                             final Searcher searcher = this.searcherFactory.create(this.searcherType, this, dataEvent, handler.result().bodyAsString(), duration);
                             this.viewListeners.forEach(listener -> listener.onResponse(searcher));

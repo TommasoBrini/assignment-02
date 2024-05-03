@@ -4,7 +4,7 @@ import ex2.core.component.searcher.Searcher;
 
 public interface ViewListener {
 
-    void onResponse(final Searcher filter);
+    void onResponse(final Searcher searcher);
 
     void onError(final String message);
 

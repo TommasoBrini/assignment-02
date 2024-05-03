@@ -48,8 +48,9 @@ public class WorkerManagerImpl implements WorkerManager {
     @Override
     public void stop() {
         this.history.saveJSON();
-        this.server.stop();
         this.worker.stop();
+        this.server.stop();
+        System.exit(0);
     }
 
 }

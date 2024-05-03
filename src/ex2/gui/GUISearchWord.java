@@ -54,10 +54,11 @@ public class GUISearchWord extends JFrame implements ViewListener {
     }
 
     @Override
-    public void onResponse(final Searcher filter) {
+    public void onResponse(final Searcher searcher) {
         SwingUtilities.invokeLater(() -> {
-            final String url = "URL: %s\n".formatted(filter.url());
-            final String info = "Depth[%d] -------- Word = %d\n".formatted(filter.currentDepth(), filter.countWord());
+            System.out.println("ADD " + searcher);
+            final String url = "URL: %s\n".formatted(searcher.url());
+            final String info = "Depth[%d] -------- Word = %d\n".formatted(searcher.currentDepth(), searcher.countWord());
             this.printArea.append(url + info + "--------------------\n");
         });
     }
@@ -69,8 +70,10 @@ public class GUISearchWord extends JFrame implements ViewListener {
 
     @Override
     public void onFinish() {
-        this.commandArea.enableSearch();
-        MessageDialogUtils.createMessage(this, "Finish Search");
+        SwingUtilities.invokeLater(() -> {
+            this.commandArea.enableSearch();
+            MessageDialogUtils.createMessage(this, "Finish Search");
+        });
     }
 
 }

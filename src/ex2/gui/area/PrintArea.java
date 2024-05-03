@@ -5,7 +5,6 @@ import ex2.core.listener.InputGuiListener;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import java.awt.*;
 
 import static ex2.gui.GuiConstants.PRINT_AREA_DIMENSION;
 
@@ -16,7 +15,7 @@ public class PrintArea extends JScrollPane implements InputGuiListener {
     public PrintArea() {
         this.printArea = new JTextArea();
         this.printArea.setEditable(false);
-        this.printArea.setPreferredSize(PRINT_AREA_DIMENSION);
+        this.setPreferredSize(PRINT_AREA_DIMENSION);
 
         final TitledBorder titleFindWordArea = BorderFactory.createTitledBorder(TITLE_PRINT_AREA);
         titleFindWordArea.setTitleJustification(TitledBorder.CENTER);
@@ -26,7 +25,6 @@ public class PrintArea extends JScrollPane implements InputGuiListener {
     }
 
     public void append(final String text) {
-        this.printArea.setForeground(Color.BLACK);
         this.printArea.append(text);
     }
 
