@@ -37,14 +37,7 @@ public class EventLoopImpl extends AbstractVerticle implements LogicWorker, Sear
         this.modelListeners = new ArrayList<>();
         this.counterSearch = new CounterSearchImpl();
         this.searcherFactory = new SimpleFactory();
-
-        final WebClientOptions options = new WebClientOptions()
-                .setConnectTimeout(HttpClientOptions.DEFAULT_CONNECT_TIMEOUT)  // Timeout di connessione in millisecondi (default: 60000 ms)
-                .setIdleTimeout(0)       // Timeout di inattività in secondi (default: 600 s)
-                .setIdleTimeoutUnit(HttpClientOptions.DEFAULT_IDLE_TIMEOUT_TIME_UNIT)
-                .setKeepAlive(false);
-
-        this.webClient = WebClient.create(this.vertx, options);
+        this.webClient = WebClient.create(this.vertx);
         this.setupConsumers();
     }
 
@@ -105,7 +98,7 @@ public class EventLoopImpl extends AbstractVerticle implements LogicWorker, Sear
                             this.viewListeners.forEach(ViewListener::onFinish);
                         }
                     } else {
-                        System.out.println("Error");
+                        System.out.println("ERROR -> " + handler.cause().getMessage());
                         this.viewListeners.forEach(viewListener -> viewListener.onError(handler.cause().getMessage()));
                     }
                 });
