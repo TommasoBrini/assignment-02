@@ -5,7 +5,7 @@ import ex2.core.component.searcher.Searcher;
 import ex2.core.component.FactorySearcher;
 import ex2.core.component.searcher.SearcherType;
 import ex2.core.component.searcher.SearcherWorker;
-import ex2.core.component.searcher.concrete.SearchLocal;
+import ex2.core.component.searcher.concrete.SearcherLocal;
 import ex2.core.component.searcher.concrete.SearcherWeb;
 
 public class SimpleFactory implements FactorySearcher {
@@ -15,7 +15,7 @@ public class SimpleFactory implements FactorySearcher {
                                 final DataEvent dataEvent,
                                 final String body,
                                 final long duration) {
-        return new SearchLocal(searcherWorker, dataEvent, body, duration);
+        return new SearcherLocal(searcherWorker, dataEvent, body, duration);
     }
 
     @Override

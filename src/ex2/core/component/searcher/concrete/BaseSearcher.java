@@ -10,21 +10,41 @@ import org.jsoup.select.Elements;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 public abstract class BaseSearcher {
     private final SearcherWorker searcherWorker;
     private final Document document;
     private final DataEvent data;
     private final long duration;
+    private final Supplier<List<String>> urlsLazy;
 
     public BaseSearcher(final SearcherWorker searcherWorker, final DataEvent dataEvent, final String body, final long duration) {
         this.searcherWorker = searcherWorker;
         this.data = dataEvent;
         this.document = Jsoup.parse(body);
         this.duration = duration;
+        this.urlsLazy = new Supplier<>() {
+            List<String> value;
+            @Override
+            public List<String> get() {
+                if (this.value == null) {
+                    synchronized (this) {
+                        if (this.value == null) {
+                            this.value = getUrls(); // Calcola il valore lazy
+                        }
+                    }
+                }
+                return this.value;
+            }
+        };
     }
 
-    protected abstract List<String> findUrls();
+    protected abstract List<String> getUrls();
+
+    protected List<String> findUrls(){
+        return this.urlsLazy.get();
+    };
 
     protected Document document() {
         return this.document;
