@@ -70,8 +70,7 @@ public class HistoryImpl implements History {
 
     @Override
     public List<DataEvent> lastHistory() {
-        final int skip = this.history.size() - MAX_SIZE;
-        if (skip < 0) return List.of();
+        final int skip = Math.abs(this.history.size() - MAX_SIZE);
         return this.history.stream().skip(skip).toList();
     }
 
