@@ -1,7 +1,7 @@
 package ex2.core.component.searcher.concreate;
 
 import ex2.core.component.DataEvent;
-import ex2.core.component.concreate.DataEventImpl;
+import ex2.core.component.concrete.DataEventImpl;
 import ex2.core.component.searcher.SearcherWorker;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
