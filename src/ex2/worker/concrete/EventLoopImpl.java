@@ -1,10 +1,10 @@
-package ex2.worker.concreate;
+package ex2.worker.concrete;
 
 import ex2.core.component.CounterSearch;
 import ex2.core.component.FactorySearcher;
-import ex2.core.component.concreate.CounterSearchImpl;
+import ex2.core.component.concrete.CounterSearchImpl;
 import ex2.core.component.DataEvent;
-import ex2.core.component.concreate.DataEventImpl;
+import ex2.core.component.concrete.DataEventImpl;
 import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
 import ex2.core.component.searcher.Searcher;

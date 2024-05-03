@@ -1,4 +1,4 @@
-package ex2.core.component.concreate;
+package ex2.core.component.concrete;
 
 
 import ex2.core.component.CounterSearch;

@@ -2,12 +2,12 @@ package ex2.worker;
 
 import ex2.core.component.DataEvent;
 import ex2.core.component.History;
-import ex2.core.component.concreate.HistoryImpl;
+import ex2.core.component.concrete.HistoryImpl;
 import ex2.core.component.searcher.SearcherType;
 import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
 import ex2.server.Server;
-import ex2.worker.concreate.EventLoopImpl;
+import ex2.worker.concrete.EventLoopImpl;
 
 import java.util.List;
 
