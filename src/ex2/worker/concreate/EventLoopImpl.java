@@ -14,8 +14,10 @@ import ex2.core.component.searcher.SearcherWorker;
 import ex2.worker.LogicWorker;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
+import io.vertx.core.http.HttpClientOptions;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.WebClient;
+import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.uritemplate.UriTemplate;
 
 import java.util.ArrayList;
@@ -36,7 +38,14 @@ public class EventLoopImpl extends AbstractVerticle implements LogicWorker, Sear
         this.modelListeners = new ArrayList<>();
         this.counterSearch = new CounterSearchImpl();
         this.searcherFactory = new SimpleFactory();
-        this.webClient = WebClient.create(this.vertx);
+
+        WebClientOptions options = new WebClientOptions()
+                .setConnectTimeout(HttpClientOptions.DEFAULT_CONNECT_TIMEOUT)  // Timeout di connessione in millisecondi (default: 60000 ms)
+                .setIdleTimeout(0)       // Timeout di inattività in secondi (default: 600 s)
+                .setIdleTimeoutUnit(HttpClientOptions.DEFAULT_IDLE_TIMEOUT_TIME_UNIT)
+                .setKeepAlive(false);
+
+        this.webClient = WebClient.create(this.vertx, options);
         this.searcherType = SearcherType.LOCAL;
         this.setupConsumers();
     }
@@ -83,15 +92,7 @@ public class EventLoopImpl extends AbstractVerticle implements LogicWorker, Sear
 
     private void searchUrl(final DataEvent dataEvent) {
         final long startTime = System.currentTimeMillis();
-        UriTemplate absoluteURI;
-        try {
-            absoluteURI = UriTemplate.of(dataEvent.url());
-        } catch (final IllegalArgumentException e) {
-            System.out.println("ERROR URL -> " + dataEvent.url());
-            throw new RuntimeException(e);
-        }
-
-        this.webClient.getAbs(absoluteURI)
+        this.webClient.getAbs(dataEvent.url())
                 .send(handler -> {
                     if (handler.succeeded()) {
                         final long duration = System.currentTimeMillis() - startTime;
@@ -99,7 +100,6 @@ public class EventLoopImpl extends AbstractVerticle implements LogicWorker, Sear
                         if (statusCode >= 200 && statusCode < 300) {
                             System.out.println(handler.result().statusMessage() + " " + dataEvent.url());
                             final Searcher searcher = this.searcherFactory.create(this.searcherType, this, dataEvent, handler.result().bodyAsString(), duration);
-//                         = new SearcherWeb(this, dataEvent, handler.result().bodyAsString(), duration);
                             this.viewListeners.forEach(listener -> listener.onResponse(searcher));
                             this.counterSearch.increaseSendIfMaxDepth(searcher);
                             searcher.addSearchFindUrls();
@@ -111,6 +111,7 @@ public class EventLoopImpl extends AbstractVerticle implements LogicWorker, Sear
                             this.viewListeners.forEach(ViewListener::onFinish);
                         }
                     } else {
+                        System.out.println("Error");
                         this.viewListeners.forEach(viewListener -> viewListener.onError(handler.cause().getMessage()));
                     }
                 });

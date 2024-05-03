@@ -21,8 +21,8 @@ public class SearcherWeb extends BaseSearcher implements Searcher {
             final Elements links = this.document().select("body a");
             findUrls.addAll(links.stream().map(l -> l.attr("href"))
                     .filter(l -> l.startsWith("https"))
-                    .filter(l -> !l.contains("twitter.com"))
-                    .filter(l -> !l.contains("ru"))
+//                    .filter(l -> !l.contains("twitter.com"))
+//                    .filter(l -> !l.contains("ru"))
                     .toList());
         }
         return findUrls;
