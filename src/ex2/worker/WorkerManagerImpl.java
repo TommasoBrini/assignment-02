@@ -5,19 +5,28 @@ import ex2.core.history.History;
 import ex2.core.history.HistoryImpl;
 import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
+import ex2.core.searcher.SearcherType;
+import ex2.server.Server;
 import ex2.worker.eventLoop.EventLoopImpl;
 
 import java.util.List;
 
 public class WorkerManagerImpl implements WorkerManager {
-    private final LogicWorker worker;
+    final private Server server;
     final private History history;
+    final private LogicWorker worker;
 
-    public WorkerManagerImpl() {
-        this.worker = new EventLoopImpl();
+    public WorkerManagerImpl(final SearcherType searcherType) {
+        this.server = new Server();
+        this.worker = new EventLoopImpl(searcherType);
         this.history = new HistoryImpl();
 
         this.worker.addModelListener(this.history);
+        this.server.run();
+    }
+
+    public WorkerManagerImpl() {
+        this(SearcherType.LOCAL);
     }
 
     @Override
@@ -43,6 +52,7 @@ public class WorkerManagerImpl implements WorkerManager {
     @Override
     public void stop() {
         this.history.saveJSON();
+        this.server.stop();
         this.worker.stop();
     }
 

@@ -16,7 +16,6 @@ import java.util.List;
 import static ex2.gui.GuiConstants.FRAME_DIMENSION;
 
 public class GUISearchWord extends JFrame implements ViewListener {
-    private static final int MAX_SET_HISTORY_DATA = 5;
     private final CommandArea commandArea;
     private final PrintArea printArea;
     private final HistoryArea historyArea;
@@ -70,7 +69,7 @@ public class GUISearchWord extends JFrame implements ViewListener {
 
     @Override
     public void onFinish() {
-        this.commandArea.enableCommand();
+        this.commandArea.enableSearch();
     }
 
 }

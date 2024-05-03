@@ -7,9 +7,8 @@ import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
 import ex2.core.searcher.Searcher;
 import ex2.core.searcher.SearcherFactory;
-import ex2.core.searcher.SearcherId;
+import ex2.core.searcher.SearcherType;
 import ex2.core.searcher.SearcherWorker;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
@@ -26,7 +25,7 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
     private final CounterSearch counterSearch;
     private final SearcherFactory searcherFactory;
     private final WebClient webClient;
-    private SearcherId searcherId;
+    private SearcherType searcherType;
 
     public EventLoopImpl() {
         this.init(Vertx.vertx(), null);
@@ -35,13 +34,13 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
         this.counterSearch = new CounterSearch();
         this.searcherFactory = new SearcherFactory();
         this.webClient = WebClient.create(this.vertx);
-        this.searcherId = SearcherId.LOCAL;
+        this.searcherType = SearcherType.LOCAL;
         this.setupConsumers();
     }
 
-    public EventLoopImpl(final SearcherId id) {
+    public EventLoopImpl(final SearcherType id) {
         this();
-        this.searcherId = id;
+        this.searcherType = id;
     }
 
     private void setupConsumers() {
@@ -81,15 +80,22 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
 
     private void searchUrl(final DataEvent dataEvent) {
         final long startTime = System.currentTimeMillis();
-        this.webClient.getAbs(UriTemplate.of(dataEvent.url()))
+        UriTemplate absoluteURI;
+        try {
+            absoluteURI = UriTemplate.of(dataEvent.url());
+        } catch (final IllegalArgumentException e) {
+            System.out.println("ERROR URL -> " + dataEvent.url());
+            throw new RuntimeException(e);
+        }
+
+        this.webClient.getAbs(absoluteURI)
                 .send(handler -> {
                     if (handler.succeeded()) {
                         final long duration = System.currentTimeMillis() - startTime;
-
                         final int statusCode = handler.result().statusCode();
                         if (statusCode >= 200 && statusCode < 300) {
-                            System.out.println(handler.result().statusMessage());
-                            final Searcher searcher = this.searcherFactory.create(this.searcherId, this, dataEvent, handler.result().bodyAsString(), duration);
+                            System.out.println(handler.result().statusMessage() + " " + dataEvent.url());
+                            final Searcher searcher = this.searcherFactory.create(this.searcherType, this, dataEvent, handler.result().bodyAsString(), duration);
 //                         = new SearcherWeb(this, dataEvent, handler.result().bodyAsString(), duration);
                             this.viewListeners.forEach(listener -> listener.onResponse(searcher));
                             this.counterSearch.increaseSendIfMaxDepth(searcher);

@@ -1,6 +1,6 @@
 package ex2.core.searcher;
 
-public enum SearcherId {
+public enum SearcherType {
     LOCAL,
     WEB
 }

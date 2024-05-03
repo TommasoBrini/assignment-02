@@ -5,7 +5,7 @@ import ex2.core.searcher.concreate.SearchLocal;
 import ex2.core.searcher.concreate.SearcherWeb;
 
 public class SearcherFactory {
-    public Searcher create(final SearcherId id,
+    public Searcher create(final SearcherType id,
                            final SearcherWorker searcherWorker,
                            final DataEvent dataEvent,
                            final String body,

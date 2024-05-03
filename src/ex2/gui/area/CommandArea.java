@@ -71,7 +71,7 @@ public class CommandArea extends JPanel {
                         this.boxSite.getText(),
                         this.boxWord.getText(),
                         Integer.parseInt(this.boxDepth.getText())));
-                this.disableCommand();
+                this.disableSearch();
             } else {
                 MessageDialogUtils.createError(this, "Invalid input");
             }
@@ -125,13 +125,11 @@ public class CommandArea extends JPanel {
         this.boxDepth.setText(depth);
     }
 
-    private void disableCommand() {
+    private void disableSearch() {
         this.searchButton.setEnabled(false);
-        this.exitButton.setEnabled(false);
     }
 
-    public void enableCommand() {
+    public void enableSearch() {
         this.searchButton.setEnabled(true);
-        this.exitButton.setEnabled(true);
     }
 }

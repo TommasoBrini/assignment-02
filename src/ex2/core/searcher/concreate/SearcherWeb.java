@@ -20,7 +20,8 @@ public class SearcherWeb extends BaseSearcher implements Searcher {
         final List<String> findUrls = new ArrayList<>();
         if (this.currentDepth() + 1 <= this.maxDepth()) {
             final Elements links = this.document().select("body a");
-            findUrls.addAll(links.stream().map(l -> l.attr("href")).filter(l -> l.startsWith("https")).toList());
+            findUrls.addAll(links.stream().map(l -> l.attr("href"))
+                    .filter(l -> l.startsWith("https")).toList());
         }
         return findUrls;
     }

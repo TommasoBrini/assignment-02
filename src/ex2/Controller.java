@@ -7,15 +7,12 @@ import ex2.worker.WorkerManager;
 import ex2.worker.WorkerManagerImpl;
 import ex2.gui.GUISearchWord;
 import ex2.gui.area.CommandArea;
-import ex2.server.Server;
 
 public class Controller implements InputGuiListener {
-    final private Server server;
     final private GUISearchWord gui;
     final private WorkerManager workerManager;
 
     public Controller() {
-        this.server = new Server();
         this.gui = new GUISearchWord();
         this.workerManager = new WorkerManagerImpl();
 
@@ -26,7 +23,6 @@ public class Controller implements InputGuiListener {
     }
 
     public void onStart() {
-        this.server.run();
         this.gui.start(this.workerManager.lastHistory());
     }
 
@@ -38,7 +34,6 @@ public class Controller implements InputGuiListener {
 
     @Override
     public void onExit() {
-        this.server.stop();
         this.workerManager.stop();
         this.gui.dispose();
     }
