@@ -6,22 +6,36 @@ import ex2.core.component.searcher.SearcherWorker;
 import ex2.server.Server;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
 public class SearchLocal extends BaseSearcher implements Searcher {
-    private Supplier<List<String>> urls;
+    private final Supplier<List<String>> urlsLazy;
 
     public SearchLocal(final SearcherWorker searcherWorker, final DataEvent dataEvent, final String body, final long duration) {
         super(searcherWorker, dataEvent, body, duration);
+        this.urlsLazy = new Supplier<>() {
+            List<String> value;
+            @Override
+            public List<String> get() {
+                if (this.value == null) {
+                    synchronized (this) {
+                        if (this.value == null) {
+                            this.value = SearchLocal.this.findUrlss(); // Calcola il valore lazy
+                        }
+                    }
+                }
+                return this.value;
+            }
+        };
     }
 
-    @Override
-    protected List<String> findUrls() {
-
+    protected List<String> findUrlss() {
+        final List<String> urls = new ArrayList<>();
         if (this.currentDepth() + 1 <= this.maxDepth()) {
             final Elements links = this.document().select("body a");
-            this.urls.get().addAll(links.stream().map(l -> l.attr("href"))
+            urls.addAll(links.stream().map(l -> l.attr("href"))
                     .filter(l -> !l.startsWith("https")
                             && !l.contains("#")
                             && !l.contains("package-summary")
@@ -30,6 +44,12 @@ public class SearchLocal extends BaseSearcher implements Searcher {
                     .map(url -> Server.LOCAL_PATH + url)
                     .toList());
         }
-        return this.urls.get();
+        return urls;
+    }
+
+
+    @Override
+    protected List<String> findUrls() {
+        return this.urlsLazy.get();
     }
 }
