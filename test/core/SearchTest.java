@@ -28,7 +28,8 @@ public class SearchTest {
     public void findHrefWeb() {
         final WorkerManager workerManager = new WorkerManagerImpl(SearcherType.WEB);
         final String word = "Buongiorno";
-        final DataEvent dataEvent = new DataEventImpl(WEB_URL, word, 2, 0);
+        final int maxDepth = 6;
+        final DataEvent dataEvent = new DataEventImpl(WEB_URL, word, maxDepth, 0);
         workerManager.startSearch(dataEvent);
 
         try {
