@@ -1,7 +1,7 @@
 package ex2.gui.area;
 
-import ex1.simulation.SimulationType;
 import ex2.core.component.searcher.SearcherType;
+import ex2.server.Server;
 import ex2.utils.UrlUtils;
 import ex2.core.listener.InputGuiListener;
 import ex2.utils.MessageDialogUtils;
@@ -78,11 +78,11 @@ public class CommandArea extends JPanel {
         this.searchButton.addActionListener(l -> {
             if (this.isInputValid()) {
                 this.inputGuiListeners.forEach(listener -> listener.onSearch(
-                        (SearcherType) this.searcherTypeComboBox.getSelectedItem(),
+                        this.searcherType(),
                         this.boxSite.getText(),
                         this.boxWord.getText(),
                         Integer.parseInt(this.boxDepth.getText())));
-                this.disableSearch();
+                this.disableCommand();
             } else {
                 MessageDialogUtils.createError(this, "Invalid input");
             }
@@ -95,9 +95,14 @@ public class CommandArea extends JPanel {
         if (Objects.nonNull(commandListener)) this.inputGuiListeners.add(commandListener);
     }
 
-    private boolean isSiteValid() {
+    private SearcherType searcherType() {
+        return (SearcherType) this.searcherTypeComboBox.getSelectedItem();
+    }
+
+    private boolean isUrlValid() {
         final String url = this.boxSite.getText();
-        return !url.isBlank() && UrlUtils.isValidURL(url);
+        final boolean checkSearcher = !SearcherType.LOCAL.equals(this.searcherType()) || url.contains(Server.LOCAL_PATH);
+        return !url.isBlank() && checkSearcher && UrlUtils.isValidURL(url);
     }
 
     private boolean isWordValid() {
@@ -115,7 +120,7 @@ public class CommandArea extends JPanel {
     }
 
     private boolean isInputValid() {
-        return this.isSiteValid() && this.isWordValid() && this.isDepthValid();
+        return this.isUrlValid() && this.isWordValid() && this.isDepthValid();
     }
 
     private void clearText() {
@@ -136,11 +141,13 @@ public class CommandArea extends JPanel {
         this.boxDepth.setText(depth);
     }
 
-    private void disableSearch() {
+    private void disableCommand() {
         this.searchButton.setEnabled(false);
+        this.exitButton.setEnabled(false);
     }
 
-    public void enableSearch() {
+    public void enableCommand() {
         this.searchButton.setEnabled(true);
+        this.exitButton.setEnabled(true);
     }
 }

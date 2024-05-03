@@ -6,10 +6,11 @@ import ex2.core.component.searcher.SearcherWorker;
 import ex2.server.Server;
 import org.jsoup.select.Elements;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class SearchLocal extends BaseSearcher implements Searcher {
+    private Supplier<List<String>> urls;
 
     public SearchLocal(final SearcherWorker searcherWorker, final DataEvent dataEvent, final String body, final long duration) {
         super(searcherWorker, dataEvent, body, duration);
@@ -17,10 +18,10 @@ public class SearchLocal extends BaseSearcher implements Searcher {
 
     @Override
     protected List<String> findUrls() {
-        final List<String> findUrls = new ArrayList<>();
+
         if (this.currentDepth() + 1 <= this.maxDepth()) {
             final Elements links = this.document().select("body a");
-            findUrls.addAll(links.stream().map(l -> l.attr("href"))
+            this.urls.get().addAll(links.stream().map(l -> l.attr("href"))
                     .filter(l -> !l.startsWith("https")
                             && !l.contains("#")
                             && !l.contains("package-summary")
@@ -29,6 +30,6 @@ public class SearchLocal extends BaseSearcher implements Searcher {
                     .map(url -> Server.LOCAL_PATH + url)
                     .toList());
         }
-        return findUrls;
+        return this.urls.get();
     }
 }

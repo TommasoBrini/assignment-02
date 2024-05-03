@@ -71,7 +71,7 @@ public class GUISearchWord extends JFrame implements ViewListener {
     @Override
     public void onFinish() {
         SwingUtilities.invokeLater(() -> {
-            this.commandArea.enableSearch();
+            this.commandArea.enableCommand();
             MessageDialogUtils.createMessage(this, "Finish Search");
         });
     }
