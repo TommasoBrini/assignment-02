@@ -18,7 +18,6 @@ import io.vertx.core.http.HttpClientOptions;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.client.WebClientOptions;
-import io.vertx.uritemplate.UriTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,20 +38,14 @@ public class EventLoopImpl extends AbstractVerticle implements LogicWorker, Sear
         this.counterSearch = new CounterSearchImpl();
         this.searcherFactory = new SimpleFactory();
 
-        WebClientOptions options = new WebClientOptions()
+        final WebClientOptions options = new WebClientOptions()
                 .setConnectTimeout(HttpClientOptions.DEFAULT_CONNECT_TIMEOUT)  // Timeout di connessione in millisecondi (default: 60000 ms)
                 .setIdleTimeout(0)       // Timeout di inattività in secondi (default: 600 s)
                 .setIdleTimeoutUnit(HttpClientOptions.DEFAULT_IDLE_TIMEOUT_TIME_UNIT)
                 .setKeepAlive(false);
 
         this.webClient = WebClient.create(this.vertx, options);
-        this.searcherType = SearcherType.LOCAL;
         this.setupConsumers();
-    }
-
-    public EventLoopImpl(final SearcherType id) {
-        this();
-        this.searcherType = id;
     }
 
     private void setupConsumers() {
@@ -64,8 +57,9 @@ public class EventLoopImpl extends AbstractVerticle implements LogicWorker, Sear
     }
 
     @Override
-    public void startSearch(final DataEvent dataEvent) {
+    public void startSearch(final SearcherType searcherType, final DataEvent dataEvent) {
         this.modelListeners.forEach(listener -> listener.onStart(dataEvent));
+        this.searcherType = searcherType;
         this.counterSearch.reset();
         this.searchUrl(dataEvent);
     }

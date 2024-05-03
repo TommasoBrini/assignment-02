@@ -13,9 +13,9 @@ public class SearchTest {
 
     @Test
     public void findHrefLocal() {
-        final WorkerManager workerManager = new WorkerManagerImpl(SearcherType.LOCAL);
+        final WorkerManager workerManager = new WorkerManagerImpl();
         final DataEvent dataEvent = new DataEventImpl(LOCAL_URL, "API", 4, 0);
-        workerManager.startSearch(dataEvent);
+        workerManager.startSearch(SearcherType.LOCAL, dataEvent);
 
         try {
             Thread.sleep(10000);
@@ -26,11 +26,11 @@ public class SearchTest {
 
     @Test
     public void findHrefWeb() {
-        final WorkerManager workerManager = new WorkerManagerImpl(SearcherType.WEB);
+        final WorkerManager workerManager = new WorkerManagerImpl();
         final String word = "Buongiorno";
         final int maxDepth = 6;
         final DataEvent dataEvent = new DataEventImpl(WEB_URL, word, maxDepth, 0);
-        workerManager.startSearch(dataEvent);
+        workerManager.startSearch(SearcherType.WEB, dataEvent);
 
         try {
             Thread.sleep(10000);

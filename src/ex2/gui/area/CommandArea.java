@@ -1,5 +1,7 @@
 package ex2.gui.area;
 
+import ex1.simulation.SimulationType;
+import ex2.core.component.searcher.SearcherType;
 import ex2.utils.UrlUtils;
 import ex2.core.listener.InputGuiListener;
 import ex2.utils.MessageDialogUtils;
@@ -31,6 +33,9 @@ public class CommandArea extends JPanel {
     private final JButton exitButton;
     private final JButton clearButton;
 
+    private final DefaultComboBoxModel<SearcherType> searcherTypeComboBoxModel;
+    private final JComboBox<SearcherType> searcherTypeComboBox;
+
     private final List<InputGuiListener> inputGuiListeners;
 
     public CommandArea() {
@@ -44,6 +49,11 @@ public class CommandArea extends JPanel {
         this.exitButton = new JButton(EXIT);
         this.clearButton = new JButton(CLEAR);
 
+        this.searcherTypeComboBoxModel = new DefaultComboBoxModel<>();
+        this.searcherTypeComboBoxModel.addElement(SearcherType.LOCAL);
+        this.searcherTypeComboBoxModel.addElement(SearcherType.WEB);
+        this.searcherTypeComboBox = new JComboBox<>(this.searcherTypeComboBoxModel);
+
         this.inputGuiListeners = new ArrayList<>();
 
         final JPanel northPanel = PanelUtils.createPanelWithFlowLayout();
@@ -52,6 +62,7 @@ public class CommandArea extends JPanel {
         centerPanel.add(this.boxWord);
         centerPanel.add(this.boxDepth);
         final JPanel southPanel = PanelUtils.createPanelWithFlowLayout();
+        southPanel.add(this.searcherTypeComboBox);
         southPanel.add(this.searchButton);
         southPanel.add(this.clearButton);
         southPanel.add(this.exitButton);
@@ -67,7 +78,7 @@ public class CommandArea extends JPanel {
         this.searchButton.addActionListener(l -> {
             if (this.isInputValid()) {
                 this.inputGuiListeners.forEach(listener -> listener.onSearch(
-                        this,
+                        (SearcherType) this.searcherTypeComboBox.getSelectedItem(),
                         this.boxSite.getText(),
                         this.boxWord.getText(),
                         Integer.parseInt(this.boxDepth.getText())));

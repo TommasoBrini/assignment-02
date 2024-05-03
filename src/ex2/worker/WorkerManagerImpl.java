@@ -3,9 +3,9 @@ package ex2.worker;
 import ex2.core.component.DataEvent;
 import ex2.core.component.History;
 import ex2.core.component.concreate.HistoryImpl;
+import ex2.core.component.searcher.SearcherType;
 import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
-import ex2.core.component.searcher.SearcherType;
 import ex2.server.Server;
 import ex2.worker.concreate.EventLoopImpl;
 
@@ -16,17 +16,13 @@ public class WorkerManagerImpl implements WorkerManager {
     final private History history;
     final private LogicWorker worker;
 
-    public WorkerManagerImpl(final SearcherType searcherType) {
+    public WorkerManagerImpl() {
         this.server = new Server();
-        this.worker = new EventLoopImpl(searcherType);
+        this.worker = new EventLoopImpl();
         this.history = new HistoryImpl();
 
         this.worker.addModelListener(this.history);
         this.server.run();
-    }
-
-    public WorkerManagerImpl() {
-        this(SearcherType.LOCAL);
     }
 
     @Override
@@ -45,8 +41,8 @@ public class WorkerManagerImpl implements WorkerManager {
     }
 
     @Override
-    public void startSearch(final DataEvent dataEvent) {
-        this.worker.startSearch(dataEvent);
+    public void startSearch(final SearcherType searcherType, final DataEvent dataEvent) {
+        this.worker.startSearch(searcherType, dataEvent);
     }
 
     @Override

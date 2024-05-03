@@ -1,5 +1,6 @@
 package ex2.gui.area;
 
+import ex2.core.component.searcher.SearcherType;
 import ex2.core.listener.InputGuiListener;
 import ex2.utils.PanelUtils;
 
@@ -14,10 +15,12 @@ public class HistoryArea extends JPanel implements InputGuiListener {
     private static final String CLEAR = "Clear";
     private static final int INDEX_ADD_BUTTON_IN_PANEL = 0;
 
+    private final CommandArea commandArea;
     private final JPanel recordPanel;
     private final JButton clearButton;
 
-    public HistoryArea() {
+    public HistoryArea(final CommandArea commandArea) {
+        this.commandArea = commandArea;
         this.clearButton = new JButton(CLEAR);
         this.recordPanel = new JPanel();
 
@@ -53,7 +56,7 @@ public class HistoryArea extends JPanel implements InputGuiListener {
         this.recordPanel.repaint();
     }
 
-    public void append(final CommandArea commandArea, final String site, final String word, final String depth) {
+    public void append(final String site, final String word, final String depth) {
         final JButton button = new JButton();
         button.setMaximumSize(new Dimension(HISTORY_AREA_DIMENSION.width, HISTORY_BUTTON_HEIGHT));
 
@@ -72,9 +75,9 @@ public class HistoryArea extends JPanel implements InputGuiListener {
         button.add(mainPanel);
 
         button.addActionListener(l -> {
-            commandArea.setSiteBoxText(site);
-            commandArea.setWordBoxText(word);
-            commandArea.setDepthBoxText(depth);
+            this.commandArea.setSiteBoxText(site);
+            this.commandArea.setWordBoxText(word);
+            this.commandArea.setDepthBoxText(depth);
         });
 
         this.recordPanel.add(button, INDEX_ADD_BUTTON_IN_PANEL);
@@ -83,8 +86,8 @@ public class HistoryArea extends JPanel implements InputGuiListener {
     }
 
     @Override
-    public void onSearch(final CommandArea commandArea, final String site, final String word, final int maxDepth) {
-        this.append(commandArea, site, word, String.valueOf(maxDepth));
+    public void onSearch(final SearcherType searcherType, final String site, final String word, final int maxDepth) {
+        this.append(site, word, String.valueOf(maxDepth));
     }
 
     @Override

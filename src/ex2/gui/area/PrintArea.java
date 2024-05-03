@@ -1,5 +1,6 @@
 package ex2.gui.area;
 
+import ex2.core.component.searcher.SearcherType;
 import ex2.core.listener.InputGuiListener;
 
 import javax.swing.*;
@@ -30,7 +31,7 @@ public class PrintArea extends JScrollPane implements InputGuiListener {
     }
 
     @Override
-    public void onSearch(final CommandArea commandArea, final String site, final String word, final int maxDepth) {
+    public void onSearch(final SearcherType searcherType, final String site, final String word, final int maxDepth) {
         this.printArea.setText("");
     }
 

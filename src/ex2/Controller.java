@@ -2,11 +2,11 @@ package ex2;
 
 import ex2.core.component.DataEvent;
 import ex2.core.component.concreate.DataEventImpl;
+import ex2.core.component.searcher.SearcherType;
 import ex2.core.listener.InputGuiListener;
 import ex2.worker.WorkerManager;
 import ex2.worker.WorkerManagerImpl;
 import ex2.gui.GUISearchWord;
-import ex2.gui.area.CommandArea;
 
 public class Controller implements InputGuiListener {
     final private GUISearchWord gui;
@@ -27,9 +27,9 @@ public class Controller implements InputGuiListener {
     }
 
     @Override
-    public void onSearch(final CommandArea commandArea, final String site, final String word, final int maxDepth) {
+    public void onSearch(final SearcherType searcherType, final String site, final String word, final int maxDepth) {
         final DataEvent dataEvent = new DataEventImpl(site, word, maxDepth, 0);
-        this.workerManager.startSearch(dataEvent);
+        this.workerManager.startSearch(searcherType, dataEvent);
     }
 
     @Override
