@@ -1,4 +1,4 @@
-package ex2.core.component.searcher.concreate;
+package ex2.core.component.searcher.concrete;
 
 import ex2.core.component.DataEvent;
 import ex2.core.component.concrete.DataEventImpl;

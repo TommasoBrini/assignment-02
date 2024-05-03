@@ -5,8 +5,8 @@ import ex2.core.component.searcher.Searcher;
 import ex2.core.component.FactorySearcher;
 import ex2.core.component.searcher.SearcherType;
 import ex2.core.component.searcher.SearcherWorker;
-import ex2.core.component.searcher.concreate.SearchLocal;
-import ex2.core.component.searcher.concreate.SearcherWeb;
+import ex2.core.component.searcher.concrete.SearchLocal;
+import ex2.core.component.searcher.concrete.SearcherWeb;
 
 public class SimpleFactory implements FactorySearcher {
 
