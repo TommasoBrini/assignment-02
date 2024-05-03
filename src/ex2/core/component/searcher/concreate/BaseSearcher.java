@@ -72,6 +72,6 @@ public abstract class BaseSearcher {
 
     @Override
     public String toString() {
-        return "CurrentDepth[" + this.currentDepth() + "] maxDepth[" + this.maxDepth() + "]";
+        return "Url->"+ this.url() + " CurrentDepth[" + this.currentDepth() + "] maxDepth[" + this.maxDepth() + "]";
     }
 }
