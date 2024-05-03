@@ -1,7 +1,8 @@
-package ex2.core.searcher;
+package ex2.core.component.searcher.concreate;
 
-import ex2.core.dataEvent.DataEvent;
-import ex2.core.dataEvent.DataEventImpl;
+import ex2.core.component.DataEvent;
+import ex2.core.component.concreate.DataEventImpl;
+import ex2.core.component.searcher.SearcherWorker;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -59,7 +60,6 @@ public abstract class BaseSearcher {
 
     public int countWord() {
         final Elements texts = this.document().select("body");
-        //System.out.println(texts.stream().map(Element::text).toList());
         return (int) texts.stream().map(Element::text).flatMap(text -> Arrays.stream(text.split("\\s+"))).filter(word -> word.equals(this.word())).count();
     }
 

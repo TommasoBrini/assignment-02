@@ -1,14 +1,17 @@
-package ex2.worker.eventLoop;
+package ex2.worker.concreate;
 
-import ex2.core.CounterSearch;
-import ex2.core.dataEvent.DataEvent;
-import ex2.core.dataEvent.DataEventImpl;
+import ex2.core.component.CounterSearch;
+import ex2.core.component.FactorySearcher;
+import ex2.core.component.concreate.CounterSearchImpl;
+import ex2.core.component.DataEvent;
+import ex2.core.component.concreate.DataEventImpl;
 import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
-import ex2.core.searcher.Searcher;
-import ex2.core.searcher.SearcherFactory;
-import ex2.core.searcher.SearcherType;
-import ex2.core.searcher.SearcherWorker;
+import ex2.core.component.searcher.Searcher;
+import ex2.core.component.searcher.factory.SimpleFactory;
+import ex2.core.component.searcher.SearcherType;
+import ex2.core.component.searcher.SearcherWorker;
+import ex2.worker.LogicWorker;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
@@ -18,12 +21,12 @@ import io.vertx.uritemplate.UriTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventLoopImpl extends AbstractVerticle implements EventLoop, SearcherWorker {
+public class EventLoopImpl extends AbstractVerticle implements LogicWorker, SearcherWorker {
     private static final String EVENT_URL = "searchUrls";
     private final List<ViewListener> viewListeners;
     private final List<ModelListener> modelListeners;
     private final CounterSearch counterSearch;
-    private final SearcherFactory searcherFactory;
+    private final FactorySearcher searcherFactory;
     private final WebClient webClient;
     private SearcherType searcherType;
 
@@ -31,8 +34,8 @@ public class EventLoopImpl extends AbstractVerticle implements EventLoop, Search
         this.init(Vertx.vertx(), null);
         this.viewListeners = new ArrayList<>();
         this.modelListeners = new ArrayList<>();
-        this.counterSearch = new CounterSearch();
-        this.searcherFactory = new SearcherFactory();
+        this.counterSearch = new CounterSearchImpl();
+        this.searcherFactory = new SimpleFactory();
         this.webClient = WebClient.create(this.vertx);
         this.searcherType = SearcherType.LOCAL;
         this.setupConsumers();

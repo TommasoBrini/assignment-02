@@ -1,9 +1,8 @@
-package ex2.core.searcher.concreate;
+package ex2.core.component.searcher.concreate;
 
-import ex2.core.dataEvent.DataEvent;
-import ex2.core.searcher.BaseSearcher;
-import ex2.core.searcher.Searcher;
-import ex2.core.searcher.SearcherWorker;
+import ex2.core.component.DataEvent;
+import ex2.core.component.searcher.Searcher;
+import ex2.core.component.searcher.SearcherWorker;
 import ex2.server.Server;
 import org.jsoup.select.Elements;
 

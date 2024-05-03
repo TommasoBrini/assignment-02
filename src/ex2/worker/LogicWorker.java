@@ -1,6 +1,6 @@
 package ex2.worker;
 
-import ex2.core.dataEvent.DataEvent;
+import ex2.core.component.DataEvent;
 import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
 

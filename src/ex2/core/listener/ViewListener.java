@@ -1,6 +1,6 @@
 package ex2.core.listener;
 
-import ex2.core.searcher.Searcher;
+import ex2.core.component.searcher.Searcher;
 
 public interface ViewListener {
 

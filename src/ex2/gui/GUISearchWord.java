@@ -1,9 +1,9 @@
 package ex2.gui;
 
-import ex2.core.dataEvent.DataEvent;
+import ex2.core.component.DataEvent;
 import ex2.gui.area.PrintArea;
 import ex2.core.listener.InputGuiListener;
-import ex2.core.searcher.Searcher;
+import ex2.core.component.searcher.Searcher;
 import ex2.gui.area.CommandArea;
 import ex2.gui.area.HistoryArea;
 import ex2.core.listener.ViewListener;

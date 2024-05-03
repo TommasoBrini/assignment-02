@@ -1,7 +1,7 @@
 package ex2;
 
-import ex2.core.dataEvent.DataEvent;
-import ex2.core.dataEvent.DataEventImpl;
+import ex2.core.component.DataEvent;
+import ex2.core.component.concreate.DataEventImpl;
 import ex2.core.listener.InputGuiListener;
 import ex2.worker.WorkerManager;
 import ex2.worker.WorkerManagerImpl;

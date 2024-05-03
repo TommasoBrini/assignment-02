@@ -1,6 +1,6 @@
 package ex2.core.listener;
 
-import ex2.core.dataEvent.DataEvent;
+import ex2.core.component.DataEvent;
 
 public interface ModelListener {
 

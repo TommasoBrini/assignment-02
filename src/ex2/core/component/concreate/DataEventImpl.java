@@ -1,5 +1,6 @@
-package ex2.core.dataEvent;
+package ex2.core.component.concreate;
 
+import ex2.core.component.DataEvent;
 import io.vertx.core.json.JsonObject;
 
 public record DataEventImpl(String url, String word, int maxDepth, int currentDepth, long duration) implements DataEvent {

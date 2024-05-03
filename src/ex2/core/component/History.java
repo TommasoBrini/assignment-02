@@ -1,6 +1,5 @@
-package ex2.core.history;
+package ex2.core.component;
 
-import ex2.core.dataEvent.DataEvent;
 import ex2.core.listener.ModelListener;
 
 import java.util.List;
