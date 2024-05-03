@@ -13,8 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static ex2.utils.PathUtils.HISTORY_PATH;
+
 public class HistoryImpl implements History {
-    private static final String HISTORY_PATH = "res/history.json";
     private static final String HISTORY_KEY = "history";
     private static final int POSITION_ADD_JSON = 0;
     private static final int MAX_SIZE = 5;
@@ -70,6 +71,7 @@ public class HistoryImpl implements History {
     @Override
     public List<DataEvent> lastHistory() {
         final int skip = this.history.size() - MAX_SIZE;
+        if (skip < 0) return List.of();
         return this.history.stream().skip(skip).toList();
     }
 
