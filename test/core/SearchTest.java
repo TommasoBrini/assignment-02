@@ -5,6 +5,7 @@ import ex2.core.component.concrete.DataEventImpl;
 import ex2.core.component.searcher.SearcherType;
 import ex2.worker.WorkerManager;
 import ex2.worker.WorkerManagerImpl;
+import ex2.worker.concrete.WorkerStrategy;
 import org.junit.Test;
 
 public class SearchTest {
@@ -15,7 +16,7 @@ public class SearchTest {
     public void findHrefLocal() {
         final WorkerManager workerManager = new WorkerManagerImpl();
         final DataEvent dataEvent = new DataEventImpl(LOCAL_URL, "API", 4, 0);
-        workerManager.startSearch(SearcherType.LOCAL, dataEvent);
+        workerManager.startSearch(WorkerStrategy.EVENT_LOOP, SearcherType.LOCAL, dataEvent);
 
         try {
             Thread.sleep(10000);
@@ -30,7 +31,7 @@ public class SearchTest {
         final String word = "Buongiorno";
         final int maxDepth = 6;
         final DataEvent dataEvent = new DataEventImpl(WEB_URL, word, maxDepth, 0);
-        workerManager.startSearch(SearcherType.WEB, dataEvent);
+        workerManager.startSearch(WorkerStrategy.VIRTUAL_THREAD,SearcherType.WEB, dataEvent);
 
         try {
             Thread.sleep(10000);
