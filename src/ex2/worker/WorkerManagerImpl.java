@@ -9,19 +9,21 @@ import ex2.core.listener.ViewListener;
 import ex2.server.Server;
 import ex2.worker.concrete.EventLoopImpl;
 import ex2.worker.concrete.VirtualThreadsImpl;
-import ex2.worker.concrete.WorkerStrategy;
 
 import java.util.List;
 
 public class WorkerManagerImpl implements WorkerManager {
     final private Server server;
     final private History history;
-    private LogicWorker worker;
+    final private LogicWorker worker;
 
     public WorkerManagerImpl() {
         this.server = new Server();
         this.worker = new EventLoopImpl();
+        //this.worker = new VirtualThreadsImpl();
         this.history = new HistoryImpl();
+
+        this.worker.addModelListener(this.history);
         this.server.run();
     }
 
@@ -53,15 +55,4 @@ public class WorkerManagerImpl implements WorkerManager {
         System.exit(0);
     }
 
-    @Override
-    public void setStrategy(WorkerStrategy workerStrategy) {
-        if (workerStrategy == WorkerStrategy.EVENT_LOOP) {
-            this.worker = new EventLoopImpl();
-            System.out.println("Event Loop");
-        } else if (workerStrategy == WorkerStrategy.VIRTUAL_THREADS) {
-            this.worker = new VirtualThreadsImpl();
-            System.out.println("Virtual Threads");
-        }
-        this.worker.addModelListener(this.history);
-    }
 }
