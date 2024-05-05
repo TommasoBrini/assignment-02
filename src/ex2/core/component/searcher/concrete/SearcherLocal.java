@@ -2,6 +2,7 @@ package ex2.core.component.searcher.concrete;
 
 import ex2.core.component.DataEvent;
 import ex2.core.component.searcher.Searcher;
+import ex2.core.component.searcher.SearcherType;
 import ex2.core.component.searcher.SearcherWorker;
 import ex2.server.Server;
 import org.jsoup.select.Elements;
@@ -32,4 +33,8 @@ public class SearcherLocal extends BaseSearcher implements Searcher {
         return urls;
     }
 
+    @Override
+    public SearcherType searcherType() {
+        return SearcherType.LOCAL;
+    }
 }

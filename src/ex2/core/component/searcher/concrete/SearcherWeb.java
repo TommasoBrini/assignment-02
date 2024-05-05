@@ -2,6 +2,7 @@ package ex2.core.component.searcher.concrete;
 
 import ex2.core.component.DataEvent;
 import ex2.core.component.searcher.Searcher;
+import ex2.core.component.searcher.SearcherType;
 import ex2.core.component.searcher.SearcherWorker;
 import org.jsoup.select.Elements;
 
@@ -27,4 +28,8 @@ public class SearcherWeb extends BaseSearcher implements Searcher {
     }
 
 
+    @Override
+    public SearcherType searcherType() {
+        return SearcherType.WEB;
+    }
 }

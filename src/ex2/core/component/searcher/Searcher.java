@@ -17,4 +17,6 @@ public interface Searcher {
     int countUrl();
 
     void addSearchFindUrls();
+
+    SearcherType searcherType();
 }
