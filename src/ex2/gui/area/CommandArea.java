@@ -89,10 +89,10 @@ public class CommandArea extends JPanel {
         this.searchButton.addActionListener(l -> {
             if (this.isInputValid()) {
                 this.inputGuiListeners.forEach(listener -> listener.onSearch(
+                        this.workerStrategy(),
                         this.searcherType(),
                         this.boxSite.getText(),
-                        this.boxWord.getText(),
-                        Integer.parseInt(this.boxDepth.getText())));
+                        this.boxWord.getText(), Integer.parseInt(this.boxDepth.getText())));
                 this.disableCommand();
             } else {
                 MessageDialogUtils.createError(this, "Invalid input");
@@ -106,8 +106,25 @@ public class CommandArea extends JPanel {
         if (Objects.nonNull(commandListener)) this.inputGuiListeners.add(commandListener);
     }
 
+    public void setSiteBoxText(final String text) {
+        this.boxSite.setText(text);
+    }
+
+    public void setWordBoxText(final String word) {
+        this.boxWord.setText(word);
+    }
+
+    public void setDepthBoxText(final String depth) {
+        this.boxDepth.setText(depth);
+    }
+
+
     private SearcherType searcherType() {
         return (SearcherType) this.searcherTypeComboBox.getSelectedItem();
+    }
+
+    private WorkerStrategy workerStrategy() {
+        return (WorkerStrategy) this.workerStrategyComboBox.getSelectedItem();
     }
 
     private boolean isUrlValid() {
@@ -138,18 +155,6 @@ public class CommandArea extends JPanel {
         this.boxSite.clear();
         this.boxWord.clear();
         this.boxDepth.clear();
-    }
-
-    public void setSiteBoxText(final String text) {
-        this.boxSite.setText(text);
-    }
-
-    public void setWordBoxText(final String word) {
-        this.boxWord.setText(word);
-    }
-
-    public void setDepthBoxText(final String depth) {
-        this.boxDepth.setText(depth);
     }
 
     private void disableCommand() {

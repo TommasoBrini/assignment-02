@@ -6,12 +6,11 @@ import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
 
 public interface LogicWorker {
+    void startSearch(final SearcherType searcherType, final DataEvent dataEvent);
 
     void addViewListener(final ViewListener viewListener);
 
     void addModelListener(final ModelListener modelListener);
-
-    void startSearch(final SearcherType searcherType, final DataEvent dataEvent);
 
     void stop();
 

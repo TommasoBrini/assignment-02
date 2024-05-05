@@ -7,23 +7,28 @@ import ex2.core.component.searcher.SearcherType;
 import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
 import ex2.server.Server;
-import ex2.worker.concrete.EventLoopImpl;
-import ex2.worker.concrete.VirtualThreadsImpl;
+import ex2.worker.concrete.WorkerStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkerManagerImpl implements WorkerManager {
-    final private Server server;
-    final private History history;
-    final private LogicWorker worker;
+    private final Server server;
+    private final History history;
+    private final List<ViewListener> viewListeners;
+    private final  List<ModelListener> modelListeners;
+
+    private final FactoryWorker factoryWorker;
+    private LogicWorker worker;
 
     public WorkerManagerImpl() {
         this.server = new Server();
-        this.worker = new EventLoopImpl();
-        //this.worker = new VirtualThreadsImpl();
         this.history = new HistoryImpl();
+        this.viewListeners = new ArrayList<>();
+        this.modelListeners = new ArrayList<>();
+        this.factoryWorker = new FactoryWorker.FactoryWorkerImpl();
 
-        this.worker.addModelListener(this.history);
+        this.addModelListener(this.history);
         this.server.run();
     }
 
@@ -33,18 +38,21 @@ public class WorkerManagerImpl implements WorkerManager {
     }
 
     @Override
+    public void startSearch(final WorkerStrategy workerStrategy, final SearcherType searcherType, final DataEvent dataEvent) {
+        this.worker = this.factoryWorker.createWorker(workerStrategy);
+        this.modelListeners.forEach(this.worker::addModelListener);
+        this.viewListeners.forEach(this.worker::addViewListener);
+        this.worker.startSearch(searcherType, dataEvent);
+    }
+
+    @Override
     public void addViewListener(final ViewListener viewListener) {
-        this.worker.addViewListener(viewListener);
+        this.viewListeners.add(viewListener);
     }
 
     @Override
     public void addModelListener(final ModelListener modelListener) {
-        this.worker.addModelListener(modelListener);
-    }
-
-    @Override
-    public void startSearch(final SearcherType searcherType, final DataEvent dataEvent) {
-        this.worker.startSearch(searcherType, dataEvent);
+        this.modelListeners.add(modelListener);
     }
 
     @Override

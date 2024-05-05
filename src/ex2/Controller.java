@@ -7,6 +7,7 @@ import ex2.core.listener.InputGuiListener;
 import ex2.worker.WorkerManager;
 import ex2.worker.WorkerManagerImpl;
 import ex2.gui.GUISearchWord;
+import ex2.worker.concrete.WorkerStrategy;
 
 public class Controller implements InputGuiListener {
     final private GUISearchWord gui;
@@ -27,9 +28,9 @@ public class Controller implements InputGuiListener {
     }
 
     @Override
-    public void onSearch(final SearcherType searcherType, final String site, final String word, final int maxDepth) {
+    public void onSearch(final WorkerStrategy workerStrategy, final SearcherType searcherType, final String site, final String word, final int maxDepth) {
         final DataEvent dataEvent = new DataEventImpl(site, word, maxDepth, 0);
-        this.workerManager.startSearch(searcherType, dataEvent);
+        this.workerManager.startSearch(workerStrategy, searcherType, dataEvent);
     }
 
     @Override
