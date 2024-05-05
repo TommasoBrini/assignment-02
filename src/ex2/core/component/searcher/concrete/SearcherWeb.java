@@ -7,7 +7,6 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class SearcherWeb extends BaseSearcher implements Searcher {
 
@@ -22,8 +21,6 @@ public class SearcherWeb extends BaseSearcher implements Searcher {
             final Elements links = this.document().select("body a");
             findUrls.addAll(links.stream().map(l -> l.attr("href"))
                     .filter(l -> l.startsWith("http"))
-//                    .filter(l -> !l.contains("twitter.com"))
-//                    .filter(l -> !l.contains("ru"))
                     .toList());
         }
         return findUrls;

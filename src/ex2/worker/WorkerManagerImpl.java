@@ -8,6 +8,7 @@ import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
 import ex2.server.Server;
 import ex2.worker.concrete.EventLoopImpl;
+import ex2.worker.concrete.VirtualThreadsImpl;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class WorkerManagerImpl implements WorkerManager {
     public WorkerManagerImpl() {
         this.server = new Server();
         this.worker = new EventLoopImpl();
+        //this.worker = new VirtualThreadsImpl();
         this.history = new HistoryImpl();
 
         this.worker.addModelListener(this.history);
