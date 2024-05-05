@@ -9,7 +9,7 @@ public final class GuiConstants {
     public static final Dimension HISTORY_AREA_DIMENSION = new Dimension(350, 450);
 
     // BUTTON
-    public static final int HISTORY_BUTTON_HEIGHT = 45;
+    public static final int HISTORY_BUTTON_HEIGHT = 65;
 
     // STRING
     public static final String URL = "URL: ";

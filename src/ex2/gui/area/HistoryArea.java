@@ -65,17 +65,20 @@ public class HistoryArea extends JPanel implements InputGuiListener {
 
         final JPanel mainPanel = PanelUtils.createPanelWithBorderLayout();
         final JPanel southPanel = PanelUtils.createPanelWithBorderLayout();
-        final JPanel panel = PanelUtils.createPanelWithFlowLayout(FlowLayout.CENTER, 20, INDEX_ADD_BUTTON_IN_PANEL);
+        final JPanel panelInfo = PanelUtils.createPanelWithFlowLayout(FlowLayout.CENTER, 20, INDEX_ADD_BUTTON_IN_PANEL);
+        final JPanel panelData = PanelUtils.createPanelWithFlowLayout(FlowLayout.CENTER, 20, INDEX_ADD_BUTTON_IN_PANEL);
 
-        panel.add(new JLabel(WORD + word));
-        panel.add(new JLabel(DEPTH + depth));
-        panel.add(new JLabel(WORKER + workerStrategy));
-        panel.add(new JLabel(SEARCHER + searcherType));
-        southPanel.add(panel, BorderLayout.CENTER);
+        panelInfo.add(new JLabel(WORD + word));
+        panelInfo.add(new JLabel(DEPTH + depth));
+        southPanel.add(panelInfo, BorderLayout.CENTER);
+
+        panelData.add(new JLabel(WORKER + workerStrategy));
+        panelData.add(new JLabel(SEARCHER + searcherType));
+        southPanel.add(panelData, BorderLayout.SOUTH);
 
         mainPanel.setMaximumSize(new Dimension(HISTORY_AREA_DIMENSION.width, HISTORY_BUTTON_HEIGHT));
         mainPanel.add(new JLabel(URL + site), BorderLayout.NORTH);
-        mainPanel.add(southPanel, BorderLayout.SOUTH);
+        mainPanel.add(southPanel, BorderLayout.CENTER);
 
         button.add(mainPanel);
 
