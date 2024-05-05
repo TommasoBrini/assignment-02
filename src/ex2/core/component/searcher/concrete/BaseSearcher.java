@@ -25,13 +25,13 @@ public abstract class BaseSearcher {
         this.document = Jsoup.parse(body);
         this.duration = duration;
         this.urlsLazy = new Supplier<>() {
-            List<String> value;
+            volatile List<String> value;
             @Override
             public List<String> get() {
                 if (this.value == null) {
                     synchronized (this) {
                         if (this.value == null) {
-                            this.value = getUrls(); // Calcola il valore lazy
+                            this.value = BaseSearcher.this.getUrls(); // Calcola il valore lazy
                         }
                     }
                 }
@@ -44,7 +44,7 @@ public abstract class BaseSearcher {
 
     protected List<String> findUrls(){
         return this.urlsLazy.get();
-    };
+    }
 
     protected Document document() {
         return this.document;
@@ -85,7 +85,7 @@ public abstract class BaseSearcher {
 
     public void addSearchFindUrls() {
         this.findUrls().forEach(url -> {
-            final DataEvent dt = new DataEventImpl(url, this.word(), this.maxDepth(), this.currentDepth() + 1, this.duration());
+            final DataEvent dt = new DataEventImpl(this.data.workerStrategy(),this.data.searcherType(), url, this.word(), this.maxDepth(), this.currentDepth() + 1, this.duration());
             this.searcherWorker().addEventUrl(dt);
         });
     }

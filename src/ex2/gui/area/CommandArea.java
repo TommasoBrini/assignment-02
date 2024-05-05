@@ -1,12 +1,14 @@
 package ex2.gui.area;
 
+import ex2.core.component.DataEvent;
+import ex2.core.component.concrete.DataEventImpl;
 import ex2.core.component.searcher.SearcherType;
-import ex2.server.Server;
-import ex2.utils.UrlUtils;
 import ex2.core.listener.InputGuiListener;
+import ex2.gui.components.TextBox;
+import ex2.server.Server;
 import ex2.utils.MessageDialogUtils;
 import ex2.utils.PanelUtils;
-import ex2.gui.components.TextBox;
+import ex2.utils.UrlUtils;
 import ex2.worker.concrete.WorkerStrategy;
 
 import javax.swing.*;
@@ -26,7 +28,7 @@ public class CommandArea extends JPanel {
     private static final int WORD_COLUMNS_TEXT = 15;
     private static final int DEPTH_COLUMNS_TEXT = 4;
 
-    private final TextBox boxSite;
+    private final TextBox boxUrl;
     private final TextBox boxWord;
     private final TextBox boxDepth;
 
@@ -45,7 +47,7 @@ public class CommandArea extends JPanel {
     public CommandArea() {
         super(new BorderLayout());
         this.setBackground(Color.WHITE);
-        this.boxSite = new TextBox(URL, SITE_COLUMNS_TEXT);
+        this.boxUrl = new TextBox(URL, SITE_COLUMNS_TEXT);
         this.boxWord = new TextBox(WORD, WORD_COLUMNS_TEXT);
         this.boxDepth = new TextBox(DEPTH, DEPTH_COLUMNS_TEXT);
 
@@ -67,7 +69,7 @@ public class CommandArea extends JPanel {
         this.inputGuiListeners = new ArrayList<>();
 
         final JPanel northPanel = PanelUtils.createPanelWithFlowLayout();
-        northPanel.add(this.boxSite);
+        northPanel.add(this.boxUrl);
         final JPanel centerPanel = PanelUtils.createPanelWithFlowLayout();
         centerPanel.add(this.boxWord);
         centerPanel.add(this.boxDepth);
@@ -88,11 +90,10 @@ public class CommandArea extends JPanel {
     private void setupListener() {
         this.searchButton.addActionListener(l -> {
             if (this.isInputValid()) {
-                this.inputGuiListeners.forEach(listener -> listener.onSearch(
-                        this.workerStrategy(),
-                        this.searcherType(),
-                        this.boxSite.getText(),
-                        this.boxWord.getText(), Integer.parseInt(this.boxDepth.getText())));
+                final DataEvent dataEvent = new DataEventImpl(
+                        this.workerStrategy(), this.searcherType(),
+                        this.boxUrl.getText(), this.boxWord.getText(), Integer.parseInt(this.boxDepth.getText()), 0);
+                this.inputGuiListeners.forEach(listener -> listener.onSearch(dataEvent));
                 this.disableCommand();
             } else {
                 MessageDialogUtils.createError(this, "Invalid input");
@@ -107,7 +108,7 @@ public class CommandArea extends JPanel {
     }
 
     public void setSiteBoxText(final String text) {
-        this.boxSite.setText(text);
+        this.boxUrl.setText(text);
     }
 
     public void setWordBoxText(final String word) {
@@ -135,7 +136,7 @@ public class CommandArea extends JPanel {
     }
 
     private boolean isUrlValid() {
-        final String url = this.boxSite.getText();
+        final String url = this.boxUrl.getText();
         final boolean checkSearcher = !SearcherType.LOCAL.equals(this.searcherType()) || url.contains(Server.LOCAL_PATH);
         return !url.isBlank() && checkSearcher && UrlUtils.isValidURL(url);
     }
@@ -159,7 +160,7 @@ public class CommandArea extends JPanel {
     }
 
     private void clearText() {
-        this.boxSite.clear();
+        this.boxUrl.clear();
         this.boxWord.clear();
         this.boxDepth.clear();
     }

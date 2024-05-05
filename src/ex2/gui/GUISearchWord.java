@@ -47,7 +47,7 @@ public class GUISearchWord extends JFrame implements ViewListener {
     }
 
     public void start(final List<DataEvent> history) {
-        history.forEach(data -> this.historyArea.append(WorkerStrategy.EVENT_LOOP, SearcherType.LOCAL, data.url(), data.word(), "" + data.maxDepth()));
+        history.forEach(data -> this.historyArea.append(data.workerStrategy(), data.searcherType(), data.url(), data.word(), "" + data.maxDepth()));
         this.setVisible(true);
     }
 

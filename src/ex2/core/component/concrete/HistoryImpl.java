@@ -70,7 +70,7 @@ public class HistoryImpl implements History {
 
     @Override
     public List<DataEvent> lastHistory() {
-        final int skip = Math.abs(this.history.size() - MAX_SIZE);
+        final int skip = Math.max(this.history.size() - MAX_SIZE, 0);
         return this.history.stream().skip(skip).toList();
     }
 
@@ -95,7 +95,7 @@ public class HistoryImpl implements History {
     public void onFinish() {
         this.searchEvent.ifPresent(event -> {
             final long duration = System.currentTimeMillis() - this.time;
-            final DataEvent dataEvent = new DataEventImpl(event.url(), event.word(), event.maxDepth(), event.currentDepth(), duration);
+            final DataEvent dataEvent = new DataEventImpl(event.workerStrategy(), event.searcherType(), event.url(), event.word(), event.maxDepth(), event.currentDepth(), duration);
             this.append(dataEvent);
         });
     }

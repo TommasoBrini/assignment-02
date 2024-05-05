@@ -3,7 +3,6 @@ package ex2.worker;
 import ex2.core.component.DataEvent;
 import ex2.core.component.History;
 import ex2.core.component.concrete.HistoryImpl;
-import ex2.core.component.searcher.SearcherType;
 import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
 import ex2.server.Server;
@@ -11,6 +10,7 @@ import ex2.worker.concrete.WorkerStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class WorkerManagerImpl implements WorkerManager {
     private final Server server;
@@ -39,16 +39,16 @@ public class WorkerManagerImpl implements WorkerManager {
 
     @Override
     public void setupWorker(final WorkerStrategy workerStrategy) {
-        if (this.worker.strategy().equals(workerStrategy)) return;
+        if (Objects.nonNull(this.worker) && workerStrategy.equals(this.worker.strategy())) return;
         this.worker = this.factoryWorker.createWorker(workerStrategy);
         this.modelListeners.forEach(this.worker::addModelListener);
         this.viewListeners.forEach(this.worker::addViewListener);
     }
 
     @Override
-    public void startSearch(final WorkerStrategy workerStrategy, final SearcherType searcherType, final DataEvent dataEvent) {
-        this.setupWorker(workerStrategy);
-        this.worker.startSearch(searcherType, dataEvent);
+    public void startSearch(final DataEvent dataEvent) {
+        this.setupWorker(dataEvent.workerStrategy());
+        this.worker.startSearch(dataEvent.searcherType(), dataEvent);
     }
 
     @Override

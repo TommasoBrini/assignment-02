@@ -1,5 +1,6 @@
 package ex2.gui.area;
 
+import ex2.core.component.DataEvent;
 import ex2.core.component.searcher.SearcherType;
 import ex2.core.listener.InputGuiListener;
 import ex2.utils.PanelUtils;
@@ -96,8 +97,8 @@ public class HistoryArea extends JPanel implements InputGuiListener {
     }
 
     @Override
-    public void onSearch(final WorkerStrategy workerStrategy, final SearcherType searcherType, final String site, final String word, final int maxDepth) {
-        this.append(workerStrategy, searcherType, site, word, String.valueOf(maxDepth));
+    public void onSearch(final DataEvent dataEvent) {
+        this.append(dataEvent.workerStrategy(), dataEvent.searcherType(), dataEvent.url(), dataEvent.word(), String.valueOf(dataEvent.maxDepth()));
     }
 
     @Override
