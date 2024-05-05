@@ -14,10 +14,15 @@ public class VirtualThreadsImpl extends AbstractWorker {
     }
 
     @Override
-    public void addEventUrl(DataEvent dataEvent) {
+    public void addEventUrl(final DataEvent dataEvent) {
         // lancio di un virtual threads per ogni dataEvent
-        executor.submit(() -> {
+        this.executor.submit(() -> {
             this.searchUrl(dataEvent);
         });
+    }
+
+    @Override
+    public WorkerStrategy strategy() {
+        return WorkerStrategy.VIRTUAL_THREAD;
     }
 }

@@ -39,7 +39,7 @@ public abstract class AbstractWorker extends AbstractVerticle implements LogicWo
     }
 
     @Override
-    public void startSearch(SearcherType searcherType, DataEvent dataEvent) {
+    public void startSearch(final SearcherType searcherType, final DataEvent dataEvent) {
         this.modelListeners.forEach(listener -> listener.onStart(dataEvent));
         this.searcherType = searcherType;
         this.counterSearch.reset();

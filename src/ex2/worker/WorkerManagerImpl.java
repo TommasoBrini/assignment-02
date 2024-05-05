@@ -16,7 +16,7 @@ public class WorkerManagerImpl implements WorkerManager {
     private final Server server;
     private final History history;
     private final List<ViewListener> viewListeners;
-    private final  List<ModelListener> modelListeners;
+    private final List<ModelListener> modelListeners;
 
     private final FactoryWorker factoryWorker;
     private LogicWorker worker;
@@ -39,6 +39,7 @@ public class WorkerManagerImpl implements WorkerManager {
 
     @Override
     public void setupWorker(final WorkerStrategy workerStrategy) {
+        if (this.worker.strategy().equals(workerStrategy)) return;
         this.worker = this.factoryWorker.createWorker(workerStrategy);
         this.modelListeners.forEach(this.worker::addModelListener);
         this.viewListeners.forEach(this.worker::addViewListener);

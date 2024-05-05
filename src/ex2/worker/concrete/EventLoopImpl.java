@@ -4,7 +4,7 @@ import ex2.core.component.DataEvent;
 import ex2.core.component.concrete.DataEventImpl;
 import io.vertx.core.json.JsonObject;
 
-public class EventLoopImpl extends AbstractWorker{
+public class EventLoopImpl extends AbstractWorker {
     private static final String EVENT_URL = "searchUrls";
 
     public EventLoopImpl() {
@@ -26,4 +26,8 @@ public class EventLoopImpl extends AbstractWorker{
         this.vertx.eventBus().send(EVENT_URL, dataEvent.toJson());
     }
 
+    @Override
+    public WorkerStrategy strategy() {
+        return WorkerStrategy.EVENT_LOOP;
+    }
 }
