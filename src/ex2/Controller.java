@@ -24,6 +24,7 @@ public class Controller implements InputGuiListener {
     }
 
     public void onStart() {
+        this.workerManager.setupWorker(this.gui.getWorkerStrategy());
         this.gui.start(this.workerManager.lastHistory());
     }
 

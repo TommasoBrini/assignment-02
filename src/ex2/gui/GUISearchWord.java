@@ -2,12 +2,14 @@ package ex2.gui;
 
 import ex2.core.component.DataEvent;
 import ex2.core.component.searcher.Searcher;
+import ex2.core.component.searcher.SearcherType;
 import ex2.core.listener.InputGuiListener;
 import ex2.core.listener.ViewListener;
 import ex2.gui.area.CommandArea;
 import ex2.gui.area.HistoryArea;
 import ex2.gui.area.PrintArea;
 import ex2.utils.MessageDialogUtils;
+import ex2.worker.concrete.WorkerStrategy;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,8 +47,12 @@ public class GUISearchWord extends JFrame implements ViewListener {
     }
 
     public void start(final List<DataEvent> history) {
-        history.forEach(data -> this.historyArea.append(data.url(), data.word(), "" + data.maxDepth()));
+        history.forEach(data -> this.historyArea.append(WorkerStrategy.EVENT_LOOP, SearcherType.LOCAL, data.url(), data.word(), "" + data.maxDepth()));
         this.setVisible(true);
+    }
+
+    public WorkerStrategy getWorkerStrategy() {
+        return this.commandArea.workerStrategy();
     }
 
     public void addInputGuiListener(final InputGuiListener inputGuiListener) {
@@ -75,5 +81,6 @@ public class GUISearchWord extends JFrame implements ViewListener {
             MessageDialogUtils.createMessage(this, "Finish Search");
         });
     }
+
 
 }

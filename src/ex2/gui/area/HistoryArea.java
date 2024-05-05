@@ -15,6 +15,8 @@ public class HistoryArea extends JPanel implements InputGuiListener {
     private static final String HISTORY = "History";
     private static final String CLEAR = "Clear";
     private static final int INDEX_ADD_BUTTON_IN_PANEL = 0;
+    private static final String SEARCHER = "Searcher: ";
+    private static final String WORKER = "Worker: ";
 
     private final CommandArea commandArea;
     private final JPanel recordPanel;
@@ -57,7 +59,7 @@ public class HistoryArea extends JPanel implements InputGuiListener {
         this.recordPanel.repaint();
     }
 
-    public void append(final String site, final String word, final String depth) {
+    public void append(final WorkerStrategy workerStrategy, final SearcherType searcherType, final String site, final String word, final String depth) {
         final JButton button = new JButton();
         button.setMaximumSize(new Dimension(HISTORY_AREA_DIMENSION.width, HISTORY_BUTTON_HEIGHT));
 
@@ -67,6 +69,8 @@ public class HistoryArea extends JPanel implements InputGuiListener {
 
         panel.add(new JLabel(WORD + word));
         panel.add(new JLabel(DEPTH + depth));
+        panel.add(new JLabel(WORKER + workerStrategy));
+        panel.add(new JLabel(SEARCHER + searcherType));
         southPanel.add(panel, BorderLayout.CENTER);
 
         mainPanel.setMaximumSize(new Dimension(HISTORY_AREA_DIMENSION.width, HISTORY_BUTTON_HEIGHT));
@@ -76,6 +80,8 @@ public class HistoryArea extends JPanel implements InputGuiListener {
         button.add(mainPanel);
 
         button.addActionListener(l -> {
+            this.commandArea.setWorkerStrategy(workerStrategy);
+            this.commandArea.setSearcherType(searcherType);
             this.commandArea.setSiteBoxText(site);
             this.commandArea.setWordBoxText(word);
             this.commandArea.setDepthBoxText(depth);
@@ -87,8 +93,8 @@ public class HistoryArea extends JPanel implements InputGuiListener {
     }
 
     @Override
-    public void onSearch(WorkerStrategy workerStrategy, final SearcherType searcherType, final String site, final String word, final int maxDepth) {
-        this.append(site, word, String.valueOf(maxDepth));
+    public void onSearch(final WorkerStrategy workerStrategy, final SearcherType searcherType, final String site, final String word, final int maxDepth) {
+        this.append(workerStrategy, searcherType, site, word, String.valueOf(maxDepth));
     }
 
     @Override

@@ -118,12 +118,19 @@ public class CommandArea extends JPanel {
         this.boxDepth.setText(depth);
     }
 
+    public void setWorkerStrategy(final WorkerStrategy workerStrategy) {
+        this.workerStrategyComboBox.setSelectedItem(workerStrategy);
+    }
+
+    public void setSearcherType(final SearcherType searcherType) {
+        this.searcherTypeComboBox.setSelectedItem(searcherType);
+    }
 
     private SearcherType searcherType() {
         return (SearcherType) this.searcherTypeComboBox.getSelectedItem();
     }
 
-    private WorkerStrategy workerStrategy() {
+    public WorkerStrategy workerStrategy() {
         return (WorkerStrategy) this.workerStrategyComboBox.getSelectedItem();
     }
 
@@ -166,4 +173,5 @@ public class CommandArea extends JPanel {
         this.searchButton.setEnabled(true);
         this.exitButton.setEnabled(true);
     }
+
 }

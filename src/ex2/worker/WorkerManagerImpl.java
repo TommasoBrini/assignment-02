@@ -38,10 +38,15 @@ public class WorkerManagerImpl implements WorkerManager {
     }
 
     @Override
-    public void startSearch(final WorkerStrategy workerStrategy, final SearcherType searcherType, final DataEvent dataEvent) {
+    public void setupWorker(final WorkerStrategy workerStrategy) {
         this.worker = this.factoryWorker.createWorker(workerStrategy);
         this.modelListeners.forEach(this.worker::addModelListener);
         this.viewListeners.forEach(this.worker::addViewListener);
+    }
+
+    @Override
+    public void startSearch(final WorkerStrategy workerStrategy, final SearcherType searcherType, final DataEvent dataEvent) {
+        this.setupWorker(workerStrategy);
         this.worker.startSearch(searcherType, dataEvent);
     }
 
