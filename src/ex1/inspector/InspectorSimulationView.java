@@ -3,7 +3,7 @@ package ex1.inspector;
 import ex1.simulation.InspectorSimulation;
 import ex1.simulation.SimulationManager;
 import ex1.simulation.SimulationType;
-import utils.ViewUtils;
+import ex1.utils.ViewUtils;
 
 import javax.swing.*;
 import java.awt.*;

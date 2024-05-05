@@ -5,7 +5,7 @@ import ex1.synchronizers.service.ExecutorType;
 import ex1.synchronizers.worker.master.MultiWorkerGeneric;
 import ex1.synchronizers.worker.master.MultiWorkerSpecific;
 import ex1.synchronizers.worker.master.WorkerType;
-import utils.ViewUtils;
+import ex1.utils.ViewUtils;
 
 import javax.swing.*;
 import java.awt.*;

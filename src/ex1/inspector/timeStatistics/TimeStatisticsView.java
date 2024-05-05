@@ -1,9 +1,8 @@
 package ex1.inspector.timeStatistics;
 
-import utils.ViewUtils;
+import ex1.utils.ViewUtils;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class TimeStatisticsView extends JPanel {
     public static final String TIMES = "Times: ";
