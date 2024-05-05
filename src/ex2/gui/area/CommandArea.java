@@ -7,6 +7,7 @@ import ex2.core.listener.InputGuiListener;
 import ex2.utils.MessageDialogUtils;
 import ex2.utils.PanelUtils;
 import ex2.gui.components.TextBox;
+import ex2.worker.concrete.WorkerStrategy;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,6 +36,8 @@ public class CommandArea extends JPanel {
 
     private final DefaultComboBoxModel<SearcherType> searcherTypeComboBoxModel;
     private final JComboBox<SearcherType> searcherTypeComboBox;
+    private final DefaultComboBoxModel<WorkerStrategy> workerStrategyComboBoxModel;
+    private final JComboBox<WorkerStrategy> workerStrategyComboBox;
 
     private final List<InputGuiListener> inputGuiListeners;
 
@@ -54,6 +57,11 @@ public class CommandArea extends JPanel {
         this.searcherTypeComboBoxModel.addElement(SearcherType.WEB);
         this.searcherTypeComboBox = new JComboBox<>(this.searcherTypeComboBoxModel);
 
+        this.workerStrategyComboBoxModel = new DefaultComboBoxModel<>();
+        this.workerStrategyComboBoxModel.addElement(WorkerStrategy.EVENT_LOOP);
+        this.workerStrategyComboBoxModel.addElement(WorkerStrategy.VIRTUAL_THREADS);
+        this.workerStrategyComboBox = new JComboBox<>(this.workerStrategyComboBoxModel);
+
         this.inputGuiListeners = new ArrayList<>();
 
         final JPanel northPanel = PanelUtils.createPanelWithFlowLayout();
@@ -62,6 +70,7 @@ public class CommandArea extends JPanel {
         centerPanel.add(this.boxWord);
         centerPanel.add(this.boxDepth);
         final JPanel southPanel = PanelUtils.createPanelWithFlowLayout();
+        southPanel.add(this.workerStrategyComboBox);
         southPanel.add(this.searcherTypeComboBox);
         southPanel.add(this.searchButton);
         southPanel.add(this.clearButton);
@@ -78,6 +87,7 @@ public class CommandArea extends JPanel {
         this.searchButton.addActionListener(l -> {
             if (this.isInputValid()) {
                 this.inputGuiListeners.forEach(listener -> listener.onSearch(
+                        this.workerStrategy(),
                         this.searcherType(),
                         this.boxSite.getText(),
                         this.boxWord.getText(),
@@ -97,6 +107,10 @@ public class CommandArea extends JPanel {
 
     private SearcherType searcherType() {
         return (SearcherType) this.searcherTypeComboBox.getSelectedItem();
+    }
+
+    private WorkerStrategy workerStrategy() {
+        return (WorkerStrategy) this.workerStrategyComboBox.getSelectedItem();
     }
 
     private boolean isUrlValid() {
