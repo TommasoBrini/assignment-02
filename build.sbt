@@ -17,6 +17,8 @@ lazy val root = (project in file("."))
     libraryDependencies += "org.jsoup" % "jsoup" % "1.17.2" ,
     libraryDependencies += "org.jfree" % "jfreechart" % "1.5.3",
     libraryDependencies += "org.jfree" % "jcommon" % "1.0.23",
-    // junit
+      // https://mvnrepository.com/artifact/com.squareup.okhttp/okhttp
+      libraryDependencies += "com.squareup.okhttp3" % "okhttp" % "5.0.0-alpha.14",
+        // junit
     libraryDependencies += "junit" % "junit" % "4.13.2" % Test,
-)
+    )
