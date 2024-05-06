@@ -27,6 +27,7 @@ public abstract class BaseSearcher {
         this.duration = duration;
         this.urlsLazy = new Supplier<>() {
             volatile List<String> value;
+
             @Override
             public List<String> get() {
                 if (this.value == null) {
@@ -41,9 +42,13 @@ public abstract class BaseSearcher {
         };
     }
 
+    protected boolean checkExtensions(final String l) {
+        return this.extension.stream().noneMatch(l::endsWith);
+    }
+
     protected abstract List<String> getUrls();
 
-    protected List<String> findUrls(){
+    protected List<String> findUrls() {
         return this.urlsLazy.get();
     }
 
@@ -86,13 +91,13 @@ public abstract class BaseSearcher {
 
     public void addSearchFindUrls() {
         this.findUrls().forEach(url -> {
-            final DataEvent dt = new DataEventImpl(this.data.workerStrategy(),this.data.searcherType(), url, this.word(), this.maxDepth(), this.currentDepth() + 1, this.duration());
+            final DataEvent dt = new DataEventImpl(this.data.workerStrategy(), this.data.searcherType(), url, this.word(), this.maxDepth(), this.currentDepth() + 1, this.duration());
             this.searcherWorker().addEventUrl(dt);
         });
     }
 
     @Override
     public String toString() {
-        return "Url->"+ this.url() + " CurrentDepth[" + this.currentDepth() + "] maxDepth[" + this.maxDepth() + "]";
+        return "Url->" + this.url() + " CurrentDepth[" + this.currentDepth() + "] maxDepth[" + this.maxDepth() + "]";
     }
 }
