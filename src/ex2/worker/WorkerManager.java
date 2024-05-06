@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface WorkerManager {
 
-    List<DataEvent> lastHistory();
-
     void setupWorker(final WorkerStrategy workerStrategy);
 
     void startSearch(final DataEvent dataEvent);

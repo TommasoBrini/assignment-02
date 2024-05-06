@@ -2,6 +2,7 @@ package ex2.core.component.concrete;
 
 import ex2.core.component.DataEvent;
 import ex2.core.component.History;
+import ex2.core.listener.HistoryListener;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
@@ -22,16 +23,22 @@ public class HistoryImpl implements History {
 
     private final JsonArray historyJson;
     private final List<DataEvent> history;
+    private final List<HistoryListener> listeners;
 
     private Optional<DataEvent> searchEvent;
     private long time;
 
-    public HistoryImpl() {
+    public HistoryImpl(final List<HistoryListener> listeners) {
         this.historyJson = new JsonArray();
         this.history = new ArrayList<>();
         this.searchEvent = Optional.empty();
+        this.listeners = new ArrayList<>(listeners);
         this.createJSON();
         this.readJSON();
+    }
+
+    public HistoryImpl() {
+        this(List.of());
     }
 
     private void createJSON() {
@@ -61,6 +68,12 @@ public class HistoryImpl implements History {
     private void append(final DataEvent dataEvent) {
         this.historyJson.add(POSITION_ADD_JSON, dataEvent.toJson());
         this.history.addFirst(dataEvent);
+        this.listeners.forEach(listener -> listener.append(dataEvent));
+    }
+
+    @Override
+    public void addListener(final HistoryListener listener) {
+        this.listeners.add(listener);
     }
 
     @Override

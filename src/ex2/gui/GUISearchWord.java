@@ -2,10 +2,8 @@ package ex2.gui;
 
 import ex2.core.component.DataEvent;
 import ex2.core.component.searcher.Searcher;
-import ex2.core.component.searcher.SearcherType;
 import ex2.core.listener.InputGuiListener;
 import ex2.core.listener.ViewListener;
-import ex2.gui.area.AnalysisArea;
 import ex2.gui.area.CommandArea;
 import ex2.gui.area.HistoryArea;
 import ex2.gui.area.PrintArea;
@@ -35,8 +33,6 @@ public class GUISearchWord extends JFrame implements ViewListener {
 
         this.commandArea.addInputListener(this.printArea);
         this.commandArea.addInputListener(this.historyArea);
-
-        final AnalysisArea area = new AnalysisArea();
 
         this.setupGraphics();
         this.setResizable(true);

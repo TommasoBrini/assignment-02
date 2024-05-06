@@ -72,7 +72,7 @@ public abstract class AbstractWorker extends AbstractVerticle implements LogicWo
                     if (handler.succeeded()) {
                         final long duration = System.currentTimeMillis() - startTime;
                         final int statusCode = handler.result().statusCode();
-                        if (statusCode >= STATUS_CODE_MIN && statusCode < STATUS_CODE_MAX) {
+                        if (statusCode >= STATUS_CODE_MIN && statusCode < STATUS_CODE_MAX && handler.result().bodyAsString() != null) {
                             System.out.println(handler.result().statusMessage() + " " + dataEvent.url());
                             final Searcher searcher = this.searcherFactory.create(this.searcherType, this, dataEvent, handler.result().bodyAsString(), duration);
                             this.viewListeners.forEach(listener -> listener.onResponse(searcher));
