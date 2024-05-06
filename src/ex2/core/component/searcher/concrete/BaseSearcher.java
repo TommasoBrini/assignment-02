@@ -18,6 +18,7 @@ public abstract class BaseSearcher {
     private final DataEvent data;
     private final long duration;
     private final Supplier<List<String>> urlsLazy;
+    protected final List<String> extension = Arrays.asList(".svg", ".png", ".jpg", ".jpeg", ".gif", ".pdf", ".mp4", "mp3", ".mp3", ".avi", ".flv", ".mov", ".wmv", ".zip", ".dmg", ".exe", ".msi");
 
     public BaseSearcher(final SearcherWorker searcherWorker, final DataEvent dataEvent, final String body, final long duration) {
         this.searcherWorker = searcherWorker;
