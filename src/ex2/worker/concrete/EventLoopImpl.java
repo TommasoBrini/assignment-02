@@ -96,6 +96,7 @@ public class EventLoopImpl extends AbstractWorker implements Verticle {
 
     @Override
     public void stop() {
+        this.webClient.close();
         this.vertx.close();
     }
 }
