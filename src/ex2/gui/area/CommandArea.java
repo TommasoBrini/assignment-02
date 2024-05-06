@@ -6,6 +6,7 @@ import ex2.core.component.searcher.SearcherType;
 import ex2.core.listener.InputGuiListener;
 import ex2.gui.components.TextBox;
 import ex2.server.Server;
+import ex2.utils.ComboBoxUtils;
 import ex2.utils.MessageDialogUtils;
 import ex2.utils.PanelUtils;
 import ex2.utils.UrlUtils;
@@ -14,6 +15,7 @@ import ex2.worker.concrete.WorkerStrategy;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,10 +38,7 @@ public class CommandArea extends JPanel {
     private final JButton exitButton;
     private final JButton clearButton;
 
-    private final DefaultComboBoxModel<SearcherType> searcherTypeComboBoxModel;
     private final JComboBox<SearcherType> searcherTypeComboBox;
-
-    private final DefaultComboBoxModel<WorkerStrategy> workerStrategyComboBoxModel;
     private final JComboBox<WorkerStrategy> workerStrategyComboBox;
 
     private final List<InputGuiListener> inputGuiListeners;
@@ -55,16 +54,8 @@ public class CommandArea extends JPanel {
         this.exitButton = new JButton(EXIT);
         this.clearButton = new JButton(CLEAR);
 
-        this.searcherTypeComboBoxModel = new DefaultComboBoxModel<>();
-        this.searcherTypeComboBoxModel.addElement(SearcherType.LOCAL);
-        this.searcherTypeComboBoxModel.addElement(SearcherType.WEB);
-        this.searcherTypeComboBox = new JComboBox<>(this.searcherTypeComboBoxModel);
-
-        this.workerStrategyComboBoxModel = new DefaultComboBoxModel<>();
-        this.workerStrategyComboBoxModel.addElement(WorkerStrategy.EVENT_LOOP);
-        this.workerStrategyComboBoxModel.addElement(WorkerStrategy.VIRTUAL_THREAD);
-        this.workerStrategyComboBoxModel.addElement(WorkerStrategy.REACT);
-        this.workerStrategyComboBox = new JComboBox<>(this.workerStrategyComboBoxModel);
+        this.searcherTypeComboBox = ComboBoxUtils.createComboBox(Arrays.stream(SearcherType.values()).toList());
+        this.workerStrategyComboBox = ComboBoxUtils.createComboBox(Arrays.stream(WorkerStrategy.values()).toList());
 
         this.inputGuiListeners = new ArrayList<>();
 
