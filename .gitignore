@@ -8,7 +8,7 @@
 *.iml
 
 # Json sbt
-.sbt/sbt.json
+.bps/sbt.json
 
 # sbt
 target/
