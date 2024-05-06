@@ -41,7 +41,7 @@ public class EventLoopImpl extends AbstractWorker implements Verticle {
     }
 
     @Override
-    protected void searchUrl(DataEvent dataEvent) {
+    protected void searchUrl(final DataEvent dataEvent) {
         final long startTime = System.currentTimeMillis();
         this.webClient.getAbs(dataEvent.url())
                 .send(handler -> {
@@ -75,22 +75,22 @@ public class EventLoopImpl extends AbstractWorker implements Verticle {
 
     @Override
     public Vertx getVertx() {
-        return vertx;
+        return this.vertx;
     }
 
     @Override
-    public void init(Vertx vertx, Context context) {
+    public void init(final Vertx vertx, final Context context) {
         this.vertx = vertx;
         this.context = context;
     }
 
     @Override
-    public void start(Promise<Void> startPromise) throws Exception {
+    public void start(final Promise<Void> startPromise) throws Exception {
         startPromise.complete();
     }
 
     @Override
-    public void stop(Promise<Void> stopPromise) throws Exception {
+    public void stop(final Promise<Void> stopPromise) throws Exception {
         stopPromise.complete();
     }
 

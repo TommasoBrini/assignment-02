@@ -32,40 +32,40 @@ public class VirtualThreadsImpl extends AbstractWorker {
     }
 
     @Override
-    protected void searchUrl(DataEvent dataEvent) {
+    protected void searchUrl(final DataEvent dataEvent) {
         final long startTime = System.currentTimeMillis();
-        Request request = new Request.Builder()
+        final Request request = new Request.Builder()
                 .url(dataEvent.url())
                 .build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
+        this.okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onResponse(Call call, Response response){
+            public void onResponse(final Call call, final Response response){
                 final long duration = System.currentTimeMillis() - startTime;
                 final int statusCode = response.code();
-                try (ResponseBody responseBody = response.body()) {
+                try (final ResponseBody responseBody = response.body()) {
                     if (statusCode >= STATUS_CODE_MIN && statusCode < STATUS_CODE_MAX && responseBody != null) {
                         System.out.println(response.message() + " " + dataEvent.url());
-                        final Searcher searcher = searcherFactory.create(searcherType, VirtualThreadsImpl.this, dataEvent, responseBody.string(), duration);
-                        viewListeners.forEach(listener -> listener.onResponse(searcher));
-                        counterSearch.increaseSendIfMaxDepth(searcher);
+                        final Searcher searcher = VirtualThreadsImpl.this.searcherFactory.create(VirtualThreadsImpl.this.searcherType, VirtualThreadsImpl.this, dataEvent, responseBody.string(), duration);
+                        VirtualThreadsImpl.this.viewListeners.forEach(listener -> listener.onResponse(searcher));
+                        VirtualThreadsImpl.this.counterSearch.increaseSendIfMaxDepth(searcher);
                         searcher.addSearchFindUrls();
                     }
-                    counterSearch.increaseConsumeIfMaxDepth(dataEvent);
+                    VirtualThreadsImpl.this.counterSearch.increaseConsumeIfMaxDepth(dataEvent);
 
-                    if (counterSearch.isEnd()) {
-                        modelListeners.forEach(ModelListener::onFinish);
-                        viewListeners.forEach(ViewListener::onFinish);
+                    if (VirtualThreadsImpl.this.counterSearch.isEnd()) {
+                        VirtualThreadsImpl.this.modelListeners.forEach(ModelListener::onFinish);
+                        VirtualThreadsImpl.this.viewListeners.forEach(ViewListener::onFinish);
                     }
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     System.out.println("ERROR -> " + e.getMessage());
-                    viewListeners.forEach(viewListener -> viewListener.onError(e.getMessage()));
+                    VirtualThreadsImpl.this.viewListeners.forEach(viewListener -> viewListener.onError(e.getMessage()));
                 }
             }
 
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(final Call call, final IOException e) {
                 System.out.println("ERROR -> " + e.getMessage());
-                viewListeners.forEach(viewListener -> viewListener.onError(e.getMessage()));
+                VirtualThreadsImpl.this.viewListeners.forEach(viewListener -> viewListener.onError(e.getMessage()));
             }
         });
     }
