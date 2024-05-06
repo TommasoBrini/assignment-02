@@ -7,6 +7,9 @@
 # IML files
 *.iml
 
+# Json sbt
+.sbt/sbt.json
+
 # sbt
 target/
 
