@@ -26,7 +26,7 @@ public class Controller implements InputGuiListener {
         this.workerManager.addModelListener(this.history);
         this.workerManager.addViewListener(this.gui);
         this.gui.addInputGuiListener(this);
-
+        this.gui.setupAnalysis(this.guiAnalysis);
         this.onStart();
     }
 

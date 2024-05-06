@@ -50,6 +50,10 @@ public class GUISearchWord extends JFrame implements ViewListener {
         this.setVisible(true);
     }
 
+    public void setupAnalysis(final GUIAnalysis guiAnalysis) {
+        this.commandArea.setupAnalisys(guiAnalysis);
+    }
+
     public WorkerStrategy getWorkerStrategy() {
         return this.commandArea.workerStrategy();
     }
@@ -80,5 +84,6 @@ public class GUISearchWord extends JFrame implements ViewListener {
             MessageDialogUtils.createMessage(this, "Finish Search");
         });
     }
+
 
 }

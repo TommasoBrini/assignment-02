@@ -4,6 +4,7 @@ import ex2.core.component.DataEvent;
 import ex2.core.component.concrete.DataEventImpl;
 import ex2.core.component.searcher.SearcherType;
 import ex2.core.listener.InputGuiListener;
+import ex2.gui.GUIAnalysis;
 import ex2.gui.components.TextBox;
 import ex2.server.Server;
 import ex2.utils.ComboBoxUtils;
@@ -29,6 +30,7 @@ public class CommandArea extends JPanel {
     private static final int SITE_COLUMNS_TEXT = 30;
     private static final int WORD_COLUMNS_TEXT = 15;
     private static final int DEPTH_COLUMNS_TEXT = 4;
+    private static final String MAGIC = "Magic";
 
     private final TextBox boxUrl;
     private final TextBox boxWord;
@@ -37,6 +39,7 @@ public class CommandArea extends JPanel {
     private final JButton searchButton;
     private final JButton exitButton;
     private final JButton clearButton;
+    private final JButton magicButton;
 
     private final JComboBox<SearcherType> searcherTypeComboBox;
     private final JComboBox<WorkerStrategy> workerStrategyComboBox;
@@ -53,6 +56,7 @@ public class CommandArea extends JPanel {
         this.searchButton = new JButton(SEARCH);
         this.exitButton = new JButton(EXIT);
         this.clearButton = new JButton(CLEAR);
+        this.magicButton = new JButton(MAGIC);
 
         this.searcherTypeComboBox = ComboBoxUtils.createComboBox(Arrays.stream(SearcherType.values()).toList());
         this.workerStrategyComboBox = ComboBoxUtils.createComboBox(Arrays.stream(WorkerStrategy.values()).toList());
@@ -69,6 +73,7 @@ public class CommandArea extends JPanel {
         southPanel.add(this.searcherTypeComboBox);
         southPanel.add(this.searchButton);
         southPanel.add(this.clearButton);
+        southPanel.add(this.magicButton);
         southPanel.add(this.exitButton);
 
         this.add(northPanel, BorderLayout.NORTH);
@@ -92,6 +97,10 @@ public class CommandArea extends JPanel {
         });
         this.exitButton.addActionListener(l -> this.inputGuiListeners.forEach(InputGuiListener::onExit));
         this.clearButton.addActionListener(l -> this.clearText());
+    }
+
+    public void setupAnalisys(final GUIAnalysis guiAnalysis) {
+        this.magicButton.addActionListener(l -> guiAnalysis.changeVisible());
     }
 
     public void addInputListener(final InputGuiListener commandListener) {

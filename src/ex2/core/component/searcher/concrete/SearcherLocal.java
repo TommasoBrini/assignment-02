@@ -25,9 +25,8 @@ public class SearcherLocal extends BaseSearcher implements Searcher {
                     .filter(l -> !l.startsWith("http")
                             && !l.contains("#")
                             && !l.contains("package-summary")
-                            && !l.contains(".svg")
                             && !l.contains("Context")
-                            && this.extension.stream().noneMatch(l::endsWith))
+                            && this.checkExtensions(l))
                     .map(url -> Server.LOCAL_PATH + url)
                     .toList());
         }
