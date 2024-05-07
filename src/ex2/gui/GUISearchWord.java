@@ -64,12 +64,7 @@ public class GUISearchWord extends JFrame implements ViewListener {
 
     @Override
     public void onResponse(final Searcher searcher) {
-        SwingUtilities.invokeLater(() -> {
-            System.out.println("ADD " + searcher);
-            final String url = "URL: %s\n".formatted(searcher.url());
-            final String info = "Depth[%d] -------- Word = %d\n".formatted(searcher.currentDepth(), searcher.countWord());
-            this.printArea.append(url + info + "--------------------\n");
-        });
+        this.printArea.sendEventSearcher(searcher);
     }
 
     @Override

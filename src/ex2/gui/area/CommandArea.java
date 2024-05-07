@@ -166,11 +166,15 @@ public class CommandArea extends JPanel {
     }
 
     private void disableCommand() {
+        this.workerStrategyComboBox.setEnabled(false);
+        this.searcherTypeComboBox.setEnabled(false);
         this.searchButton.setEnabled(false);
         this.exitButton.setEnabled(false);
     }
 
     public void enableCommand() {
+        this.workerStrategyComboBox.setEnabled(true);
+        this.searcherTypeComboBox.setEnabled(true);
         this.searchButton.setEnabled(true);
         this.exitButton.setEnabled(true);
     }
