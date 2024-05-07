@@ -10,6 +10,7 @@ import io.reactivex.rxjava3.subjects.Subject;
 import okhttp3.*;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class ReactiveImpl extends AbstractWorker {
     private final Subject<DataEvent> subject;
@@ -18,7 +19,11 @@ public class ReactiveImpl extends AbstractWorker {
 
     public ReactiveImpl() {
         super();
-        this.okHttpClient = new OkHttpClient();
+        this.okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS)
+                .build();
         this.subject = PublishSubject.create();
         this.subject.observeOn(Schedulers.computation()).subscribe(this::searchUrl);
     }
