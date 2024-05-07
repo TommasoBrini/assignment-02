@@ -28,6 +28,7 @@
     <orderEntry type="library" name="sbt: io.netty:netty-resolver:4.1.108.Final:jar" level="project" />
     <orderEntry type="library" name="sbt: io.netty:netty-transport-native-unix-common:4.1.108.Final:jar" level="project" />
     <orderEntry type="library" name="sbt: io.netty:netty-transport:4.1.108.Final:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.reactivex.rxjava3:rxjava:3.1.8:jar" level="project" />
     <orderEntry type="library" name="sbt: io.vertx:vertx-auth-common:4.5.7:jar" level="project" />
     <orderEntry type="library" name="sbt: io.vertx:vertx-bridge-common:4.5.7:jar" level="project" />
     <orderEntry type="library" name="sbt: io.vertx:vertx-core:4.5.7:jar" level="project" />
@@ -42,6 +43,7 @@
     <orderEntry type="library" name="sbt: org.jfree:jcommon:1.0.23:jar" level="project" />
     <orderEntry type="library" name="sbt: org.jfree:jfreechart:1.5.3:jar" level="project" />
     <orderEntry type="library" name="sbt: org.jsoup:jsoup:1.17.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.reactivestreams:reactive-streams:1.0.4:jar" level="project" />
     <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.12.18:jar" level="project" />
   </component>
 </module>
