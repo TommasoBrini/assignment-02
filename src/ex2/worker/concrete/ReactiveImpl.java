@@ -4,6 +4,7 @@ import ex2.core.component.DataEvent;
 import ex2.core.component.searcher.Searcher;
 import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 import io.reactivex.rxjava3.subjects.Subject;
 import okhttp3.*;
@@ -11,7 +12,7 @@ import okhttp3.*;
 import java.io.IOException;
 
 public class ReactiveImpl extends AbstractWorker {
-    private final Subject<String> subject;
+    private final Subject<DataEvent> subject;
 
     private final OkHttpClient okHttpClient;
 
@@ -19,11 +20,12 @@ public class ReactiveImpl extends AbstractWorker {
         super();
         this.okHttpClient = new OkHttpClient();
         this.subject = PublishSubject.create();
+        this.subject.observeOn(Schedulers.computation()).subscribe(this::searchUrl);
     }
 
     @Override
     public void addEventUrl(final DataEvent dataEvent) {
-        this.subject.onNext(dataEvent.url());
+        this.subject.onNext(dataEvent);
     }
 
     @Override
