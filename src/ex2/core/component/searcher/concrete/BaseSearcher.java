@@ -20,10 +20,10 @@ public abstract class BaseSearcher {
     private final Supplier<List<String>> urlsLazy;
     protected final List<String> extension = Arrays.asList(".svg", ".png", ".jpg", ".jpeg", ".gif", ".pdf", ".mp4", "mp3", ".mp3", ".avi", ".flv", ".mov", ".wmv", ".zip", ".dmg", ".exe", ".msi");
 
-    public BaseSearcher(final SearcherWorker searcherWorker, final DataEvent dataEvent, final String body, final long duration) {
+    public BaseSearcher(final SearcherWorker searcherWorker, final DataEvent dataEvent, final Document document, final long duration) {
         this.searcherWorker = searcherWorker;
         this.data = dataEvent;
-        this.document = Jsoup.parse(body);
+        this.document = document;
         this.duration = duration;
         this.urlsLazy = new Supplier<>() {
             volatile List<String> value;

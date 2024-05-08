@@ -3,8 +3,8 @@ package core;
 import ex2.core.component.DataEvent;
 import ex2.core.component.concrete.DataEventImpl;
 import ex2.core.component.searcher.SearcherType;
-import ex2.worker.WorkerManager;
-import ex2.worker.WorkerManagerImpl;
+import ex2.server.clientManager.ClientManager;
+import ex2.server.clientManager.ClientManagerImpl;
 import ex2.worker.concrete.WorkerStrategy;
 import org.junit.Test;
 
@@ -14,7 +14,7 @@ public class SearchTest {
 
     @Test
     public void findHrefLocal() {
-        final WorkerManager workerManager = new WorkerManagerImpl();
+        final ClientManager clientManager = new ClientManagerImpl();
         final DataEvent dataEvent = new DataEventImpl(
                 WorkerStrategy.EVENT_LOOP,
                 SearcherType.LOCAL,
@@ -22,7 +22,7 @@ public class SearchTest {
                 "API",
                 4,
                 0);
-        workerManager.startSearch(dataEvent);
+        clientManager.startSearch(dataEvent);
 
         try {
             Thread.sleep(10000);
@@ -33,7 +33,7 @@ public class SearchTest {
 
     @Test
     public void findHrefWeb() {
-        final WorkerManager workerManager = new WorkerManagerImpl();
+        final ClientManager clientManager = new ClientManagerImpl();
         final String word = "Buongiorno";
         final int maxDepth = 6;
         final DataEvent dataEvent = new DataEventImpl(
@@ -43,7 +43,7 @@ public class SearchTest {
                 word,
                 maxDepth,
                 0);
-        workerManager.startSearch(dataEvent);
+        clientManager.startSearch(dataEvent);
 
         try {
             Thread.sleep(10000);
