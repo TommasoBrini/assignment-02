@@ -12,6 +12,7 @@
 
 # sbt
 target/
+output
 
 # doc java
 res/docs/
