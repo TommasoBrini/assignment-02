@@ -21,6 +21,7 @@ public class VirtualThreadsImpl extends AbstractWorker {
     public VirtualThreadsImpl() {
         super();
         this.okHttpClient = new OkHttpClient();
+//        this.executor = Executors.newFixedThreadPool(10, Thread.ofVirtual().factory());
         this.executor = Executors.newVirtualThreadPerTaskExecutor();
     }
 
