@@ -15,7 +15,7 @@ target/
 output
 
 # doc java
-res/docs/
+#res/docs/
 
 # Log file
 *.log
