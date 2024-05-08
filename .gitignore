@@ -17,6 +17,9 @@ output
 # Idea files
 .idea/
 
+# Project files
+project/
+
 # doc java
 res/docs/
 
