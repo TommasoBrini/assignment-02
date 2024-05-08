@@ -5,6 +5,7 @@ import ex2.core.component.DataEvent;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
@@ -20,8 +21,11 @@ public class VirtualThreadsImpl extends AbstractWorker {
 
     public VirtualThreadsImpl() {
         super();
-        this.okHttpClient = new OkHttpClient();
-//        this.executor = Executors.newFixedThreadPool(10, Thread.ofVirtual().factory());
+        this.okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS)
+                .build();
         this.executor = Executors.newVirtualThreadPerTaskExecutor();
     }
 
