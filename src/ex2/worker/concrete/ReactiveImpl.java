@@ -19,11 +19,7 @@ public class ReactiveImpl extends AbstractWorker {
 
     public ReactiveImpl() {
         super();
-        this.okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS)
-                .writeTimeout(20, TimeUnit.SECONDS)
-                .build();
+        this.okHttpClient = new OkHttpClient();
         this.subject = PublishSubject.create();
         this.subject.observeOn(Schedulers.computation()).subscribe(this::searchUrl);
     }
@@ -45,6 +41,7 @@ public class ReactiveImpl extends AbstractWorker {
                 final long duration = System.currentTimeMillis() - startTime;
                 final int statusCode = response.code();
                 try (final ResponseBody responseBody = response.body()) {
+
                     if (statusCode >= STATUS_CODE_MIN && statusCode < STATUS_CODE_MAX && responseBody != null) {
                         System.out.println(response.message() + " " + dataEvent.url());
                         final Searcher searcher = ReactiveImpl.this.searcherFactory.create(ReactiveImpl.this.searcherType, ReactiveImpl.this, dataEvent, responseBody.string(), duration);
@@ -52,6 +49,7 @@ public class ReactiveImpl extends AbstractWorker {
                         ReactiveImpl.this.counterSearch.increaseSendIfMaxDepth(searcher);
                         searcher.addSearchFindUrls();
                     }
+
                     ReactiveImpl.this.counterSearch.increaseConsumeIfMaxDepth(dataEvent);
 
                     if (ReactiveImpl.this.counterSearch.isEnd()) {
