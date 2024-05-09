@@ -46,7 +46,12 @@ public class ClientServiceTest {
         }
     }
 
-//    @Test
-//    public void mass
+    @Test
+    public void massiveSearchRemoteUrl() {
+        final int requests = 100;
+        for (int i = 0; i < requests; i++) {
+            this.clientService.onSearch(REMOTE_URL);
+        }
+    }
 
 }
