@@ -22,4 +22,9 @@ public class ClientServiceTest {
         this.clientService.onSearch("http://localhost:8080/index.html");
     }
 
+    @Test
+    public void searchRemoteUrl() {
+        this.clientService.onSearch("https://www.google.com");
+    }
+
 }
