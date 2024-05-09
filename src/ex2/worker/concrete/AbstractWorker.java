@@ -10,7 +10,7 @@ import ex2.core.component.searcher.SearcherWorker;
 import ex2.core.component.searcher.factory.SimpleFactory;
 import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
-import ex2.server.client.ClientService;
+import ex2.web.client.ClientService;
 import ex2.worker.LogicWorker;
 import org.jsoup.nodes.Document;
 

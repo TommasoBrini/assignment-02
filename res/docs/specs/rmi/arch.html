@@ -96,16 +96,16 @@ algorithm similar to Modula-3's Network Objects. (See "Network Objects"
 by Birrell, Nelson, and Owicki, <em>Digital Equipment Corporation
 Systems Research Center Technical Report 115</em>, 1994.)</p>
 <p>To accomplish reference-counting garbage collection, the RMI runtime
-keeps track of all live references within each Java virtual machine.
-When a live reference enters a Java virtual machine, its reference count
-is incremented. The first reference to an object sends a "referenced"
-message to the server for the object. As live references are found to be
-unreferenced in the local virtual machine, the count is decremented.
-When the last reference has been discarded, an unreferenced message is
-sent to the server. Many subtleties exist in the protocol; most of these
-are related to maintaining the ordering of referenced and unreferenced
-messages in order to ensure that the object is not prematurely
-collected.</p>
+    keeps track of all live references within each Java virtual machine.
+    When a live reference enters a Java virtual machine, its reference count
+    is incremented. The first reference to an object sends a "referenced"
+    message to the server for the object. As live references are found to be
+    unreferenced in the local virtual machine, the count is decremented.
+    When the last reference has been discarded, an unreferenced message is
+    sent to the web. Many subtleties exist in the protocol; most of these
+    are related to maintaining the ordering of referenced and unreferenced
+    messages in order to ensure that the object is not prematurely
+    collected.</p>
 <p>When a remote object is not referenced by any client, the RMI runtime
 refers to it using a weak reference. The weak reference allows the Java
 virtual machine's garbage collector to discard the object if no other
@@ -118,7 +118,7 @@ garbage-collected and it can be passed in remote calls or returned to
 clients. Passing a remote object adds the identifier for the virtual
 machine to which it was passed to the referenced set. A remote object
 needing unreferenced notification must implement the
-<code>java.rmi.server.Unreferenced</code> interface. When those
+<code>java.rmi.web.Unreferenced</code> interface. When those
 references no longer exist, the <code>unreferenced</code> method will be
 invoked. <code>unreferenced</code> is called when the set of references
 is found to be empty so it might be called more than once. Remote
@@ -166,7 +166,7 @@ definitions for classes corresponding to the class descriptors in the
 stream.</p>
 <p>For every class descriptor written to an RMI marshal stream, the
 <code>annotateClass</code> method adds to the stream the result of
-calling <code>java.rmi.server.RMIClassLoader.getClassAnnotation</code>
+calling <code>java.rmi.web.RMIClassLoader.getClassAnnotation</code>
 for the class object, which may be <code>null</code> or may be a
 <code>String</code> object representing the codebase URL path (a
 space-separated list of URLs) from which the remote endpoint should
@@ -174,7 +174,7 @@ download the class definition file for the given class.</p>
 <p>For every class descriptor read from an RMI marshal stream, the
 <code>resolveClass</code> method reads a single object from the stream.
 If the object is a String (and the value of the
-<code>java.rmi.server.useCodebaseOnly</code> property is not
+<code>java.rmi.web.useCodebaseOnly</code> property is not
 <code>true</code>), then <code>resolveClass</code> returns the result of
 calling <code>RMIClassLoader.loadClass</code> with the annotated
 <code>String</code> object as the first parameter and the name of the

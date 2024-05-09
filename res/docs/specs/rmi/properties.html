@@ -38,18 +38,18 @@
 servers for configuration. Note that properties are typically restricted
 from being set from applets.</p>
 <h3
-id="java.rmi.server.codebase"><code>java.rmi.server.codebase</code></h3>
+id="java.rmi.server.codebase"><code>java.rmi.web.codebase</code></h3>
 <p>Indicates the codebase URL of classes originating from the JVM. The
 codebase property is used to annotate class descriptors of classes
 <em>originating</em> from a JVM so that the class for an object sent as
 a parameter or return value in a remote method call can be loaded at the
 receiver.</p>
 <h3
-id="java.rmi.server.disablehttp"><code>java.rmi.server.disableHttp</code></h3>
+id="java.rmi.server.disablehttp"><code>java.rmi.web.disableHttp</code></h3>
 <p>The implementation of RMI calls through firewalls via proxies has
 been removed as of JDK 9.</p>
 <h3
-id="java.rmi.server.hostname"><code>java.rmi.server.hostname</code></h3>
+id="java.rmi.server.hostname"><code>java.rmi.web.hostname</code></h3>
 <p>RMI uses IP addresses to indicate the location of a server (embedded
 in a remote reference). If the use of a hostname is desired, this
 property is used to specify the fully-qualified hostname for RMI to use
@@ -60,17 +60,17 @@ id="java.rmi.dgc.leasevalue"><code>java.rmi.dgc.leaseValue</code></h3>
 <p>Sets the lease duration that the RMI runtime grants to clients
 referencing remote objects in the JVM. Defaults to 10 minutes.</p>
 <h3
-id="java.rmi.server.logcalls"><code>java.rmi.server.logCalls</code></h3>
+id="java.rmi.server.logcalls"><code>java.rmi.web.logCalls</code></h3>
 <p>If set to <code>true</code>, server call logging is turned on and
 prints to stderr. Defaults to <code>false</code>.</p>
 <h3
-id="java.rmi.server.usecodebaseonly"><code>java.rmi.server.useCodebaseOnly</code></h3>
+id="java.rmi.server.usecodebaseonly"><code>java.rmi.web.useCodebaseOnly</code></h3>
 <p>If set to <code>true</code>, when RMI loads classes (if not available
 via <code>CLASSPATH</code>) they are only loaded using the URL specified
-by the property <code>java.rmi.server.codebase</code>.</p>
+by the property <code>java.rmi.web.codebase</code>.</p>
 <h3
-id="java.rmi.server.uselocalhostname"><code>java.rmi.server.useLocalHostname</code></h3>
-<p>If the <code>java.rmi.server.hostname</code> property is not set and
+id="java.rmi.server.uselocalhostname"><code>java.rmi.web.useLocalHostname</code></h3>
+<p>If the <code>java.rmi.web.hostname</code> property is not set and
 this property is set, then RMI will not use an IP address to denote the
 location (embedded in remote references) of remote objects that are
 exported into the JVM. Instead, RMI will use the value of the call to
@@ -86,7 +86,7 @@ id="java.rmi.loader.packageprefix"><code>java.rmi.loader.packagePrefix</code></h
 <p><em>Note: this property is deprecated as of Java 2 SDK, Standard
 Edition, v1.2</em></p>
 <p>The package prefix for the class that implements the interface
-<code>java.rmi.server.LoaderHandler</code>. Defaults to
+<code>java.rmi.web.LoaderHandler</code>. Defaults to
 <code>sun.rmi.server</code>.</p>
 <h3
 id="java.rmi.registry.packageprefix"><code>java.rmi.registry.packagePrefix</code></h3>
@@ -96,7 +96,7 @@ Edition, v1.2</em></p>
 <code>java.rmi.registry.RegistryHandler</code>. Defaults to
 <code>sun.rmi.registry</code>.</p>
 <h3
-id="java.rmi.server.packageprefix"><code>java.rmi.server.packagePrefix</code></h3>
+id="java.rmi.server.packageprefix"><code>java.rmi.web.packagePrefix</code></h3>
 <p><em>Note: this property is deprecated as of Java 2 SDK, Standard
 Edition, v1.2</em></p>
 <p>The server package prefix. Assumes that the implementation of the

@@ -237,18 +237,18 @@ the compiler), not a <code>RuntimeException</code>.</p>
 <h3 id="the-remoteobject-class-and-its-subclasses">2.4.3 The
 <code>RemoteObject</code> Class and its Subclasses</h3>
 <p>RMI server functions are provided by
-<code>java.rmi.server.RemoteObject</code> and its subclasses,
-<code>java.rmi.server.RemoteServer</code> and
-<code>java.rmi.server.UnicastRemoteObject</code>.</p>
+<code>java.rmi.web.RemoteObject</code> and its subclasses,
+<code>java.rmi.web.RemoteServer</code> and
+<code>java.rmi.web.UnicastRemoteObject</code>.</p>
 <ul>
-<li><p>The class <code>java.rmi.server.RemoteObject</code> provides
+<li><p>The class <code>java.rmi.web.RemoteObject</code> provides
 implementations for the <code>java.lang.Object</code> methods,
 <code>hashCode</code>, <code>equals</code>, and <code>toString</code>
 that are sensible for remote objects.</p></li>
 <li><p>The methods needed to create remote objects and export them (make
 them available to remote clients) are provided by the class
 <code>UnicastRemoteObject</code>.</p></li>
-<li><p>The <code>java.rmi.server.UnicastRemoteObject</code> class
+<li><p>The <code>java.rmi.web.UnicastRemoteObject</code> class
 defines a singleton (unicast) remote object whose references are valid
 only while the server process is alive.</p></li>
 </ul>
@@ -258,10 +258,10 @@ Interface</h2>
 as follows:</p>
 <ul>
 <li>The class <em>usually</em> extends
-<code>java.rmi.server.UnicastRemoteObject</code>, thereby inheriting the
+<code>java.rmi.web.UnicastRemoteObject</code>, thereby inheriting the
 remote behavior provided by the classes
-<code>java.rmi.server.RemoteObject</code> and
-<code>java.rmi.server.RemoteServer</code>.</li>
+<code>java.rmi.web.RemoteObject</code> and
+<code>java.rmi.web.RemoteServer</code>.</li>
 <li>The class can implement any number of remote interfaces.</li>
 <li>The class can extend another remote implementation class.</li>
 <li>The class can define methods that do not appear in the remote
@@ -270,11 +270,11 @@ available remotely.</li>
 </ul>
 <p>For example, the following class <code>BankAcctImpl</code> implements
 the <code>BankAccount</code> remote interface and extends the
-<code>java.rmi.server.UnicastRemoteObject</code> class:</p>
+<code>java.rmi.web.UnicastRemoteObject</code> class:</p>
 <pre><code>package mypackage;
 
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
+import java.rmi.web.UnicastRemoteObject;
 
 public class BankAccountImpl
         extends UnicastRemoteObject
@@ -302,7 +302,7 @@ public class BankAccountImpl
 <ul>
 <li><p>If necessary, a class that implements a remote interface can
 extend some other class besides
-<code>java.rmi.server.UnicastRemoteObject</code>. However, the
+<code>java.rmi.web.UnicastRemoteObject</code>. However, the
 implementation class must then assume the responsibility for exporting
 the object (taken care of by the <code>UnicastRemoteObject</code>
 constructor) and for implementing (if needed) the correct remote
@@ -385,7 +385,7 @@ is an instance of <code>java.rmi.Remote</code> and the object is
 <em>not</em> exported to the RMI runtime, then
 <code>replaceObject</code> returns the object itself. A stub for a
 remote object is obtained via a call to the method
-<code>java.rmi.server.RemoteObject.toStub</code>.</p></li>
+<code>java.rmi.web.RemoteObject.toStub</code>.</p></li>
 <li><p>If the object passed to <code>replaceObject</code> is not an
 instance of <code>java.rmi.Remote</code>, then the object is simply
 returned.</p></li>

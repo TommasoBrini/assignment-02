@@ -1,9 +1,8 @@
-package ex2.server.clientManager;
+package ex2.web.clientManager;
 
 import ex2.core.component.DataEvent;
 import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
-import ex2.worker.concrete.WorkerStrategy;
 
 public interface ClientManager {
 

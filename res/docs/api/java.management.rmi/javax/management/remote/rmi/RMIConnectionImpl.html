@@ -228,7 +228,7 @@ implements <a href="RMIConnection.html" title="interface in javax.management.rem
  int&nbsp;maxNotifications,
  long&nbsp;timeout)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Retrieves notifications from the connector server.</div>
+<div class="block">Retrieves notifications from the connector web.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../../../java.base/java/lang/Object.html" title="class in java.lang">Object</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAttribute(javax.management.ObjectName,java.lang.String,javax.security.auth.Subject)" class="member-name-link">getAttribute</a><wbr>(<a href="../../../../../java.management/javax/management/ObjectName.html" title="class in javax.management">ObjectName</a>&nbsp;name,
@@ -441,8 +441,8 @@ implements <a href="RMIConnection.html" title="interface in javax.management.rem
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../../../java.base/java/lang/String.html" title="class in java.lang">String</a></span>&nbsp;<span class="element-name">getConnectionId</span>()
                        throws <span class="exceptions"><a href="../../../../../java.base/java/io/IOException.html" title="class in java.io">IOException</a></span></div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="RMIConnection.html#getConnectionId()">RMIConnection</a></code></span></div>
-<div class="block"><p>Returns the connection ID.  This string is different for
- every open connection to a given RMI connector server.</p></div>
+<div class="block"><p>Returns the connection ID. This string is different for
+    every open connection to a given RMI connector web.</p></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="RMIConnection.html#getConnectionId()">getConnectionId</a></code>&nbsp;in interface&nbsp;<code><a href="RMIConnection.html" title="interface in javax.management.remote.rmi">RMIConnection</a></code></dd>
@@ -1511,10 +1511,10 @@ implements <a href="RMIConnection.html" title="interface in javax.management.rem
  long&nbsp;timeout)</span>
                                       throws <span class="exceptions"><a href="../../../../../java.base/java/io/IOException.html" title="class in java.io">IOException</a></span></div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="RMIConnection.html#fetchNotifications(long,int,long)">RMIConnection</a></code></span></div>
-<div class="block"><p>Retrieves notifications from the connector server.  This
- method can block until there is at least one notification or
- until the specified timeout is reached.  The method can also
- return at any time with zero notifications.</p>
+<div class="block"><p>Retrieves notifications from the connector web. This
+    method can block until there is at least one notification or
+    until the specified timeout is reached. The method can also
+    return at any time with zero notifications.</p>
 
  <p>A notification can be included in the result if its sequence
  number is no less than <code>clientSequenceNumber</code> and

@@ -61,7 +61,7 @@ Class</h2>
 <p>See the <code>RemoteServer</code> API documentation.</p>
 <h2 id="the-unicastremoteobject-class">5.3 The
 <code>UnicastRemoteObject</code> Class</h2>
-<p>The class <code>java.rmi.server.UnicastRemoteObject</code> provides
+<p>The class <code>java.rmi.web.UnicastRemoteObject</code> provides
 support for creating and exporting remote objects. The class implements
 a remote server object with the following characteristics:</p>
 <ul>
@@ -69,7 +69,7 @@ a remote server object with the following characteristics:</p>
 the process that creates the remote object.</li>
 <li>Communication with the remote object uses a TCP transport.</li>
 <li>Invocations, parameters, and results use a stream protocol for
-communicating between client and server.</li>
+    communicating between client and web.</li>
 </ul>
 <pre><code>package java.rmi.server;
 
@@ -193,7 +193,7 @@ was not previously exported to the RMI runtime.</p>
 <h3 id="the-clone-method">5.3.6 The <code>clone</code> method</h3>
 <p>Objects are only cloneable using the Java programming language's
 default mechanism if they support the <code>java.lang.Cloneable</code>
-interface. The class <code>java.rmi.server.UnicastRemoteObject</code>
+interface. The class <code>java.rmi.web.UnicastRemoteObject</code>
 does not implement this interface, but does implement the
 <code>clone</code> method so that if subclasses need to implement
 <code>Cloneable</code>, the remote object will be capable of being
@@ -208,7 +208,7 @@ Interface</h2>
 public interface Unreferenced {
         public void unreferenced();
 }</code></pre>
-<p>The <code>java.rmi.server.Unreferenced</code> interface allows a
+<p>The <code>java.rmi.web.Unreferenced</code> interface allows a
 server object to receive notification that there are no clients holding
 remote references to it. The distributed garbage collection mechanism
 maintains for each remote object, the set of client virtual machines
@@ -355,7 +355,7 @@ requests.</p></li>
 </ul>
 <h3 id="the-rmisocketfactory-class">5.8.1 The
 <code>RMISocketFactory</code> Class</h3>
-<p>The <code>java.rmi.server.RMISocketFactory</code> abstract class
+<p>The <code>java.rmi.web.RMISocketFactory</code> abstract class
 provides an interface for specifying how the transport should obtain
 sockets. Note that the class below uses <code>Socket</code> and
 <code>ServerSocket</code> from the <code>java.net</code> package.</p>
@@ -416,7 +416,7 @@ is not set.</p>
 <p>See the <code>RMIClientSocketFactory</code> API documentation.</p>
 <h2 id="the-rmifailurehandler-interface">5.9 The
 <code>RMIFailureHandler</code> Interface</h2>
-<p>The <code>java.rmi.server.RMIFailureHandler</code> interface provides
+<p>The <code>java.rmi.web.RMIFailureHandler</code> interface provides
 a method for specifying how the RMI runtime should respond when server
 socket creation fails (except during object export).</p>
 <pre><code>package java.rmi.server;

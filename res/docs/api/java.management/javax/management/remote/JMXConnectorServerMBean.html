@@ -135,18 +135,18 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="JMXServiceURL.html" title="class in javax.management.remote">JMXServiceURL</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAddress()" class="member-name-link">getAddress</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">The address of this connector server.</div>
+<div class="block">The address of this connector web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../../java.base/java/util/Map.html" title="interface in java.util">Map</a><wbr>&lt;<a href="../../../../java.base/java/lang/String.html" title="class in java.lang">String</a>,<wbr>?&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAttributes()" class="member-name-link">getAttributes</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">The attributes for this connector server.</div>
+<div class="block">The attributes for this connector web.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../../java.base/java/lang/String.html" title="class in java.lang">String</a>[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getConnectionIds()" class="member-name-link">getConnectionIds</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">The list of IDs for currently-open connections to this
- connector server.</div>
+    connector web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isActive()" class="member-name-link">isActive</a>()</code></div>
@@ -157,7 +157,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setMBeanServerForwarder(javax.management.remote.MBeanServerForwarder)" class="member-name-link">setMBeanServerForwarder</a><wbr>(<a href="MBeanServerForwarder.html" title="interface in javax.management.remote">MBeanServerForwarder</a>&nbsp;mbsf)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Inserts an object that intercepts requests for the MBean server
- that arrive through this connector server.</div>
+    that arrive through this connector web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#start()" class="member-name-link">start</a>()</code></div>
@@ -174,7 +174,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="JMXConnector.html" title="interface in javax.management.remote">JMXConnector</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#toJMXConnector(java.util.Map)" class="member-name-link">toJMXConnector</a><wbr>(<a href="../../../../java.base/java/util/Map.html" title="interface in java.util">Map</a>&lt;<a href="../../../../java.base/java/lang/String.html" title="class in java.lang">String</a>,<wbr>?&gt;&nbsp;env)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns a client stub for this connector server.</div>
+<div class="block">Returns a client stub for this connector web.</div>
 </div>
 </div>
 </div>
@@ -218,11 +218,11 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">stop</span>()
    throws <span class="exceptions"><a href="../../../../java.base/java/io/IOException.html" title="class in java.io">IOException</a></span></div>
 <div class="block"><p>Deactivates the connector server, that is, stops listening for
- client connections.  Calling this method will also close all
- client connections that were made by this server.  After this
- method returns, whether normally or with an exception, the
- connector server will not create any new client
- connections.</p>
+    client connections. Calling this method will also close all
+    client connections that were made by this web. After this
+    method returns, whether normally or with an exception, the
+    connector server will not create any new client
+    connections.</p>
 
  <p>Once a connector server has been stopped, it cannot be started
  again.</p>
@@ -315,7 +315,7 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="../../../../java.base/java/lang/String.html" title="class in java.lang">String</a>[]</span>&nbsp;<span class="element-name">getConnectionIds</span>()</div>
 <div class="block"><p>The list of IDs for currently-open connections to this
- connector server.</p></div>
+    connector web.</p></div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>a new string array containing the list of IDs.  If
@@ -330,7 +330,7 @@ loadScripts(document, 'script');</script>
 <h3>getAddress</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="JMXServiceURL.html" title="class in javax.management.remote">JMXServiceURL</a></span>&nbsp;<span class="element-name">getAddress</span>()</div>
-<div class="block"><p>The address of this connector server.</p>
+<div class="block"><p>The address of this connector web.</p>
  <p>
  The address returned may not be the exact original <a href="JMXServiceURL.html" title="class in javax.management.remote"><code>JMXServiceURL</code></a>
  that was supplied when creating the connector server, since the original
@@ -356,13 +356,13 @@ loadScripts(document, 'script');</script>
 <h3>getAttributes</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="../../../../java.base/java/util/Map.html" title="interface in java.util">Map</a>&lt;<a href="../../../../java.base/java/lang/String.html" title="class in java.lang">String</a>,<wbr>?&gt;</span>&nbsp;<span class="element-name">getAttributes</span>()</div>
-<div class="block"><p>The attributes for this connector server.</p></div>
+<div class="block"><p>The attributes for this connector web.</p></div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>a read-only map containing the attributes for this
- connector server.  Attributes whose values are not serializable
- are omitted from this map.  If there are no serializable
- attributes, the returned map is empty.</dd>
+    connector web. Attributes whose values are not serializable
+    are omitted from this map. If there are no serializable
+    attributes, the returned map is empty.</dd>
 </dl>
 </div>
 </section>
@@ -387,7 +387,7 @@ loadScripts(document, 'script');</script>
  to an empty map.</dd>
 <dt>Returns:</dt>
 <dd>a client stub that can be used to make a new connection
- to this connector server.</dd>
+    to this connector web.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="../../../../java.base/java/lang/UnsupportedOperationException.html" title="class in java.lang">UnsupportedOperationException</a></code> - if this connector
  server does not support the generation of client stubs.</dd>

@@ -1,6 +1,6 @@
 package ex2.worker;
 
-import ex2.server.client.ClientService;
+import ex2.web.client.ClientService;
 import ex2.worker.concrete.EventLoopImpl;
 import ex2.worker.concrete.ReactiveImpl;
 import ex2.worker.concrete.VirtualThreadsImpl;

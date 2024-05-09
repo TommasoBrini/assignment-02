@@ -1,4 +1,4 @@
-package ex2.server.client;
+package ex2.web.client;
 
 import ex2.core.component.DataEvent;
 import org.jsoup.nodes.Document;

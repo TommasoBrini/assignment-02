@@ -5,7 +5,7 @@ import ex2.core.component.DataEvent;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import ex2.server.client.ClientService;
+import ex2.web.client.ClientService;
 
 
 public class VirtualThreadsImpl extends AbstractWorker {
@@ -18,7 +18,7 @@ public class VirtualThreadsImpl extends AbstractWorker {
 
     @Override
     public void addEventUrl(final DataEvent dataEvent) {
-        this.executor.submit(() -> this.clientService.searchUrl(dataEvent));
+        this.executor.submit(() -> this.clientService.onSearch(dataEvent.url()));
     }
 
     @Override

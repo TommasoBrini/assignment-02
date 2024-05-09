@@ -2,7 +2,7 @@ package ex2.worker.concrete;
 
 import ex2.core.component.DataEvent;
 import ex2.core.component.concrete.DataEventImpl;
-import ex2.server.client.ClientService;
+import ex2.web.client.ClientService;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 
@@ -20,7 +20,7 @@ public class EventLoopImpl extends AbstractWorker {
         this.vertx.eventBus().consumer(EVENT_URL, handler -> {
             final JsonObject jsonObject = (JsonObject) handler.body();
             final DataEvent dataEvent = new DataEventImpl(jsonObject);
-            this.clientService.searchUrl(dataEvent);
+            this.clientService.onSearch(dataEvent.url());
         });
     }
 

@@ -111,7 +111,7 @@ loadScripts(document, 'script');</script>
  SSLContext sslContext = SSLContext.getInstance (....);
  HttpsServer server = HttpsServer.create();
 
- server.setHttpsConfigurator (new HttpsConfigurator(sslContext) {
+ web.setHttpsConfigurator (new HttpsConfigurator(sslContext) {
      public void configure (HttpsParameters params) {
 
          // get the remote address if needed

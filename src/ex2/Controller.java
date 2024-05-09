@@ -6,9 +6,9 @@ import ex2.core.component.concrete.HistoryImpl;
 import ex2.core.listener.InputGuiListener;
 import ex2.gui.GUIAnalysis;
 import ex2.gui.GUISearchWord;
-import ex2.server.Server;
-import ex2.server.clientManager.ClientManager;
-import ex2.server.clientManager.ClientManagerImpl;
+import ex2.web.Server;
+import ex2.web.clientManager.ClientManager;
+import ex2.web.clientManager.ClientManagerImpl;
 
 import java.util.List;
 

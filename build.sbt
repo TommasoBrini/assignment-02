@@ -9,12 +9,12 @@ lazy val root = (project in file("."))
     name := "assignment-02",
     // https://mvnrepository.com/artifact/io.vertx/vertx-core
     libraryDependencies += "io.vertx" % "vertx-core" % "4.5.7",
-      // https://mvnrepository.com/artifact/io.vertx/vertx-web
+    // https://mvnrepository.com/artifact/io.vertx/vertx-web
     libraryDependencies += "io.vertx" % "vertx-web" % "4.5.7",
     // https://mvnrepository.com/artifact/io.vertx/vertx-web-client
     libraryDependencies += "io.vertx" % "vertx-web-client" % "4.5.7",
     // https://mvnrepository.com/artifact/org.jsoup/jsoup
-    libraryDependencies += "org.jsoup" % "jsoup" % "1.17.2" ,
+    libraryDependencies += "org.jsoup" % "jsoup" % "1.17.2",
     libraryDependencies += "org.jfree" % "jfreechart" % "1.5.3",
     libraryDependencies += "org.jfree" % "jcommon" % "1.0.23",
     // https://mvnrepository.com/artifact/com.squareup.okhttp/okhttp
@@ -22,5 +22,7 @@ lazy val root = (project in file("."))
     // junit
     libraryDependencies += "junit" % "junit" % "4.13.2" % Test,
     // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxjava
-    libraryDependencies += "io.reactivex.rxjava3" % "rxjava" % "3.1.8"
+    libraryDependencies += "io.reactivex.rxjava3" % "rxjava" % "3.1.8",
+    // https://mvnrepository.com/artifact/io.netty/netty-resolver-dns-native-macos
+    libraryDependencies += "io.netty" % "netty-resolver-dns-native-macos" % "4.1.100.Final"
     )

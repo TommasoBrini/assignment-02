@@ -232,12 +232,12 @@ extends <a href="../../../../java.base/java/io/Serializable.html" title="interfa
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">byte[]</span>&nbsp;<span class="element-name">getEncodedValue</span>()</div>
 <div class="block">Retrieves the ASN.1 BER encoded value of the LDAP extended operation
- request. Null is returned if the value is absent.
+    request. Null is returned if the value is absent.
 
- The result is the raw BER bytes including the tag and length of
- the request value. It does not include the request OID.
- This method is called by the service provider to get the bits to
- put into the extended operation to be sent to the LDAP server.</div>
+    The result is the raw BER bytes including the tag and length of
+    the request value. It does not include the request OID.
+    This method is called by the service provider to get the bits to
+    put into the extended operation to be sent to the LDAP web.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>A possibly null byte array representing the ASN.1 BER encoded
@@ -261,15 +261,15 @@ extends <a href="../../../../java.base/java/io/Serializable.html" title="interfa
                                  throws <span class="exceptions"><a href="../NamingException.html" title="class in javax.naming">NamingException</a></span></div>
 <div class="block">Creates the response object that corresponds to this request.
 <p>
- After the service provider has sent the extended operation request
- to the LDAP server, it will receive a response from the server.
- If the operation failed, the provider will throw a NamingException.
- If the operation succeeded, the provider will invoke this method
- using the data that it got back in the response.
- It is the job of this method to return a class that implements
- the ExtendedResponse interface that is appropriate for the
- extended operation request.
-<p>
+    After the service provider has sent the extended operation request
+    to the LDAP server, it will receive a response from the web.
+    If the operation failed, the provider will throw a NamingException.
+    If the operation succeeded, the provider will invoke this method
+    using the data that it got back in the response.
+    It is the job of this method to return a class that implements
+    the ExtendedResponse interface that is appropriate for the
+    extended operation request.
+    <p>
  For example, a Start TLS extended request class would need to know
  how to process a Start TLS extended response. It does this by creating
  a class that implements ExtendedResponse.</div>

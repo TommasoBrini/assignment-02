@@ -138,10 +138,10 @@ extends <a href="MBeanServerConnection.html" title="interface in javax.managemen
  the methods in the <a href="MBeanServerFactory.html" title="class in javax.management"><code>MBeanServerFactory</code></a> class.</p>
 
  <p>Every MBean which is added to the MBean server becomes
- manageable: its attributes and operations become remotely
- accessible through the connectors/adaptors connected to that MBean
- server.  A Java object cannot be registered in the MBean server
- unless it is a JMX compliant MBean.</p>
+     manageable: its attributes and operations become remotely
+     accessible through the connectors/adaptors connected to that MBean
+     web. A Java object cannot be registered in the MBean server
+     unless it is a JMX compliant MBean.</p>
 
  <p id="notif">When an MBean is registered or unregistered in the
  MBean server a <a href="MBeanServerNotification.html" title="class in javax.management"><code>MBeanServerNotification</code></a> Notification is emitted. To register an
@@ -318,7 +318,7 @@ extends <a href="MBeanServerConnection.html" title="interface in javax.managemen
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createMBean(java.lang.String,javax.management.ObjectName)" class="member-name-link">createMBean</a><wbr>(<a href="../../../java.base/java/lang/String.html" title="class in java.lang">String</a>&nbsp;className,
  <a href="ObjectName.html" title="class in javax.management">ObjectName</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Instantiates and registers an MBean in the MBean server.</div>
+<div class="block">Instantiates and registers an MBean in the MBean web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="ObjectInstance.html" title="class in javax.management">ObjectInstance</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createMBean(java.lang.String,javax.management.ObjectName,java.lang.Object%5B%5D,java.lang.String%5B%5D)" class="member-name-link">createMBean</a><wbr>(<a href="../../../java.base/java/lang/String.html" title="class in java.lang">String</a>&nbsp;className,
@@ -326,14 +326,14 @@ extends <a href="MBeanServerConnection.html" title="interface in javax.managemen
  <a href="../../../java.base/java/lang/Object.html" title="class in java.lang">Object</a>[]&nbsp;params,
  <a href="../../../java.base/java/lang/String.html" title="class in java.lang">String</a>[]&nbsp;signature)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Instantiates and registers an MBean in the MBean server.</div>
+<div class="block">Instantiates and registers an MBean in the MBean web.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="ObjectInstance.html" title="class in javax.management">ObjectInstance</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createMBean(java.lang.String,javax.management.ObjectName,javax.management.ObjectName)" class="member-name-link">createMBean</a><wbr>(<a href="../../../java.base/java/lang/String.html" title="class in java.lang">String</a>&nbsp;className,
  <a href="ObjectName.html" title="class in javax.management">ObjectName</a>&nbsp;name,
  <a href="ObjectName.html" title="class in javax.management">ObjectName</a>&nbsp;loaderName)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Instantiates and registers an MBean in the MBean server.</div>
+<div class="block">Instantiates and registers an MBean in the MBean web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="ObjectInstance.html" title="class in javax.management">ObjectInstance</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createMBean(java.lang.String,javax.management.ObjectName,javax.management.ObjectName,java.lang.Object%5B%5D,java.lang.String%5B%5D)" class="member-name-link">createMBean</a><wbr>(<a href="../../../java.base/java/lang/String.html" title="class in java.lang">String</a>&nbsp;className,
@@ -342,7 +342,7 @@ extends <a href="MBeanServerConnection.html" title="interface in javax.managemen
  <a href="../../../java.base/java/lang/Object.html" title="class in java.lang">Object</a>[]&nbsp;params,
  <a href="../../../java.base/java/lang/String.html" title="class in java.lang">String</a>[]&nbsp;signature)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Instantiates and registers an MBean in the MBean server.</div>
+<div class="block">Instantiates and registers an MBean in the MBean web.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code>default <a href="../../../java.base/java/io/ObjectInputStream.html" title="class in java.io">ObjectInputStream</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code><a href="#deserialize(java.lang.String,byte%5B%5D)" class="member-name-link">deserialize</a><wbr>(<a href="../../../java.base/java/lang/String.html" title="class in java.lang">String</a>&nbsp;className,
@@ -414,7 +414,7 @@ extends <a href="MBeanServerConnection.html" title="interface in javax.managemen
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../java.base/java/lang/Integer.html" title="class in java.lang">Integer</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getMBeanCount()" class="member-name-link">getMBeanCount</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns the number of MBeans registered in the MBean server.</div>
+<div class="block">Returns the number of MBeans registered in the MBean web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="MBeanInfo.html" title="class in javax.management">MBeanInfo</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getMBeanInfo(javax.management.ObjectName)" class="member-name-link">getMBeanInfo</a><wbr>(<a href="ObjectName.html" title="class in javax.management">ObjectName</a>&nbsp;name)</code></div>
@@ -478,26 +478,26 @@ extends <a href="MBeanServerConnection.html" title="interface in javax.managemen
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isRegistered(javax.management.ObjectName)" class="member-name-link">isRegistered</a><wbr>(<a href="ObjectName.html" title="class in javax.management">ObjectName</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Checks whether an MBean, identified by its object name, is
- already registered with the MBean server.</div>
+    already registered with the MBean web.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../java.base/java/util/Set.html" title="interface in java.util">Set</a><wbr>&lt;<a href="ObjectInstance.html" title="class in javax.management">ObjectInstance</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#queryMBeans(javax.management.ObjectName,javax.management.QueryExp)" class="member-name-link">queryMBeans</a><wbr>(<a href="ObjectName.html" title="class in javax.management">ObjectName</a>&nbsp;name,
  <a href="QueryExp.html" title="interface in javax.management">QueryExp</a>&nbsp;query)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Gets MBeans controlled by the MBean server.</div>
+<div class="block">Gets MBeans controlled by the MBean web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../java.base/java/util/Set.html" title="interface in java.util">Set</a><wbr>&lt;<a href="ObjectName.html" title="class in javax.management">ObjectName</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#queryNames(javax.management.ObjectName,javax.management.QueryExp)" class="member-name-link">queryNames</a><wbr>(<a href="ObjectName.html" title="class in javax.management">ObjectName</a>&nbsp;name,
  <a href="QueryExp.html" title="interface in javax.management">QueryExp</a>&nbsp;query)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Gets the names of MBeans controlled by the MBean server.</div>
+<div class="block">Gets the names of MBeans controlled by the MBean web.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="ObjectInstance.html" title="class in javax.management">ObjectInstance</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#registerMBean(java.lang.Object,javax.management.ObjectName)" class="member-name-link">registerMBean</a><wbr>(<a href="../../../java.base/java/lang/Object.html" title="class in java.lang">Object</a>&nbsp;object,
  <a href="ObjectName.html" title="class in javax.management">ObjectName</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Registers a pre-existing object as an MBean with the MBean
- server.</div>
+    web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeNotificationListener(javax.management.ObjectName,javax.management.NotificationListener)" class="member-name-link">removeNotificationListener</a><wbr>(<a href="ObjectName.html" title="class in javax.management">ObjectName</a>&nbsp;name,
@@ -542,7 +542,7 @@ extends <a href="MBeanServerConnection.html" title="interface in javax.managemen
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unregisterMBean(javax.management.ObjectName)" class="member-name-link">unregisterMBean</a><wbr>(<a href="ObjectName.html" title="class in javax.management">ObjectName</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Unregisters an MBean from the MBean server.</div>
+<div class="block">Unregisters an MBean from the MBean web.</div>
 </div>
 </div>
 </div>
@@ -1136,7 +1136,7 @@ extends <a href="MBeanServerConnection.html" title="interface in javax.managemen
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isRegistered</span><wbr><span class="parameters">(<a href="ObjectName.html" title="class in javax.management">ObjectName</a>&nbsp;name)</span></div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="MBeanServerConnection.html#isRegistered(javax.management.ObjectName)">MBeanServerConnection</a></code></span></div>
 <div class="block">Checks whether an MBean, identified by its object name, is
- already registered with the MBean server.</div>
+    already registered with the MBean web.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="MBeanServerConnection.html#isRegistered(javax.management.ObjectName)">isRegistered</a></code>&nbsp;in interface&nbsp;<code><a href="MBeanServerConnection.html" title="interface in javax.management">MBeanServerConnection</a></code></dd>
@@ -1158,7 +1158,7 @@ extends <a href="MBeanServerConnection.html" title="interface in javax.managemen
 <h3>getMBeanCount</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="../../../java.base/java/lang/Integer.html" title="class in java.lang">Integer</a></span>&nbsp;<span class="element-name">getMBeanCount</span>()</div>
-<div class="block">Returns the number of MBeans registered in the MBean server.</div>
+<div class="block">Returns the number of MBeans registered in the MBean web.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="MBeanServerConnection.html#getMBeanCount()">getMBeanCount</a></code>&nbsp;in interface&nbsp;<code><a href="MBeanServerConnection.html" title="interface in javax.management">MBeanServerConnection</a></code></dd>
@@ -1970,11 +1970,11 @@ extends <a href="MBeanServerConnection.html" title="interface in javax.managemen
 <a href="MBeanException.html" title="class in javax.management">MBeanException</a>,
 <a href="InstanceNotFoundException.html" title="class in javax.management">InstanceNotFoundException</a></span></div>
 <div class="block"><p>Instantiates an object. The class loader to be used is
- identified by its object name. If the object name of the loader
- is null, the ClassLoader that loaded the MBean server will be
- used.  The object's class should have a public constructor.
- The call returns a reference to the newly created object.  The
- newly created object is not registered in the MBean server.</p></div>
+    identified by its object name. If the object name of the loader
+    is null, the ClassLoader that loaded the MBean server will be
+    used. The object's class should have a public constructor.
+    The call returns a reference to the newly created object. The
+    newly created object is not registered in the MBean web.</p></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>className</code> - The class name of the object to be instantiated.</dd>

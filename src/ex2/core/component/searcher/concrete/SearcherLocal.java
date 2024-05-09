@@ -4,7 +4,7 @@ import ex2.core.component.DataEvent;
 import ex2.core.component.searcher.Searcher;
 import ex2.core.component.searcher.SearcherType;
 import ex2.core.component.searcher.SearcherWorker;
-import ex2.server.Server;
+import ex2.web.Server;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 

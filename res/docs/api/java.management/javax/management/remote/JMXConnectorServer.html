@@ -122,9 +122,9 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">JMXConnectorServer</span>
 <span class="extends-implements">extends <a href="../NotificationBroadcasterSupport.html" title="class in javax.management">NotificationBroadcasterSupport</a>
 implements <a href="JMXConnectorServerMBean.html" title="interface in javax.management.remote">JMXConnectorServerMBean</a>, <a href="../MBeanRegistration.html" title="interface in javax.management">MBeanRegistration</a>, <a href="JMXAddressable.html" title="interface in javax.management.remote">JMXAddressable</a></span></div>
-<div class="block"><p>Superclass of every connector server.  A connector server is
- attached to an MBean server.  It listens for client connection
- requests and creates a connection for each one.</p>
+<div class="block"><p>Superclass of every connector web. A connector server is
+    attached to an MBean web. It listens for client connection
+    requests and creates a connection for each one.</p>
 
  <p>A connector server is associated with an MBean server either by
  registering it in that MBean server, or by passing the MBean server
@@ -137,8 +137,8 @@ implements <a href="JMXConnectorServerMBean.html" title="interface in javax.mana
  the connector server is unregistered from its MBean server.</p>
 
  <p>Stopping a connector server does not unregister it from its
- MBean server.  A connector server once stopped cannot be
- restarted.</p>
+     MBean web. A connector server once stopped cannot be
+     restarted.</p>
 
  <p>Each time a client connection is made or broken, a notification
  of class <a href="JMXConnectionNotification.html" title="class in javax.management.remote"><code>JMXConnectionNotification</code></a> is emitted.</p></div>
@@ -163,7 +163,7 @@ implements <a href="JMXConnectorServerMBean.html" title="interface in javax.mana
 <div class="col-second even-row-color"><code><a href="#AUTHENTICATOR" class="member-name-link">AUTHENTICATOR</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">Name of the attribute that specifies the authenticator for a
- connector server.</div>
+    connector web.</div>
 </div>
 </div>
 </section>
@@ -184,7 +184,7 @@ implements <a href="JMXConnectorServerMBean.html" title="interface in javax.mana
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(javax.management.MBeanServer)" class="member-name-link">JMXConnectorServer</a><wbr>(<a href="../MBeanServer.html" title="interface in javax.management">MBeanServer</a>&nbsp;mbeanServer)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Constructs a connector server that is attached to the given
- MBean server.</div>
+    MBean web.</div>
 </div>
 </div>
 </section>
@@ -226,7 +226,7 @@ implements <a href="JMXConnectorServerMBean.html" title="interface in javax.mana
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getConnectionIds()" class="member-name-link">getConnectionIds</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The list of IDs for currently-open connections to this
- connector server.</div>
+    connector web.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../MBeanServer.html" title="interface in javax.management">MBeanServer</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMBeanServer()" class="member-name-link">getMBeanServer</a>()</code></div>
@@ -244,7 +244,7 @@ implements <a href="JMXConnectorServerMBean.html" title="interface in javax.mana
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#postDeregister()" class="member-name-link">postDeregister</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Allows the MBean to perform any operations needed after having been
- unregistered in the MBean server.</div>
+    unregistered in the MBean web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#postRegister(java.lang.Boolean)" class="member-name-link">postRegister</a><wbr>(<a href="../../../../java.base/java/lang/Boolean.html" title="class in java.lang">Boolean</a>&nbsp;registrationDone)</code></div>
@@ -256,25 +256,25 @@ implements <a href="JMXConnectorServerMBean.html" title="interface in javax.mana
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#preDeregister()" class="member-name-link">preDeregister</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called by an MBean server when this connector server is
- unregistered from that MBean server.</div>
+    unregistered from that MBean web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../ObjectName.html" title="class in javax.management">ObjectName</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#preRegister(javax.management.MBeanServer,javax.management.ObjectName)" class="member-name-link">preRegister</a><wbr>(<a href="../MBeanServer.html" title="interface in javax.management">MBeanServer</a>&nbsp;mbs,
  <a href="../ObjectName.html" title="class in javax.management">ObjectName</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called by an MBean server when this connector server is
- registered in that MBean server.</div>
+    registered in that MBean web.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMBeanServerForwarder(javax.management.remote.MBeanServerForwarder)" class="member-name-link">setMBeanServerForwarder</a><wbr>(<a href="MBeanServerForwarder.html" title="interface in javax.management.remote">MBeanServerForwarder</a>&nbsp;mbsf)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Inserts an object that intercepts requests for the MBean server
- that arrive through this connector server.</div>
+    that arrive through this connector web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="JMXConnector.html" title="interface in javax.management.remote">JMXConnector</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toJMXConnector(java.util.Map)" class="member-name-link">toJMXConnector</a><wbr>(<a href="../../../../java.base/java/util/Map.html" title="interface in java.util">Map</a>&lt;<a href="../../../../java.base/java/lang/String.html" title="class in java.lang">String</a>,<wbr>?&gt;&nbsp;env)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns a client stub for this connector server.</div>
+<div class="block">Returns a client stub for this connector web.</div>
 </div>
 </div>
 </div>
@@ -348,9 +348,9 @@ implements <a href="JMXConnectorServerMBean.html" title="interface in javax.mana
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">JMXConnectorServer</span><wbr><span class="parameters">(<a href="../MBeanServer.html" title="interface in javax.management">MBeanServer</a>&nbsp;mbeanServer)</span></div>
 <div class="block"><p>Constructs a connector server that is attached to the given
- MBean server.  A connector server that is created in this way
- can be registered in a different MBean server, or not registered
- in any MBean server.</p></div>
+    MBean web. A connector server that is created in this way
+    can be registered in a different MBean server, or not registered
+    in any MBean web.</p></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>mbeanServer</code> - the MBean server that this connector server
@@ -378,7 +378,7 @@ implements <a href="JMXConnectorServerMBean.html" title="interface in javax.mana
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the MBean server that this connector server is attached
- to, or null if it is not yet attached to an MBean server.</dd>
+    to, or null if it is not yet attached to an MBean web.</dd>
 </dl>
 </div>
 </section>
@@ -428,7 +428,7 @@ implements <a href="JMXConnectorServerMBean.html" title="interface in javax.mana
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../../java.base/java/lang/String.html" title="class in java.lang">String</a>[]</span>&nbsp;<span class="element-name">getConnectionIds</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="JMXConnectorServerMBean.html#getConnectionIds()">JMXConnectorServerMBean</a></code></span></div>
 <div class="block"><p>The list of IDs for currently-open connections to this
- connector server.</p></div>
+    connector web.</p></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="JMXConnectorServerMBean.html#getConnectionIds()">getConnectionIds</a></code>&nbsp;in interface&nbsp;<code><a href="JMXConnectorServerMBean.html" title="interface in javax.management.remote">JMXConnectorServerMBean</a></code></dd>
@@ -474,7 +474,7 @@ implements <a href="JMXConnectorServerMBean.html" title="interface in javax.mana
  to an empty map.</dd>
 <dt>Returns:</dt>
 <dd>a client stub that can be used to make a new connection
- to this connector server.</dd>
+    to this connector web.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="../../../../java.base/java/lang/UnsupportedOperationException.html" title="class in java.lang">UnsupportedOperationException</a></code> - if this connector
  server does not support the generation of client stubs.</dd>

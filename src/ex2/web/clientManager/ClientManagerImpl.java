@@ -1,10 +1,10 @@
-package ex2.server.clientManager;
+package ex2.web.clientManager;
 
 import ex2.core.component.DataEvent;
 import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
-import ex2.server.client.ClientService;
-import ex2.server.client.JsopClientService;
+import ex2.web.client.ClientService;
+import ex2.web.client.ClientServiceFactory;
 import ex2.worker.FactoryWorker;
 import ex2.worker.LogicWorker;
 
@@ -20,7 +20,7 @@ public class ClientManagerImpl implements ClientManager {
     private LogicWorker worker;
 
     public ClientManagerImpl() {
-        this.clientService = new JsopClientService();
+        this.clientService = ClientServiceFactory.createJsoup();
         this.viewListeners = new ArrayList<>();
         this.modelListeners = new ArrayList<>();
         this.factoryWorker = new FactoryWorker.FactoryWorkerImpl();
@@ -32,14 +32,14 @@ public class ClientManagerImpl implements ClientManager {
         this.modelListeners.forEach(this.worker::addModelListener);
         this.viewListeners.forEach(this.worker::addViewListener);
         this.clientService.clearListener();
-        this.clientService.addListenerRequest(this.worker);
+        this.clientService.addListener(this.worker);
         this.worker.start(dataEvent);
     }
 
     @Override
     public void startSearch(final DataEvent dataEvent) {
         this.setupWorker(dataEvent);
-        this.clientService.searchUrl(dataEvent);
+//        this.clientService.onSearch(dataEvent.url());
     }
 
     @Override

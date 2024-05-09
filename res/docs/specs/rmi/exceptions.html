@@ -47,7 +47,7 @@ receive calls from external Java virtual machines and can be passed in
 an RMI call as either a parameter or return value. An object can either
 be exported on an anonymous port or on a specified port. For objects not
 extended from <code>UnicastRemoteObject</code>, the
-<code>java.rmi.server.UnicastRemoteObject.exportObject</code> method is
+<code>java.rmi.web.UnicastRemoteObject.exportObject</code> method is
 used to explicitly export the object.</p>
 <h3
 id="java.rmi.stubnotfoundexception"><code>java.rmi.StubNotFoundException</code></h3>
@@ -61,7 +61,7 @@ errors:</p>
 <p>Bad URL due to wrong codebase.</p>
 <p>Stub not of correct class.</p>
 <h3
-id="java.rmi.server.skeletonnotfoundexception"><code>java.rmi.server.SkeletonNotFoundException</code></h3>
+id="java.rmi.server.skeletonnotfoundexception"><code>java.rmi.web.SkeletonNotFoundException</code></h3>
 <p><em>Note: this exception is deprecated as of Java 2 SDK, Standard
 Edition, v1.2</em></p>
 <p>Class of skeleton not found.</p>
@@ -74,7 +74,7 @@ these errors:</p>
 <p>Bad URL due to wrong codebase.</p>
 <p>Skeleton not of correct class.</p>
 <h3
-id="java.rmi.server.exportexception"><code>java.rmi.server.ExportException</code></h3>
+id="java.rmi.server.exportexception"><code>java.rmi.web.ExportException</code></h3>
 <p>The port is in use by another VM.</p>
 <h2 id="a.2-exceptions-during-rmi-call">A.2 Exceptions During RMI
 Call</h2>
@@ -146,7 +146,7 @@ exception for the client to extract. These exceptions are wrapped by
 remote method invocation on the server did not fail, but that a
 secondary remote method invocation made by the server failed.</p>
 <h4
-id="java.rmi.server.skeletonmismatchexception"><code>java.rmi.server.SkeletonMismatchException</code></h4>
+id="java.rmi.server.skeletonmismatchexception"><code>java.rmi.web.SkeletonMismatchException</code></h4>
 <p><em>Note: this exception is deprecated as of the Java 2 SDK, Standard
 Edition, v1.2</em></p>
 <p>Hash mismatch of stub and skeleton.</p>
@@ -191,15 +191,15 @@ Edition, v1.2</em></p>
 <p>A security exception that is thrown by the
 <code>RMISecurityManager</code>.</p>
 <h3
-id="java.rmi.server.servercloneexception"><code>java.rmi.server.ServerCloneException</code></h3>
+id="java.rmi.server.servercloneexception"><code>java.rmi.web.ServerCloneException</code></h3>
 <p>Clone failed.</p>
 <h3
-id="java.rmi.server.servernotactiveexception"><code>java.rmi.server.ServerNotActiveException</code></h3>
+id="java.rmi.server.servernotactiveexception"><code>java.rmi.web.ServerNotActiveException</code></h3>
 <p>Attempt to get the client host via the
 <code>RemoteServer.getClientHost</code> method when the remote server is
 not executing in a remote method.</p>
 <h3
-id="java.rmi.server.socketsecurityexception"><code>java.rmi.server.SocketSecurityException</code></h3>
+id="java.rmi.server.socketsecurityexception"><code>java.rmi.web.SocketSecurityException</code></h3>
 <p>Attempt to export object on an illegal port.</p>
 </main><footer class="legal-footer"><hr/><a href="../../legal/copyright.html">Copyright</a> &copy; 1993, 2024, Oracle and/or its affiliates, 500 Oracle Parkway, Redwood Shores, CA 94065 USA.<br>All rights reserved. Use is subject to <a href="https://www.oracle.com/java/javase/terms/license/java22speclicense.html">license terms</a> and the <a href="https://www.oracle.com/technetwork/java/redist-137594.html">documentation redistribution policy</a>. <!-- Version 22.0.1+8-16 --></footer>
 </body>

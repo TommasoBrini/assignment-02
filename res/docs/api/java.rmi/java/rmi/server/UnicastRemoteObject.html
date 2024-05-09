@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: module: java.rmi, package: java.rmi.server, class: UnicastRemoteObject">
 <meta name="generator" content="javadoc/ClassWriter">
-<meta name="keywords" content="java.rmi.server.UnicastRemoteObject class">
+<meta name="keywords" content="java.rmi.web.UnicastRemoteObject class">
 <meta name="keywords" content="clone()">
 <meta name="keywords" content="exportObject()">
 <meta name="keywords" content="unexportObject()">
@@ -94,9 +94,9 @@ loadScripts(document, 'script');</script>
 <h1 title="Class UnicastRemoteObject" class="title">Class UnicastRemoteObject</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="../../../../java.base/java/lang/Object.html" title="class in java.lang">java.lang.Object</a>
-<div class="inheritance"><a href="RemoteObject.html" title="class in java.rmi.server">java.rmi.server.RemoteObject</a>
-<div class="inheritance"><a href="RemoteServer.html" title="class in java.rmi.server">java.rmi.server.RemoteServer</a>
-<div class="inheritance">java.rmi.server.UnicastRemoteObject</div>
+<div class="inheritance"><a href="RemoteObject.html" title="class in java.rmi.server">java.rmi.web.RemoteObject</a>
+<div class="inheritance"><a href="RemoteServer.html" title="class in java.rmi.server">java.rmi.web.RemoteServer</a>
+<div class="inheritance">java.rmi.web.UnicastRemoteObject</div>
 </div>
 </div>
 </div>
@@ -154,13 +154,13 @@ loadScripts(document, 'script');</script>
  always uses statically generated stubs and is deprecated.
 
  <p>The other techniques all use the following approach: if the
- <code>java.rmi.server.ignoreStubClasses</code> property is <code>true</code>
+ <code>java.rmi.web.ignoreStubClasses</code> property is <code>true</code>
  (case insensitive) or if a static stub cannot be found, stubs are generated
  dynamically using <a href="../../../../java.base/java/lang/reflect/Proxy.html" title="class in java.lang.reflect"><code>Proxy</code></a> objects. Otherwise,
  static stubs are used.
 
  <p>The default value of the
- <code>java.rmi.server.ignoreStubClasses</code> property is <code>false</code>.
+ <code>java.rmi.web.ignoreStubClasses</code> property is <code>false</code>.
 
  <p>Statically generated stubs are typically pregenerated from the remote object's class.
  A static stub is loaded and an instance of that stub class is constructed as described below.

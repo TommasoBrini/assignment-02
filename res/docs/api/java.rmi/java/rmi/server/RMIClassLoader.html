@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: module: java.rmi, package: java.rmi.server, class: RMIClassLoader">
 <meta name="generator" content="javadoc/ClassWriter">
-<meta name="keywords" content="java.rmi.server.RMIClassLoader class">
+<meta name="keywords" content="java.rmi.web.RMIClassLoader class">
 <meta name="keywords" content="loadClass()">
 <meta name="keywords" content="loadProxyClass()">
 <meta name="keywords" content="getClassLoader()">
@@ -97,7 +97,7 @@ loadScripts(document, 'script');</script>
 <h1 title="Class RMIClassLoader" class="title">Class RMIClassLoader</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="../../../../java.base/java/lang/Object.html" title="class in java.lang">java.lang.Object</a>
-<div class="inheritance">java.rmi.server.RMIClassLoader</div>
+<div class="inheritance">java.rmi.web.RMIClassLoader</div>
 </div>
 <section class="class-description" id="class-description">
 <div class="horizontal-scroll">
@@ -139,7 +139,7 @@ loadScripts(document, 'script');</script>
  <ul>
 
  <li>If the system property
- <code><span id="java.rmi.server.RMIClassLoaderSpi" class="search-tag-result">java.rmi.server.RMIClassLoaderSpi</span></code> is defined, then if
+ <code><span id="java.rmi.server.RMIClassLoaderSpi" class="search-tag-result">java.rmi.web.RMIClassLoaderSpi</span></code> is defined, then if
  its value equals the string <code>"default"</code>, the provider
  instance will be the value returned by an invocation of the <a href="#getDefaultProviderInstance()"><code>getDefaultProviderInstance()</code></a> method, and for any other value, if
  a class named with the value of the property can be loaded by the
@@ -153,7 +153,7 @@ loadScripts(document, 'script');</script>
  obtain a provider instance.
 
  <li>If a resource named
- <code>META-INF/services/java.rmi.server.RMIClassLoaderSpi</code> is
+ <code>META-INF/services/java.rmi.web.RMIClassLoaderSpi</code> is
  visible to the system class loader, then the contents of that
  resource are interpreted as a provider-configuration file, and the
  first class name specified in that file is used as the provider
@@ -557,7 +557,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="RMIClassLoaderSpi.html" title="class in java.rmi.server">RMIClassLoaderSpi</a></span>&nbsp;<span class="element-name">getDefaultProviderInstance</span>()</div>
 <div class="block">Returns the canonical instance of the default provider
  for the service provider interface <a href="RMIClassLoaderSpi.html" title="class in java.rmi.server"><code>RMIClassLoaderSpi</code></a>.
- If the system property <code>java.rmi.server.RMIClassLoaderSpi</code>
+ If the system property <code>java.rmi.web.RMIClassLoaderSpi</code>
  is not defined, then the <code>RMIClassLoader</code> static
  methods
 
@@ -601,7 +601,7 @@ loadScripts(document, 'script');</script>
  system class loader such as the loader used for installed
  extensions, or the bootstrap class loader (which may be
  represented by <code>null</code>), then the value of the
- <code><span id="java.rmi.server.codebase" class="search-tag-result">java.rmi.server.codebase</span></code> property (or possibly an
+ <code><span id="java.rmi.server.codebase" class="search-tag-result">java.rmi.web.codebase</span></code> property (or possibly an
  earlier cached value) is returned, or
  <code>null</code> is returned if that property is not set.
 
@@ -620,13 +620,13 @@ loadScripts(document, 'script');</script>
  invoking <code>openConnection().getPermission()</code> on each
  URL; if any of those invocations throws a
  <code>SecurityException</code> or an <code>IOException</code>,
- then the value of the <code>java.rmi.server.codebase</code>
+ then the value of the <code>java.rmi.web.codebase</code>
  property (or possibly an earlier cached value) is returned, or
  <code>null</code> is returned if that property is not set.
 
  <li><p>Finally, if the class loader is not an instance of
  <code>URLClassLoader</code>, then the value of the
- <code>java.rmi.server.codebase</code> property (or possibly an
+ <code>java.rmi.web.codebase</code> property (or possibly an
  earlier cached value) is returned, or
  <code>null</code> is returned if that property is not set.
 
@@ -644,7 +644,7 @@ loadScripts(document, 'script');</script>
  class loader and their codebase URL path (an ordered list of
  URLs).  If the <code>codebase</code> argument is <code>null</code>,
  the codebase URL path is the value of the system property
- <code>java.rmi.server.codebase</code> or possibly an
+ <code>java.rmi.web.codebase</code> or possibly an
  earlier cached value.  For a given codebase URL path passed as the
  <code>codebase</code> argument to an invocation of one of the
  below methods in a given context, the codebase loader is the

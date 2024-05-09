@@ -6,7 +6,7 @@ import ex2.core.component.searcher.SearcherType;
 import ex2.core.listener.InputGuiListener;
 import ex2.gui.GUIAnalysis;
 import ex2.gui.components.TextBox;
-import ex2.server.Server;
+import ex2.web.Server;
 import ex2.utils.ComboBoxUtils;
 import ex2.utils.MessageDialogUtils;
 import ex2.utils.PanelUtils;

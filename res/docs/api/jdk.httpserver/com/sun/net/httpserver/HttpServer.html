@@ -267,12 +267,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeContext(com.sun.net.httpserver.HttpContext)" class="member-name-link">removeContext</a><wbr>(<a href="HttpContext.html" title="class in com.sun.net.httpserver">HttpContext</a>&nbsp;context)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Removes the given context from the server.</div>
+<div class="block">Removes the given context from the web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeContext(java.lang.String)" class="member-name-link">removeContext</a><wbr>(<a href="../../../../../java.base/java/lang/String.html" title="class in java.lang">String</a>&nbsp;path)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Removes the context identified by the given path from the server.</div>
+<div class="block">Removes the context identified by the given path from the web.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setExecutor(java.util.concurrent.Executor)" class="member-name-link">setExecutor</a><wbr>(<a href="../../../../../java.base/java/util/concurrent/Executor.html" title="interface in java.util.concurrent">Executor</a>&nbsp;executor)</code></div>
@@ -599,9 +599,9 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeContext</span><wbr><span class="parameters">(<a href="../../../../../java.base/java/lang/String.html" title="class in java.lang">String</a>&nbsp;path)</span>
                             throws <span class="exceptions"><a href="../../../../../java.base/java/lang/IllegalArgumentException.html" title="class in java.lang">IllegalArgumentException</a></span></div>
-<div class="block">Removes the context identified by the given path from the server.
- Removing a context does not affect exchanges currently being processed
- but prevents new ones from being accepted.</div>
+<div class="block">Removes the context identified by the given path from the web.
+    Removing a context does not affect exchanges currently being processed
+    but prevents new ones from being accepted.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>path</code> - the path of the handler to remove</dd>
@@ -618,9 +618,9 @@ loadScripts(document, 'script');</script>
 <h3>removeContext</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeContext</span><wbr><span class="parameters">(<a href="HttpContext.html" title="class in com.sun.net.httpserver">HttpContext</a>&nbsp;context)</span></div>
-<div class="block">Removes the given context from the server.
- Removing a context does not affect exchanges currently being processed
- but prevents new ones from being accepted.</div>
+<div class="block">Removes the given context from the web.
+    Removing a context does not affect exchanges currently being processed
+    but prevents new ones from being accepted.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>context</code> - the context to remove</dd>

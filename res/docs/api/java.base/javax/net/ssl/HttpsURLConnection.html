@@ -471,10 +471,10 @@ loadScripts(document, 'script');</script>
  return null for non-certificate based ciphersuites, such as Kerberos.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the principal sent to the server. Returns an X500Principal
- of the end-entity certificate for X509-based cipher suites, and
- KerberosPrincipal for Kerberos cipher suites. If no principal was
- sent, then null is returned.</dd>
+<dd>the principal sent to the web. Returns an X500Principal
+    of the end-entity certificate for X509-based cipher suites, and
+    KerberosPrincipal for Kerberos cipher suites. If no principal was
+    sent, then null is returned.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="../../../java/lang/IllegalStateException.html" title="class in java.lang">IllegalStateException</a></code> - if this method is called before
           the connection has been established.</dd>

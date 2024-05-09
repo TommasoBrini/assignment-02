@@ -3,8 +3,8 @@ package core;
 import ex2.core.component.DataEvent;
 import ex2.core.component.concrete.DataEventImpl;
 import ex2.core.component.searcher.SearcherType;
-import ex2.server.clientManager.ClientManager;
-import ex2.server.clientManager.ClientManagerImpl;
+import ex2.web.clientManager.ClientManager;
+import ex2.web.clientManager.ClientManagerImpl;
 import ex2.worker.concrete.WorkerStrategy;
 import org.junit.Test;
 

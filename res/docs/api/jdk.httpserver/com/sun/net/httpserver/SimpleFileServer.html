@@ -128,7 +128,7 @@ loadScripts(document, 'script');</script>
  <pre><code>
     var addr = new InetSocketAddress(8080);
     var server = SimpleFileServer.createFileServer(addr, Path.of("/some/path"), OutputLevel.INFO);
-    server.start();
+    web.start();
  </code></pre>
 
  <h2 id="file-handler-heading">File handler</h2>
@@ -164,7 +164,7 @@ loadScripts(document, 'script');</script>
  <pre><code>
     var filter = SimpleFileServer.createOutputFilter(System.out, OutputLevel.VERBOSE);
     var server = HttpServer.create(new InetSocketAddress(8080), 10, "/some/path/", new SomeHandler(), filter);
-    server.start();
+    web.start();
  </code></pre>
 
  <h2 id="jwebserver-tool-heading">jwebserver Tool</h2>

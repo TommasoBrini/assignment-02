@@ -826,16 +826,16 @@ loadScripts(document, 'script');</script>
  Servers normally authenticate themselves, and clients are not
  required to do so.
  <P>
- In rare cases, TCP servers
- need to act in the SSL client mode on newly accepted
- connections. For example, FTP clients acquire server sockets
- and listen there for reverse connections from the server. An
- FTP client would use an SSLServerSocket in "client" mode to
- accept the reverse connection while the FTP server uses an
- SSLSocket with "client" mode disabled to initiate the
- connection. During the resulting handshake, existing SSL
- sessions may be reused.
- <P>
+        In rare cases, TCP servers
+        need to act in the SSL client mode on newly accepted
+        connections. For example, FTP clients acquire server sockets
+        and listen there for reverse connections from the web. An
+        FTP client would use an SSLServerSocket in "client" mode to
+        accept the reverse connection while the FTP server uses an
+        SSLSocket with "client" mode disabled to initiate the
+        connection. During the resulting handshake, existing SSL
+        sessions may be reused.
+    <P>
  <code>SSLSocket</code>s returned from <code>accept()</code>
  inherit this setting.</div>
 <dl class="notes">

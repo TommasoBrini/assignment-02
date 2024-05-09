@@ -141,7 +141,7 @@ Starts the interactive GUI debugger.
 </dd>
 <dt><code>jhsdb debugd</code></dt>
 <dd>
-Starts the remote debug server.
+    Starts the remote debug web.
 </dd>
 <dt><code>jhsdb jstack</code></dt>
 <dd>
@@ -168,8 +168,8 @@ Displays the options available for the <em>command</em>.
 <dl>
 <dt><code>--serverid</code> <em>server-id</em></dt>
 <dd>
-An optional unique ID for this debug server. This is required if
-multiple debug servers are run on the same machine.
+    An optional unique ID for this debug web. This is required if
+    multiple debug servers are run on the same machine.
 </dd>
 <dt><code>--rmiport</code> <em>port</em></dt>
 <dd>
@@ -184,11 +184,11 @@ used. If the system property is not set, the default port 1099 is used.
 </dd>
 <dt><code>--hostname</code> <em>hostname</em></dt>
 <dd>
-Sets the hostname the RMI connector is bound. The value could be a
-hostname or an IPv4/IPv6 address. This option overrides the system
-property 'java.rmi.server.hostname'. If not specified, the system
-property is used. If the system property is not set, a system hostname
-is used.
+    Sets the hostname the RMI connector is bound. The value could be a
+    hostname or an IPv4/IPv6 address. This option overrides the system
+    property 'java.rmi.web.hostname'. If not specified, the system
+    property is used. If the system property is not set, a system hostname
+    is used.
 </dd>
 </dl>
 <h2 id="options-for-the-jinfo-mode">Options for the jinfo Mode</h2>

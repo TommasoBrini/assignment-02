@@ -232,9 +232,9 @@ loadScripts(document, 'script');</script>
  the class loader that originally created the class.
 
  <p> For example, an application could create a network class loader to
- download class files from a server.  Sample code might look like:
+        download class files from a web. Sample code might look like:
 
- <blockquote><pre>
+    <blockquote><pre>
    ClassLoader loader&nbsp;= new NetworkClassLoader(host,&nbsp;port);
    Object main&nbsp;= loader.loadClass("Main", true).newInstance();
        &nbsp;.&nbsp;.&nbsp;.

@@ -1909,7 +1909,7 @@ pairs and certificates for three entities:</p>
 <p>Ensure that you store all the certificates in the same keystore.</p>
 <pre><code>keytool -genkeypair -keystore root.jks -alias root -ext bc:c -keyalg rsa
 keytool -genkeypair -keystore ca.jks -alias ca -ext bc:c -keyalg rsa
-keytool -genkeypair -keystore server.jks -alias server -keyalg rsa
+keytool -genkeypair -keystore web.jks -alias server -keyalg rsa
 
 keytool -keystore root.jks -alias root -exportcert -rfc &gt; root.pem
 
@@ -1918,11 +1918,11 @@ keytool -storepass password -keystore ca.jks -certreq -alias ca |
     -gencert -alias root -ext BC=0 -rfc &gt; ca.pem
 keytool -keystore ca.jks -importcert -alias ca -file ca.pem
 
-keytool -storepass password -keystore server.jks -certreq -alias server |
+keytool -storepass password -keystore web.jks -certreq -alias server |
     keytool -storepass password -keystore ca.jks -gencert -alias ca
-    -ext ku:c=dig,kE -rfc &gt; server.pem
-cat root.pem ca.pem server.pem |
-    keytool -keystore server.jks -importcert -alias server
+    -ext ku:c=dig,kE -rfc &gt; web.pem
+cat root.pem ca.pem web.pem |
+    keytool -keystore web.jks -importcert -alias server
 </code></pre>
 <h2 id="terms">Terms</h2>
 <dl>

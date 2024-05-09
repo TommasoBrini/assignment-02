@@ -110,8 +110,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">JMXConnector</span><span class="extends-implements">
 extends <a href="../../../../java.base/java/io/Closeable.html" title="interface in java.io">Closeable</a></span></div>
-<div class="block"><p>The client end of a JMX API connector.  An object of this type can
- be used to establish a connection to a connector server.</p>
+<div class="block"><p>The client end of a JMX API connector. An object of this type can
+    be used to establish a connection to a connector web.</p>
 
  <p>A newly-created object of this type is unconnected.  Its <a href="#connect()"><code>connect</code></a> method must be called before it can be used.
  However, objects created by <a href="JMXConnectorFactory.html#connect(javax.management.remote.JMXServiceURL,java.util.Map)"><code>JMXConnectorFactory.connect</code></a> are already connected.</p></div>
@@ -163,22 +163,22 @@ extends <a href="../../../../java.base/java/io/Closeable.html" title="interface 
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Closes the client connection to its server.</div>
+<div class="block">Closes the client connection to its web.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#connect()" class="member-name-link">connect</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Establishes the connection to the connector server.</div>
+<div class="block">Establishes the connection to the connector web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#connect(java.util.Map)" class="member-name-link">connect</a><wbr>(<a href="../../../../java.base/java/util/Map.html" title="interface in java.util">Map</a>&lt;<a href="../../../../java.base/java/lang/String.html" title="class in java.lang">String</a>,<wbr>?&gt;&nbsp;env)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Establishes the connection to the connector server.</div>
+<div class="block">Establishes the connection to the connector web.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../../java.base/java/lang/String.html" title="class in java.lang">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getConnectionId()" class="member-name-link">getConnectionId</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Gets this connection's ID from the connector server.</div>
+<div class="block">Gets this connection's ID from the connector web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../MBeanServerConnection.html" title="interface in javax.management">MBeanServerConnection</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getMBeanServerConnection()" class="member-name-link">getMBeanServerConnection</a>()</code></div>
@@ -275,7 +275,7 @@ extends <a href="../../../../java.base/java/io/Closeable.html" title="interface 
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">connect</span><wbr><span class="parameters">(<a href="../../../../java.base/java/util/Map.html" title="interface in java.util">Map</a>&lt;<a href="../../../../java.base/java/lang/String.html" title="class in java.lang">String</a>,<wbr>?&gt;&nbsp;env)</span>
       throws <span class="exceptions"><a href="../../../../java.base/java/io/IOException.html" title="class in java.io">IOException</a></span></div>
-<div class="block"><p>Establishes the connection to the connector server.</p>
+<div class="block"><p>Establishes the connection to the connector web.</p>
 
  <p>If <code>connect</code> has already been called successfully
  on this object, calling it again has no effect.  If, however,
@@ -543,10 +543,10 @@ extends <a href="../../../../java.base/java/io/Closeable.html" title="interface 
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="../../../../java.base/java/lang/String.html" title="class in java.lang">String</a></span>&nbsp;<span class="element-name">getConnectionId</span>()
                 throws <span class="exceptions"><a href="../../../../java.base/java/io/IOException.html" title="class in java.io">IOException</a></span></div>
-<div class="block"><p>Gets this connection's ID from the connector server.  For a
- given connector server, every connection will have a unique id
- which does not change during the lifetime of the
- connection.</p></div>
+<div class="block"><p>Gets this connection's ID from the connector web. For a
+    given connector server, every connection will have a unique id
+    which does not change during the lifetime of the
+    connection.</p></div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the unique ID of this connection.  This is the same as

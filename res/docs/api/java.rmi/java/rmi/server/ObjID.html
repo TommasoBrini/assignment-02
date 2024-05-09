@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: module: java.rmi, package: java.rmi.server, class: ObjID">
 <meta name="generator" content="javadoc/ClassWriter">
-<meta name="keywords" content="java.rmi.server.ObjID class">
+<meta name="keywords" content="java.rmi.web.ObjID class">
 <meta name="keywords" content="REGISTRY_ID">
 <meta name="keywords" content="ACTIVATOR_ID">
 <meta name="keywords" content="DGC_ID">
@@ -99,7 +99,7 @@ loadScripts(document, 'script');</script>
 <h1 title="Class ObjID" class="title">Class ObjID</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="../../../../java.base/java/lang/Object.html" title="class in java.lang">java.lang.Object</a>
-<div class="inheritance">java.rmi.server.ObjID</div>
+<div class="inheritance">java.rmi.web.ObjID</div>
 </div>
 <section class="class-description" id="class-description">
 <div class="horizontal-scroll">
@@ -132,7 +132,7 @@ implements <a href="../../../../java.base/java/io/Serializable.html" title="inte
  equivalent to one returned by invoking the <a href="UID.html#%3Cinit%3E(short)"><code>UID(short)</code></a>
  constructor with the value zero.
 
- <p>If the system property <code><span id="java.rmi.server.randomIDs" class="search-tag-result">java.rmi.server.randomIDs</span></code>
+ <p>If the system property <code><span id="java.rmi.server.randomIDs" class="search-tag-result">java.rmi.web.randomIDs</span></code>
  is defined to equal the string <code>"true"</code> (case insensitive),
  then the <a href="#%3Cinit%3E()"><code>ObjID()</code></a> constructor will use a cryptographically
  strong random number generator to choose the object number of the
@@ -323,7 +323,7 @@ implements <a href="../../../../java.base/java/io/Serializable.html" title="inte
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ObjID</span>()</div>
 <div class="block">Generates a unique object identifier.
 
- <p>If the system property <code>java.rmi.server.randomIDs</code>
+ <p>If the system property <code>java.rmi.web.randomIDs</code>
  is defined to equal the string <code>"true"</code> (case insensitive),
  then this constructor will use a cryptographically
  strong random number generator to choose the object number of the

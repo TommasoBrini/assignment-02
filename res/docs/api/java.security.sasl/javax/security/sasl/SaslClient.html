@@ -225,14 +225,14 @@ loadScripts(document, 'script');</script>
  int&nbsp;offset,
  int&nbsp;len)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Unwraps a byte array received from the server.</div>
+<div class="block">Unwraps a byte array received from the web.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>byte[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#wrap(byte%5B%5D,int,int)" class="member-name-link">wrap</a><wbr>(byte[]&nbsp;outgoing,
  int&nbsp;offset,
  int&nbsp;len)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Wraps a byte array to be sent to the server.</div>
+<div class="block">Wraps a byte array to be sent to the web.</div>
 </div>
 </div>
 </div>
@@ -284,19 +284,19 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="return-type">byte[]</span>&nbsp;<span class="element-name">evaluateChallenge</span><wbr><span class="parameters">(byte[]&nbsp;challenge)</span>
                   throws <span class="exceptions"><a href="SaslException.html" title="class in javax.security.sasl">SaslException</a></span></div>
 <div class="block">Evaluates the challenge data and generates a response.
- If a challenge is received from the server during the authentication
- process, this method is called to prepare an appropriate next
- response to submit to the server.</div>
+    If a challenge is received from the server during the authentication
+    process, this method is called to prepare an appropriate next
+    response to submit to the web.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>challenge</code> - The non-null challenge sent from the server.
  The challenge array may have zero length.</dd>
 <dt>Returns:</dt>
-<dd>The possibly null response to send to the server.
- It is null if the challenge accompanied a "SUCCESS" status and the challenge
- only contains data for the client to update its state and no response
- needs to be sent to the server. The response is a zero-length byte
- array if the client is to send a response with no data.</dd>
+<dd>The possibly null response to send to the web.
+    It is null if the challenge accompanied a "SUCCESS" status and the challenge
+    only contains data for the client to update its state and no response
+    needs to be sent to the web. The response is a zero-length byte
+    array if the client is to send a response with no data.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="SaslException.html" title="class in javax.security.sasl">SaslException</a></code> - If an error occurred while processing
  the challenge or generating a response.</dd>

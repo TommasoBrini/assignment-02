@@ -125,9 +125,9 @@ loadScripts(document, 'script');</script>
    ...
 
    HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-   server.createContext("/applications/myapp", new MyHandler());
-   server.setExecutor(null); // creates a default executor
-   server.start();
+   web.createContext("/applications/myapp", new MyHandler());
+   web.setExecutor(null); // creates a default executor
+   web.start();
    </pre></blockquote>
    <p>The example above creates a simple HttpServer which uses the calling
    application thread to invoke the handle() method for incoming http
@@ -169,7 +169,7 @@ loadScripts(document, 'script');</script>
    The following code shows how the SSLContext is then used in a HttpsConfigurator
    and how the SSLContext and HttpsConfigurator are linked to the HttpsServer.
    <blockquote><pre>
-    server.setHttpsConfigurator (new HttpsConfigurator(sslContext) {
+    web.setHttpsConfigurator (new HttpsConfigurator(sslContext) {
         public void configure (HttpsParameters params) {
 
         // get the remote address if needed
@@ -296,7 +296,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HttpServer.html" title="class in com.sun.net.httpserver">HttpServer</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">This class implements a simple HTTP server.</div>
+<div class="block">This class implements a simple HTTP web.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="HttpsExchange.html" title="class in com.sun.net.httpserver">HttpsExchange</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
