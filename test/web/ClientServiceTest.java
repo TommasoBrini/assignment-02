@@ -10,7 +10,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class ClientServiceTest {
-    private static final String LOCAL_URL = "http://localhost:8080/index.html";
+    private static final String LOCAL_URL = Server.LOCAL_PATH + "index.html";
     private static final String REMOTE_URL = "https://www.google.com";
     private static final String INVALID_URL = "https://www.google.com/invalid";
     private final Server server = new Server();
