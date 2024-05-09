@@ -24,8 +24,8 @@
     <orderEntry type="library" name="sbt: io.netty:netty-common:4.1.108.Final:jar" level="project" />
     <orderEntry type="library" name="sbt: io.netty:netty-handler-proxy:4.1.108.Final:jar" level="project" />
     <orderEntry type="library" name="sbt: io.netty:netty-handler:4.1.108.Final:jar" level="project" />
-    <orderEntry type="library" name="sbt: io.netty:netty-resolver-dns-classes-macos:4.1.100.Final:jar" level="project" />
-    <orderEntry type="library" name="sbt: io.netty:netty-resolver-dns-native-macos:4.1.100.Final:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.netty:netty-resolver-dns-classes-macos:4.1.76.Final:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.netty:netty-resolver-dns-native-macos:4.1.76.Final:jar" level="project" />
     <orderEntry type="library" name="sbt: io.netty:netty-resolver-dns:4.1.108.Final:jar" level="project" />
     <orderEntry type="library" name="sbt: io.netty:netty-resolver:4.1.108.Final:jar" level="project" />
     <orderEntry type="library" name="sbt: io.netty:netty-transport-native-unix-common:4.1.108.Final:jar" level="project" />

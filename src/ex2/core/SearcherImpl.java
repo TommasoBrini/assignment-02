@@ -42,4 +42,9 @@ public class SearcherImpl implements Searcher {
     public int totalWord() {
         return this.totalWord;
     }
+
+    @Override
+    public long computeDuration() {
+        return System.currentTimeMillis() - this.start;
+    }
 }

@@ -33,6 +33,7 @@ public class SearcherTest {
         final List<String> urls = this.searcher.initSearch(this.clientService, SearchLogic.Type.LOCAL, LOCAL_URL);
         urls.forEach(url -> this.searcher.search(this.clientService, SearchLogic.Type.LOCAL, url));
         System.out.println(this.searcher.totalWord());
+        System.out.println(this.searcher.computeDuration() + " ms");
     }
 
     @Test
@@ -42,5 +43,6 @@ public class SearcherTest {
         final List<String> urls = this.searcher.initSearch(this.clientService, SearchLogic.Type.REMOTE, REMOTE_URL);
         urls.forEach(url -> this.searcher.search(this.clientService, SearchLogic.Type.REMOTE, url));
         System.out.println(this.searcher.totalWord());
+        System.out.println(this.searcher.computeDuration() + " ms");
     }
 }

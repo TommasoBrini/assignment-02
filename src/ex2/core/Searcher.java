@@ -11,4 +11,6 @@ public interface Searcher {
     List<String> search(final ClientService clientService, final SearchLogic.Type searchLogicType, final String url);
 
     int totalWord();
+
+    long computeDuration();
 }

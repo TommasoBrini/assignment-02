@@ -24,5 +24,5 @@ lazy val root = (project in file("."))
     // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxjava
     libraryDependencies += "io.reactivex.rxjava3" % "rxjava" % "3.1.8",
     // https://mvnrepository.com/artifact/io.netty/netty-resolver-dns-native-macos
-    libraryDependencies += "io.netty" % "netty-resolver-dns-native-macos" % "4.1.100.Final"
+    libraryDependencies += "io.netty" % "netty-resolver-dns-native-macos" % "4.1.76.Final"
     )
