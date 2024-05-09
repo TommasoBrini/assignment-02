@@ -1,22 +1,18 @@
 package ex2.core.component.searcher;
 
+import ex2.web.client.ClientService;
+
+import java.util.List;
+
 public interface Searcher {
 
-    int currentDepth();
+    void setup(final ClientService clientService, final SearchLogic.Type searchLogicType, final String url, final String word);
 
-    int maxDepth();
+    List<String> initSearch();
 
-    String url();
+    List<String> search(final String url);
 
-    String word();
+    int totalWord();
 
-    long duration();
-
-    int countWord();
-
-    int countUrl();
-
-    void addSearchFindUrls();
-
-    SearcherType searcherType();
+    long computeDuration();
 }

@@ -1,8 +1,8 @@
 package core;
 
-import ex2.core.SearchLogic;
-import ex2.core.Searcher;
-import ex2.core.SearcherImpl;
+import ex2.core.component.searcher.SearchLogic;
+import ex2.core.component.searcher.Searcher;
+import ex2.core.component.searcher.SearcherImpl;
 import ex2.web.Server;
 import ex2.web.client.ClientService;
 import ex2.web.client.ClientServiceFactory;
@@ -23,25 +23,24 @@ public class SearcherTest {
     @Before
     public void setup() {
         this.server.run();
+        this.searcher = new SearcherImpl();
         this.clientService = ClientServiceFactory.createVertx();
     }
 
     @Test
     public void localSearch() {
-        this.word = "Java";
-        this.searcher = new SearcherImpl(this.word);
-        final List<String> urls = this.searcher.initSearch(this.clientService, SearchLogic.Type.LOCAL, LOCAL_URL);
-        urls.forEach(url -> this.searcher.search(this.clientService, SearchLogic.Type.LOCAL, url));
+        this.searcher.setup(this.clientService, SearchLogic.Type.LOCAL, LOCAL_URL, "Java");
+        final List<String> urls = this.searcher.initSearch();
+        urls.forEach(url -> this.searcher.search(url));
         System.out.println(this.searcher.totalWord());
         System.out.println(this.searcher.computeDuration() + " ms");
     }
 
     @Test
     public void remoteSearch() {
-        this.word = "Google";
-        this.searcher = new SearcherImpl(this.word);
-        final List<String> urls = this.searcher.initSearch(this.clientService, SearchLogic.Type.REMOTE, REMOTE_URL);
-        urls.forEach(url -> this.searcher.search(this.clientService, SearchLogic.Type.REMOTE, url));
+        this.searcher.setup(this.clientService, SearchLogic.Type.REMOTE, REMOTE_URL, "Google");
+        final List<String> urls = this.searcher.initSearch();
+        urls.forEach(url -> this.searcher.search(url));
         System.out.println(this.searcher.totalWord());
         System.out.println(this.searcher.computeDuration() + " ms");
     }

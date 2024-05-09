@@ -1,6 +1,5 @@
 package ex2.worker;
 
-import ex2.web.client.ClientService;
 import ex2.worker.concrete.EventLoopImpl;
 import ex2.worker.concrete.ReactiveImpl;
 import ex2.worker.concrete.VirtualThreadsImpl;
@@ -8,34 +7,34 @@ import ex2.worker.concrete.WorkerStrategy;
 
 
 public interface FactoryWorker {
-    LogicWorker createEventLoop(final ClientService clientService);
+    LogicWorker createEventLoop();
 
-    LogicWorker createVirtualThreads(final ClientService clientService);
+    LogicWorker createVirtualThreads();
 
-    LogicWorker createRect(final ClientService clientService);
+    LogicWorker createRect();
 
-    default LogicWorker createWorker(final ClientService clientService, final WorkerStrategy workerStrategy) {
+    default LogicWorker createWorker(final WorkerStrategy workerStrategy) {
         return switch (workerStrategy) {
-            case EVENT_LOOP -> this.createEventLoop(clientService);
-            case VIRTUAL_THREAD -> this.createVirtualThreads(clientService);
-            case REACT -> this.createRect(clientService);
+            case EVENT_LOOP -> this.createEventLoop();
+            case VIRTUAL_THREAD -> this.createVirtualThreads();
+            case REACT -> this.createRect();
         };
     }
 
     class FactoryWorkerImpl implements FactoryWorker {
         @Override
-        public LogicWorker createEventLoop(final ClientService clientService) {
-            return new EventLoopImpl(clientService);
+        public LogicWorker createEventLoop() {
+            return new EventLoopImpl();
         }
 
         @Override
-        public LogicWorker createVirtualThreads(final ClientService clientService) {
-            return new VirtualThreadsImpl(clientService);
+        public LogicWorker createVirtualThreads() {
+            return new VirtualThreadsImpl();
         }
 
         @Override
-        public LogicWorker createRect(final ClientService clientService) {
-            return new ReactiveImpl(clientService);
+        public LogicWorker createRect() {
+            return new ReactiveImpl();
         }
     }
 }

@@ -5,13 +5,14 @@ import ex2.core.component.DataEvent;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import ex2.core.component.searcher.Searcher;
 import ex2.web.client.ClientService;
 
 
 public class VirtualThreadsImpl extends AbstractWorker {
     private final ExecutorService executor;
 
-    public VirtualThreadsImpl(final ClientService clientService) {
+    public VirtualThreadsImpl() {
         super(clientService);
         this.executor = Executors.newVirtualThreadPerTaskExecutor();
     }
@@ -29,5 +30,10 @@ public class VirtualThreadsImpl extends AbstractWorker {
     @Override
     public void stop() {
         this.executor.shutdown();
+    }
+
+    @Override
+    public void start(final Searcher searcher) {
+
     }
 }

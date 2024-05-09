@@ -2,16 +2,19 @@ package ex2.worker.concrete;
 
 import ex2.core.component.DataEvent;
 import ex2.core.component.concrete.DataEventImpl;
+import ex2.core.component.searcher.Searcher;
 import ex2.web.client.ClientService;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 
+import java.util.List;
+
 public class EventLoopImpl extends AbstractWorker {
-    private final Vertx vertx; // VERTX
+    private Searcher searcher;
+    private final Vertx vertx;
     private static final String EVENT_URL = "searchUrls";
 
-    public EventLoopImpl(final ClientService clientService) {
-        super(clientService);
+    public EventLoopImpl() {
         this.vertx = Vertx.vertx();
         this.setupConsumers();
     }
@@ -20,10 +23,16 @@ public class EventLoopImpl extends AbstractWorker {
         this.vertx.eventBus().consumer(EVENT_URL, handler -> {
             final JsonObject jsonObject = (JsonObject) handler.body();
             final DataEvent dataEvent = new DataEventImpl(jsonObject);
-            this.clientService.findUrl(dataEvent.url());
+            this.searcher.search(__)
         });
     }
 
+    @Override
+    public void start(final Searcher searcher) {
+        this.searcher = searcher;
+        final List<String> urls = this.searcher.initSearch();
+        urls.forEach(url -> this.addEventUrl(____));
+    }
 
     @Override
     public void addEventUrl(final DataEvent dataEvent) {
@@ -39,5 +48,7 @@ public class EventLoopImpl extends AbstractWorker {
     public void stop() {
         this.vertx.close();
     }
+
+
 
 }

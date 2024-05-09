@@ -1,4 +1,4 @@
-package ex2.core;
+package ex2.core.component.searcher;
 
 import ex2.web.client.ClientService;
 import org.jsoup.nodes.Document;
@@ -9,14 +9,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SearcherImpl implements Searcher {
-    private final String word;
+    private ClientService clientService;
+    private SearchLogic.Type searchLogicType;
+    private String url;
+    private String word;
     private int totalWord;
     private long start;
-
-    public SearcherImpl(final String word) {
-        this.word = word;
-        this.totalWord = 0;
-    }
 
     private int findWord(final Document document) {
         final Elements texts = document.select("body");
@@ -26,16 +24,25 @@ public class SearcherImpl implements Searcher {
     }
 
     @Override
-    public List<String> initSearch(final ClientService clientService, final SearchLogic.Type searchLogicType, final String url) {
-        this.start = System.currentTimeMillis();
-        return this.search(clientService, searchLogicType, url);
+    public void setup(final ClientService clientService, final SearchLogic.Type searchLogicType, final String url, final String word) {
+        this.clientService = clientService;
+        this.searchLogicType = searchLogicType;
+        this.url = url;
+        this.word = word;
+        this.totalWord = 0;
     }
 
     @Override
-    public List<String> search(final ClientService clientService, final SearchLogic.Type searchLogicType, final String url) {
-        final Document document = clientService.findUrl(url);
+    public List<String> initSearch() {
+        this.start = System.currentTimeMillis();
+        return this.search(this.url);
+    }
+
+    @Override
+    public List<String> search(final String url) {
+        final Document document = this.clientService.findUrl(url);
         this.totalWord += this.findWord(document);
-        return SearchLogicFactory.create(searchLogicType).findUrls(document);
+        return SearchLogicFactory.create(this.searchLogicType).findUrls(document);
     }
 
     @Override
