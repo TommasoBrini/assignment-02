@@ -18,8 +18,8 @@ public class ClientServiceTest {
 
     @Before
     public void setUp() {
-//        this.clientService = ClientServiceFactory.createVertx();
-        this.clientService = ClientServiceFactory.createJsoup();
+        this.clientService = ClientServiceFactory.createVertx();
+//        this.clientService = ClientServiceFactory.createJsoup();
         this.server.run();
     }
 
