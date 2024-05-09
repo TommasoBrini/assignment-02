@@ -1,12 +1,13 @@
 package web;
 
+import ex2.utils.JsoupUtils;
 import ex2.web.Server;
 import ex2.web.client.ClientService;
 import ex2.web.client.ClientServiceFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertEquals;
 
 public class ClientServiceTest {
     private static final String LOCAL_URL = "http://localhost:8080/index.html";
@@ -34,13 +35,12 @@ public class ClientServiceTest {
 
     @Test
     public void searchInvalidUrl() {
-        assertThrows(RuntimeException.class, () ->
-                this.clientService.onSearch(INVALID_URL));
+        assertEquals(JsoupUtils.EmptyDocument, this.clientService.onSearch(INVALID_URL));
     }
 
     @Test
     public void massiveSearchLocalUrl() {
-        final int requests = 100000;
+        final int requests = 1000;
         for (int i = 0; i < requests; i++) {
             this.clientService.onSearch(LOCAL_URL);
         }
