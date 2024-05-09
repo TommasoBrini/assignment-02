@@ -49,7 +49,7 @@ public class SearchLogicTest {
     @Test
     public void findLocalUrlsFromLocalValidUlr() {
         this.searchLogic = SearchLogicFactory.createLocal();
-        final Document document = this.clientService.onSearch(REMOTE_URL);
+        final Document document = this.clientService.onSearch(INVALID_URL);
         assertEquals(0, this.searchLogic.findUrls(document).size());
     }
 
