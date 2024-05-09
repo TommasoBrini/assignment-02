@@ -8,10 +8,10 @@ import ex2.web.clientManager.ClientManagerImpl;
 import ex2.worker.concrete.WorkerStrategy;
 import org.junit.Test;
 
-public class SearchTest {
-    public static final String LOCAL_URL = "http://localhost:8080/index.html";
-    public static final String WEB_URL = "https://en.wikipedia.org/wiki/Buongiorno#";
+import static ex2.utils.PathUtils.LOCAL_URL;
+import static ex2.utils.PathUtils.REMOTE_URL;
 
+public class SearchTest {
     @Test
     public void findHrefLocal() {
         final ClientManager clientManager = new ClientManagerImpl();
@@ -39,7 +39,7 @@ public class SearchTest {
         final DataEvent dataEvent = new DataEventImpl(
                 WorkerStrategy.EVENT_LOOP,
                 SearcherType.LOCAL,
-                WEB_URL,
+                REMOTE_URL,
                 word,
                 maxDepth,
                 0);

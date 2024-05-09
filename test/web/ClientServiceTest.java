@@ -7,12 +7,10 @@ import ex2.web.client.ClientServiceFactory;
 import org.junit.Before;
 import org.junit.Test;
 
+import static ex2.utils.PathUtils.*;
 import static org.junit.Assert.assertEquals;
 
 public class ClientServiceTest {
-    private static final String LOCAL_URL = Server.LOCAL_PATH + "index.html";
-    private static final String REMOTE_URL = "https://www.google.com";
-    private static final String INVALID_URL = "https://www.google.com/invalid";
     private final Server server = new Server();
     private ClientService clientService;
 
@@ -25,24 +23,24 @@ public class ClientServiceTest {
 
     @Test
     public void searchLocalUrl() {
-        this.clientService.onSearch(LOCAL_URL);
+        this.clientService.findUrl(LOCAL_URL);
     }
 
     @Test
     public void searchRemoteUrl() {
-        this.clientService.onSearch(REMOTE_URL);
+        this.clientService.findUrl(REMOTE_URL);
     }
 
     @Test
     public void searchInvalidUrl() {
-        assertEquals(JsoupUtils.EmptyDocument, this.clientService.onSearch(INVALID_URL));
+        assertEquals(JsoupUtils.EmptyDocument, this.clientService.findUrl(INVALID_URL));
     }
 
     @Test
     public void massiveSearchLocalUrl() {
         final int requests = 1000;
         for (int i = 0; i < requests; i++) {
-            this.clientService.onSearch(LOCAL_URL);
+            this.clientService.findUrl(LOCAL_URL);
         }
     }
 
@@ -50,7 +48,7 @@ public class ClientServiceTest {
     public void massiveSearchRemoteUrl() {
         final int requests = 100;
         for (int i = 0; i < requests; i++) {
-            this.clientService.onSearch(REMOTE_URL);
+            this.clientService.findUrl(REMOTE_URL);
         }
     }
 

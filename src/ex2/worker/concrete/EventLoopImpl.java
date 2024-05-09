@@ -20,7 +20,7 @@ public class EventLoopImpl extends AbstractWorker {
         this.vertx.eventBus().consumer(EVENT_URL, handler -> {
             final JsonObject jsonObject = (JsonObject) handler.body();
             final DataEvent dataEvent = new DataEventImpl(jsonObject);
-            this.clientService.onSearch(dataEvent.url());
+            this.clientService.findUrl(dataEvent.url());
         });
     }
 

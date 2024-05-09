@@ -52,7 +52,7 @@ public final class ClientServiceFactory {
         }
 
         @Override
-        public Document onSearch(final String url) {
+        public Document findUrl(final String url) {
             Document doc = JsoupUtils.EmptyDocument;
             try {
                 doc = this.session.newRequest(url).get();
@@ -80,7 +80,7 @@ public final class ClientServiceFactory {
         }
 
         @Override
-        public Document onSearch(final String url) {
+        public Document findUrl(final String url) {
             this.startStopMonitor.pause();
             final AtomicReference<Document> document = new AtomicReference<>(JsoupUtils.EmptyDocument);
             this.webClient.getAbs(url).send(response -> {

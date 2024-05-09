@@ -6,7 +6,7 @@ public interface ClientService {
 
     void addListener(final ClientListener listener);
 
-    Document onSearch(final String url);
+    Document findUrl(final String url);
 
     void clearListener();
 

@@ -18,7 +18,7 @@ public class VirtualThreadsImpl extends AbstractWorker {
 
     @Override
     public void addEventUrl(final DataEvent dataEvent) {
-        this.executor.submit(() -> this.clientService.onSearch(dataEvent.url()));
+        this.executor.submit(() -> this.clientService.findUrl(dataEvent.url()));
     }
 
     @Override

@@ -16,6 +16,13 @@ public final class SearchLogicFactory {
         return new RemoteLogic();
     }
 
+    public static SearchLogic create(final SearchLogic.Type type) {
+        return switch (type) {
+            case LOCAL -> createLocal();
+            case REMOTE -> createRemote();
+        };
+    }
+
     private static final List<String> extension = List.of(
             ".svg", ".png", ".jpg", ".jpeg", ".gif", ".pdf", ".mp4", ".mp3",
             ".avi", ".flv", ".mov", ".wmv", ".zip", ".dmg", ".exe", ".msi");

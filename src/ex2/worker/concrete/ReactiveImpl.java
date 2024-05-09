@@ -12,7 +12,7 @@ public class ReactiveImpl extends AbstractWorker {
     public ReactiveImpl(final ClientService clientService) {
         super(clientService);
         this.subject = PublishSubject.create();
-        this.subject.observeOn(Schedulers.computation()).subscribe(dataEvent -> this.clientService.onSearch(dataEvent.url()));
+        this.subject.observeOn(Schedulers.computation()).subscribe(dataEvent -> this.clientService.findUrl(dataEvent.url()));
     }
 
     @Override
