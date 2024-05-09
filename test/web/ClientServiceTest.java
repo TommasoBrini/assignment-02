@@ -9,6 +9,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertThrows;
 
 public class ClientServiceTest {
+    private static final String LOCAL_URL = "http://localhost:8080/index.html";
+    private static final String REMOTE_URL = "https://www.google.com";
+    private static final String INVALID_URL = "https://www.google.com/invalid";
     private final Server server = new Server();
     private ClientService clientService;
 
@@ -21,19 +24,29 @@ public class ClientServiceTest {
 
     @Test
     public void searchLocalUrl() {
-        this.clientService.onSearch("http://localhost:8080/index.html");
+        this.clientService.onSearch(LOCAL_URL);
     }
 
     @Test
     public void searchRemoteUrl() {
-        this.clientService.onSearch("https://www.google.com");
+        this.clientService.onSearch(REMOTE_URL);
     }
 
     @Test
     public void searchInvalidUrl() {
-        assertThrows(RuntimeException.class, () -> {
-            this.clientService.onSearch("https://www.google.com/invalid");
-        });
+        assertThrows(RuntimeException.class, () ->
+                this.clientService.onSearch(INVALID_URL));
     }
+
+    @Test
+    public void massiveSearchLocalUrl() {
+        final int requests = 100000;
+        for (int i = 0; i < requests; i++) {
+            this.clientService.onSearch(LOCAL_URL);
+        }
+    }
+
+//    @Test
+//    public void mass
 
 }
