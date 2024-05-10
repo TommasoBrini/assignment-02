@@ -1,6 +1,7 @@
 package ex2.gui.components;
 
-import ex2.core.component.searcher.Searcher;
+import ex2.core.component.Searcher;
+import ex2.core.event.SearchResponse;
 import ex2.gui.area.PrintArea;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class WorkerPrint extends SwingWorker<Void, String> {
     private final PrintArea printArea;
-    private final BlockingDeque<Searcher> searchers;
+    private final BlockingDeque<SearchResponse> searchers;
     private boolean isRunning;
 
     public WorkerPrint(final PrintArea printArea) {
@@ -21,15 +22,15 @@ public class WorkerPrint extends SwingWorker<Void, String> {
     }
 
 
-    public void addSearcher(final Searcher searcher) {
-        this.searchers.add(searcher);
+    public void addSearcher(final SearchResponse response) {
+        this.searchers.add(response);
     }
 
 
     @Override
     protected Void doInBackground() {
         while (this.isRunning) {
-            final Searcher searcher = this.searchers.poll();
+            final SearchResponse searcher = this.searchers.poll();
             if (searcher != null) {
 //                System.out.println("WorkerPrint: " + searcher.url() + " " + searcher.countWord() + " " + searcher.currentDepth());
                 final String mainUrl = "URL: %s\n".formatted(searcher.url());

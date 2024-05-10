@@ -1,10 +1,10 @@
 package ex2.gui.area;
 
-import ex2.core.component.DataEvent;
-import ex2.core.component.searcher.SearcherType;
+import ex2.core.component.SearchLogic;
 import ex2.core.listener.InputGuiListener;
+import ex2.core.event.SearchEvent;
 import ex2.utils.PanelUtils;
-import ex2.worker.concrete.WorkerStrategy;
+import ex2.worker.LogicWorker;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -60,7 +60,7 @@ public class HistoryArea extends JPanel implements InputGuiListener {
         this.recordPanel.repaint();
     }
 
-    public void append(final WorkerStrategy workerStrategy, final SearcherType searcherType, final String site, final String word, final String depth) {
+    public void append(final LogicWorker.Type workerStrategy, final SearchLogic.Type searcherType, final String site, final String word, final String depth) {
         final JButton button = new JButton();
         button.setMaximumSize(new Dimension(HISTORY_AREA_DIMENSION.width, HISTORY_BUTTON_HEIGHT));
 
@@ -97,8 +97,8 @@ public class HistoryArea extends JPanel implements InputGuiListener {
     }
 
     @Override
-    public void onSearch(final DataEvent dataEvent) {
-        this.append(dataEvent.workerStrategy(), dataEvent.searcherType(), dataEvent.url(), dataEvent.word(), String.valueOf(dataEvent.maxDepth()));
+    public void onSearch(final SearchEvent searchEvent) {
+        this.append(searchEvent.workerStrategy(), searchEvent.searchLogicType(), searchEvent.url(), searchEvent.word(), String.valueOf(searchEvent.maxDepth()));
     }
 
     @Override

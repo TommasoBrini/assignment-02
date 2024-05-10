@@ -1,7 +1,8 @@
 package ex2.core.component.concrete;
 
-import ex2.core.component.DataEvent;
+import ex2.core.event.DataEvent;
 import ex2.core.component.History;
+import ex2.core.event.DataEventImpl;
 import ex2.core.listener.HistoryListener;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;

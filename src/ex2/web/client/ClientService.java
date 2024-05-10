@@ -4,11 +4,7 @@ import org.jsoup.nodes.Document;
 
 public interface ClientService {
 
-    void addListener(final ClientListener listener);
-
     Document findUrl(final String url);
-
-    void clearListener();
 
     void close();
 }

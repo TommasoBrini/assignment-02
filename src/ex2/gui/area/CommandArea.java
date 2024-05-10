@@ -1,17 +1,17 @@
 package ex2.gui.area;
 
-import ex2.core.component.DataEvent;
-import ex2.core.component.concrete.DataEventImpl;
-import ex2.core.component.searcher.SearcherType;
+import ex2.core.component.SearchLogic;
 import ex2.core.listener.InputGuiListener;
 import ex2.gui.GUIAnalysis;
+import ex2.core.event.SearchEvent;
+import ex2.core.event.SearchEventFactory;
 import ex2.gui.components.TextBox;
 import ex2.web.Server;
 import ex2.utils.ComboBoxUtils;
 import ex2.utils.MessageDialogUtils;
 import ex2.utils.PanelUtils;
 import ex2.utils.UrlUtils;
-import ex2.worker.concrete.WorkerStrategy;
+import ex2.worker.LogicWorker;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,8 +41,8 @@ public class CommandArea extends JPanel {
     private final JButton clearButton;
     private final JButton magicButton;
 
-    private final JComboBox<SearcherType> searcherTypeComboBox;
-    private final JComboBox<WorkerStrategy> workerStrategyComboBox;
+    private final JComboBox<SearchLogic.Type> searcherTypeComboBox;
+    private final JComboBox<LogicWorker.Type> workerStrategyComboBox;
 
     private final List<InputGuiListener> inputGuiListeners;
 
@@ -58,8 +58,8 @@ public class CommandArea extends JPanel {
         this.clearButton = new JButton(CLEAR);
         this.magicButton = new JButton(MAGIC);
 
-        this.searcherTypeComboBox = ComboBoxUtils.createComboBox(Arrays.stream(SearcherType.values()).toList());
-        this.workerStrategyComboBox = ComboBoxUtils.createComboBox(Arrays.stream(WorkerStrategy.values()).toList());
+        this.searcherTypeComboBox = ComboBoxUtils.createComboBox(Arrays.stream(SearchLogic.Type.values()).toList());
+        this.workerStrategyComboBox = ComboBoxUtils.createComboBox(Arrays.stream(LogicWorker.Type.values()).toList());
 
         this.inputGuiListeners = new ArrayList<>();
 
@@ -86,9 +86,10 @@ public class CommandArea extends JPanel {
     private void setupListener() {
         this.searchButton.addActionListener(l -> {
             if (this.isInputValid()) {
-                final DataEvent dataEvent = new DataEventImpl(
-                        this.workerStrategy(), this.searcherType(),
-                        this.boxUrl.getText(), this.boxWord.getText(), Integer.parseInt(this.boxDepth.getText()), 0);
+                final SearchEvent dataEvent = SearchEventFactory.create(
+                        this.workerStrategy(),
+                        this.searcherType(),
+                        this.boxUrl.getText(), this.boxWord.getText(), 0, Integer.parseInt(this.boxDepth.getText()));
                 this.inputGuiListeners.forEach(listener -> listener.onSearch(dataEvent));
                 this.disableCommand();
             } else {
@@ -99,7 +100,7 @@ public class CommandArea extends JPanel {
         this.clearButton.addActionListener(l -> this.clearText());
     }
 
-    public void setupAnalisys(final GUIAnalysis guiAnalysis) {
+    public void setupAnalysis(final GUIAnalysis guiAnalysis) {
         this.magicButton.addActionListener(l -> guiAnalysis.changeVisible());
     }
 
@@ -119,25 +120,25 @@ public class CommandArea extends JPanel {
         this.boxDepth.setText(depth);
     }
 
-    public void setWorkerStrategy(final WorkerStrategy workerStrategy) {
+    public void setWorkerStrategy(final LogicWorker.Type workerStrategy) {
         this.workerStrategyComboBox.setSelectedItem(workerStrategy);
     }
 
-    public void setSearcherType(final SearcherType searcherType) {
+    public void setSearcherType(final SearchLogic.Type searcherType) {
         this.searcherTypeComboBox.setSelectedItem(searcherType);
     }
 
-    private SearcherType searcherType() {
-        return (SearcherType) this.searcherTypeComboBox.getSelectedItem();
+    private SearchLogic.Type searcherType() {
+        return (SearchLogic.Type) this.searcherTypeComboBox.getSelectedItem();
     }
 
-    public WorkerStrategy workerStrategy() {
-        return (WorkerStrategy) this.workerStrategyComboBox.getSelectedItem();
+    public LogicWorker.Type workerStrategy() {
+        return (LogicWorker.Type) this.workerStrategyComboBox.getSelectedItem();
     }
 
     private boolean isUrlValid() {
         final String url = this.boxUrl.getText();
-        final boolean checkSearcher = !SearcherType.LOCAL.equals(this.searcherType()) || url.contains(Server.LOCAL_PATH);
+        final boolean checkSearcher = !SearchLogic.Type.LOCAL.equals(this.searcherType()) || url.contains(Server.LOCAL_PATH);
         return !url.isBlank() && checkSearcher && UrlUtils.isValidURL(url);
     }
 

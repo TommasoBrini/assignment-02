@@ -1,4 +1,4 @@
-package ex2.core.component.searcher;
+package ex2.core.component;
 
 import ex2.web.Server;
 import org.jsoup.nodes.Document;

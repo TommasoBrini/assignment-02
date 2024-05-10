@@ -10,8 +10,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public final class ClientServiceFactory {
@@ -24,27 +22,7 @@ public final class ClientServiceFactory {
         return new VertxService();
     }
 
-    private static abstract class AbstractService {
-        private final List<ClientListener> listeners;
-
-        public AbstractService() {
-            this.listeners = new ArrayList<>();
-        }
-
-        protected List<ClientListener> listeners() {
-            return this.listeners;
-        }
-
-        public void addListener(final ClientListener listener) {
-            this.listeners.add(listener);
-        }
-
-        public void clearListener() {
-            this.listeners.clear();
-        }
-    }
-
-    private static class JsoupService extends AbstractService implements ClientService {
+    private static class JsoupService implements ClientService {
         private final Connection session;
 
         public JsoupService() {
@@ -56,7 +34,8 @@ public final class ClientServiceFactory {
             Document doc = JsoupUtils.EmptyDocument;
             try {
                 doc = this.session.newRequest(url).get();
-            } catch (final IOException ignored) { }
+            } catch (final IOException ignored) {
+            }
             return doc;
         }
 
@@ -66,7 +45,7 @@ public final class ClientServiceFactory {
         }
     }
 
-    private static class VertxService extends AbstractService implements ClientService {
+    private static class VertxService implements ClientService {
         private static final int STATUS_CODE_MIN = 200;
         private static final int STATUS_CODE_MAX = 300;
         private final WebClient webClient;

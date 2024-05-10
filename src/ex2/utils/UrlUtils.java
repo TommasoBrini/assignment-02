@@ -9,7 +9,7 @@ public final class UrlUtils {
         try {
             final URL url = new URL(urlString);
             return true;
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             return false;
         }
     }

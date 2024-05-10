@@ -3,38 +3,27 @@ package ex2.worker;
 import ex2.worker.concrete.EventLoopImpl;
 import ex2.worker.concrete.ReactiveImpl;
 import ex2.worker.concrete.VirtualThreadsImpl;
-import ex2.worker.concrete.WorkerStrategy;
 
 
-public interface FactoryWorker {
-    LogicWorker createEventLoop();
+public final class FactoryWorker {
 
-    LogicWorker createVirtualThreads();
-
-    LogicWorker createRect();
-
-    default LogicWorker createWorker(final WorkerStrategy workerStrategy) {
-        return switch (workerStrategy) {
-            case EVENT_LOOP -> this.createEventLoop();
-            case VIRTUAL_THREAD -> this.createVirtualThreads();
-            case REACT -> this.createRect();
-        };
+    public static LogicWorker createEventLoop() {
+        return new EventLoopImpl();
     }
 
-    class FactoryWorkerImpl implements FactoryWorker {
-        @Override
-        public LogicWorker createEventLoop() {
-            return new EventLoopImpl();
-        }
+    public static LogicWorker createVirtualThreads() {
+        return new VirtualThreadsImpl();
+    }
 
-        @Override
-        public LogicWorker createVirtualThreads() {
-            return new VirtualThreadsImpl();
-        }
+    public static LogicWorker createRect() {
+        return new ReactiveImpl();
+    }
 
-        @Override
-        public LogicWorker createRect() {
-            return new ReactiveImpl();
-        }
+    public static LogicWorker createWorker(final LogicWorker.Type workerStrategy) {
+        return switch (workerStrategy) {
+            case EVENT_LOOP -> createEventLoop();
+            case VIRTUAL_THREAD -> createVirtualThreads();
+            case REACT -> createRect();
+        };
     }
 }

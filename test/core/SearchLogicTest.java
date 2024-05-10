@@ -1,7 +1,7 @@
 package core;
 
-import ex2.core.component.searcher.SearchLogic;
-import ex2.core.component.searcher.SearchLogicFactory;
+import ex2.core.component.SearchLogic;
+import ex2.core.component.SearchLogicFactory;
 import ex2.web.Server;
 import ex2.web.client.ClientService;
 import ex2.web.client.ClientServiceFactory;

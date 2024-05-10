@@ -1,11 +1,9 @@
 package ex2.gui.area;
 
-import ex2.core.component.DataEvent;
-import ex2.core.component.searcher.Searcher;
+import ex2.core.event.SearchResponse;
 import ex2.core.listener.InputGuiListener;
+import ex2.core.event.SearchEvent;
 import ex2.gui.components.WorkerPrint;
-import io.vertx.core.Vertx;
-import io.vertx.core.json.JsonObject;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -49,14 +47,14 @@ public class PrintArea extends JScrollPane implements InputGuiListener {
 //        });
 //    }
 
-    public void sendEventSearcher(final Searcher searcher) {
-        this.workerPrint.addSearcher(searcher);
-//        this.vertx.eventBus().send(EVENT_SEARCH, this.searcherToJson(searcher));
+    public void sendEventSearcher(final SearchResponse response) {
+        this.workerPrint.addSearcher(response);
+//        this.vertx.eventBus().send(EVENT_SEARCH, this.searcherToJson(response));
     }
 
-    public void append(final String url, final int countWord, final int currentDepth) {
-        final String mainUrl = "URL: %s\n".formatted(url);
-        final String info = "Depth[%d] -------- Word = %d\n".formatted(currentDepth, countWord);
+    public void append(final SearchResponse searchResponse) {
+        final String mainUrl = "URL: %s\n".formatted(searchResponse.url());
+        final String info = "Depth[%d] -------- Word = %d\n".formatted(searchResponse.currentDepth(), searchResponse.countWord());
         final String text = mainUrl + info + "--------------------\n";
         this.printArea.append(text);
     }
@@ -69,7 +67,7 @@ public class PrintArea extends JScrollPane implements InputGuiListener {
 //    }
 
     @Override
-    public void onSearch(final DataEvent dataEvent) {
+    public void onSearch(final SearchEvent searchEvent) {
         this.printArea.setText("");
     }
 

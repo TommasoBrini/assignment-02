@@ -1,6 +1,6 @@
 package ex2.core.component;
 
-import ex2.core.component.searcher.Searcher;
+import ex2.core.event.DataEvent;
 
 public interface CounterSearch {
 

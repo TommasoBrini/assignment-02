@@ -1,14 +1,14 @@
 package ex2.gui;
 
-import ex2.core.component.DataEvent;
-import ex2.core.component.searcher.Searcher;
+import ex2.core.event.DataEvent;
+import ex2.core.event.SearchResponse;
 import ex2.core.listener.InputGuiListener;
 import ex2.core.listener.ViewListener;
 import ex2.gui.area.CommandArea;
 import ex2.gui.area.HistoryArea;
 import ex2.gui.area.PrintArea;
 import ex2.utils.MessageDialogUtils;
-import ex2.worker.concrete.WorkerStrategy;
+import ex2.worker.LogicWorker;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,10 +51,10 @@ public class GUISearchWord extends JFrame implements ViewListener {
     }
 
     public void setupAnalysis(final GUIAnalysis guiAnalysis) {
-        this.commandArea.setupAnalisys(guiAnalysis);
+        this.commandArea.setupAnalysis(guiAnalysis);
     }
 
-    public WorkerStrategy getWorkerStrategy() {
+    public LogicWorker.Type getWorkerStrategy() {
         return this.commandArea.workerStrategy();
     }
 
@@ -63,8 +63,13 @@ public class GUISearchWord extends JFrame implements ViewListener {
     }
 
     @Override
-    public void onResponse(final Searcher searcher) {
-        this.printArea.sendEventSearcher(searcher);
+    public void onStart(final SearchResponse response) {
+        this.printArea.sendEventSearcher(response);
+    }
+
+    @Override
+    public void onResponse(final SearchResponse response) {
+        this.printArea.sendEventSearcher(response);
     }
 
     @Override

@@ -1,14 +1,14 @@
-package ex2.core.component;
+package ex2.core.event;
 
-import ex2.core.component.searcher.SearcherType;
-import ex2.worker.concrete.WorkerStrategy;
+import ex2.core.component.SearchLogic;
+import ex2.worker.LogicWorker;
 import io.vertx.core.json.JsonObject;
 
 public interface DataEvent {
 
-    WorkerStrategy workerStrategy();
+    LogicWorker.Type workerStrategy();
 
-    SearcherType searcherType();
+    SearchLogic.Type searcherType();
 
     String url();
 

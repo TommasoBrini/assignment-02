@@ -1,6 +1,6 @@
 package ex2.gui;
 
-import ex2.core.component.DataEvent;
+import ex2.core.event.DataEvent;
 import ex2.core.listener.HistoryListener;
 import ex2.utils.ComboBoxUtils;
 import ex2.utils.PanelUtils;

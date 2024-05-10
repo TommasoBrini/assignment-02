@@ -1,28 +1,26 @@
 package ex2.worker.concrete;
 
-import ex2.core.component.DataEvent;
-import ex2.web.client.ClientService;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 import io.reactivex.rxjava3.subjects.Subject;
 
 public class ReactiveImpl extends AbstractWorker {
-    private final Subject<DataEvent> subject;
+    private final Subject<String> subject;
 
-    public ReactiveImpl(final ClientService clientService) {
-        super(clientService);
+    public ReactiveImpl() {
         this.subject = PublishSubject.create();
-        this.subject.observeOn(Schedulers.computation()).subscribe(dataEvent -> this.clientService.findUrl(dataEvent.url()));
+        this.subject.observeOn(Schedulers.computation())
+                .subscribe(url -> this.searcher().search(url));
     }
 
     @Override
-    public void addEventUrl(final DataEvent dataEvent) {
-        this.subject.onNext(dataEvent);
+    public Type strategy() {
+        return Type.REACT;
     }
 
     @Override
-    public WorkerStrategy strategy() {
-        return WorkerStrategy.REACT;
+    public void addEventUrl(final String url) {
+        this.subject.onNext(url);
     }
 
     @Override
