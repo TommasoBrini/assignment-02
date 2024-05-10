@@ -1,4 +1,5 @@
 package ex2.utils;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
@@ -35,6 +36,15 @@ public class ConcurrentSet<T> {
         lock.lock();
         try {
             return set.size();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public boolean addAll(Collection<? extends T> elements) {
+        lock.lock();
+        try {
+            return set.addAll(elements);
         } finally {
             lock.unlock();
         }
