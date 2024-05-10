@@ -18,6 +18,10 @@ public class TextBox extends JPanel {
         this.add(this.textField);
     }
 
+    public void setEnabled(final boolean enabled) {
+        this.textField.setEnabled(enabled);
+    }
+
     public String getText() {
         return this.textField.getText();
     }

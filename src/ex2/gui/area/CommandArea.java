@@ -30,28 +30,31 @@ public class CommandArea extends JPanel {
     private static final int SITE_COLUMNS_TEXT = 30;
     private static final int WORD_COLUMNS_TEXT = 15;
     private static final int DEPTH_COLUMNS_TEXT = 4;
+    private static final int TOTAL_COLUMNS_TEXT = 4;
     private static final String MAGIC = "Magic";
 
     private final TextBox boxUrl;
     private final TextBox boxWord;
     private final TextBox boxDepth;
-
+    private final TextBox boxTotalWords;
     private final JButton searchButton;
     private final JButton exitButton;
     private final JButton clearButton;
     private final JButton magicButton;
-
     private final JComboBox<SearchLogic.Type> searcherTypeComboBox;
     private final JComboBox<LogicWorker.Type> workerStrategyComboBox;
 
     private final List<InputGuiListener> inputGuiListeners;
 
     public CommandArea() {
-        super(new BorderLayout());
+        super();
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBackground(Color.WHITE);
         this.boxUrl = new TextBox(URL, SITE_COLUMNS_TEXT);
         this.boxWord = new TextBox(WORD, WORD_COLUMNS_TEXT);
         this.boxDepth = new TextBox(DEPTH, DEPTH_COLUMNS_TEXT);
+        this.boxTotalWords = new TextBox(TOTAL_WORDS, TOTAL_COLUMNS_TEXT);
+        this.boxTotalWords.setEnabled(false);
 
         this.searchButton = new JButton(SEARCH);
         this.exitButton = new JButton(EXIT);
@@ -71,14 +74,20 @@ public class CommandArea extends JPanel {
         final JPanel southPanel = PanelUtils.createPanelWithFlowLayout();
         southPanel.add(this.workerStrategyComboBox);
         southPanel.add(this.searcherTypeComboBox);
-        southPanel.add(this.searchButton);
-        southPanel.add(this.clearButton);
-        southPanel.add(this.magicButton);
-        southPanel.add(this.exitButton);
 
-        this.add(northPanel, BorderLayout.NORTH);
-        this.add(centerPanel, BorderLayout.CENTER);
-        this.add(southPanel, BorderLayout.SOUTH);
+
+        final JPanel totalWordsPanel = PanelUtils.createPanelWithFlowLayout();
+        totalWordsPanel.add(this.searchButton);
+        totalWordsPanel.add(this.boxTotalWords);
+        totalWordsPanel.add(this.clearButton);
+        totalWordsPanel.add(this.magicButton);
+        totalWordsPanel.add(this.exitButton);
+
+
+        this.add(northPanel);
+        this.add(centerPanel);
+        this.add(southPanel);
+        this.add(totalWordsPanel);
 
         this.setupListener();
     }
