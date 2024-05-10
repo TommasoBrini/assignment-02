@@ -6,47 +6,47 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConcurrentSet<T> {
-    private Set<T> set;
-    private Lock lock;
+    private final Set<T> set;
+    private final Lock lock;
 
     public ConcurrentSet() {
         this.set = new HashSet<>();
         this.lock = new ReentrantLock();
     }
 
-    public boolean add(T element) {
-        lock.lock();
+    public boolean add(final T element) {
+        this.lock.lock();
         try {
-            return set.add(element);
+            return this.set.add(element);
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     }
 
-    public boolean contains(T element) {
-        lock.lock();
+    public boolean contains(final T element) {
+        this.lock.lock();
         try {
-            return set.contains(element);
+            return this.set.contains(element);
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     }
 
     public int size() {
-        lock.lock();
+        this.lock.lock();
         try {
-            return set.size();
+            return this.set.size();
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     }
 
-    public boolean addAll(Collection<? extends T> elements) {
-        lock.lock();
+    public boolean addAll(final Collection<? extends T> elements) {
+        this.lock.lock();
         try {
-            return set.addAll(elements);
+            return this.set.addAll(elements);
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     }
 
