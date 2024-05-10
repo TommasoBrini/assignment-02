@@ -2,7 +2,7 @@ package ex2.core.component.concrete;
 
 
 import ex2.core.component.CounterSearch;
-import ex2.core.event.DataEvent;
+import ex2.core.event.SearchData;
 import ex2.core.component.Searcher;
 
 public class CounterSearchImpl implements CounterSearch {
@@ -17,10 +17,10 @@ public class CounterSearchImpl implements CounterSearch {
     }
 
     @Override
-    public void increaseConsumeIfMaxDepth(final DataEvent dataEvent) {
-        if (dataEvent.currentDepth() == dataEvent.maxDepth()) {
-            this.countConsumeEvent += STEP_CONSUMER;
-        }
+    public void increaseConsumeIfMaxDepth(final SearchData searchData) {
+//        if (searchData.currentDepth() == searchData.maxDepth()) {
+//            this.countConsumeEvent += STEP_CONSUMER;
+//        }
     }
 
     @Override

@@ -1,6 +1,7 @@
-package ex2.core.event;
+package ex2.core.event.factory;
 
 import ex2.core.component.SearchLogic;
+import ex2.core.event.SearchEvent;
 import ex2.worker.LogicWorker;
 
 public final class SearchEventFactory {

@@ -4,7 +4,7 @@ import ex2.core.component.SearchLogic;
 import ex2.core.component.Searcher;
 import ex2.core.component.concrete.SearcherImpl;
 import ex2.core.event.SearchEvent;
-import ex2.core.event.SearchEventFactory;
+import ex2.core.event.factory.SearchEventFactory;
 import ex2.core.event.SearchResponse;
 import ex2.utils.PathUtils;
 import ex2.web.Server;
@@ -13,8 +13,6 @@ import ex2.web.client.ClientServiceFactory;
 import ex2.worker.LogicWorker;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.junit.Assert.assertFalse;
 
@@ -48,7 +46,7 @@ public class SearcherTest {
 
         assert this.searcher.totalWord() > 0;
         System.out.println(this.searcher.totalWord());
-        System.out.println(this.searcher.computeDuration() + " ms");
+        System.out.println(this.searcher.dataOnFinish().duration() + " ms");
     }
 
     @Test
@@ -69,6 +67,6 @@ public class SearcherTest {
 
         assert this.searcher.totalWord() > 0;
         System.out.println(this.searcher.totalWord());
-        System.out.println(this.searcher.computeDuration() + " ms");
+        System.out.println(this.searcher.dataOnFinish().duration() + " ms");
     }
 }

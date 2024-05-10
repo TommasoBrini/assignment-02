@@ -1,6 +1,6 @@
 package ex2.gui;
 
-import ex2.core.event.DataEvent;
+import ex2.core.event.SearchData;
 import ex2.core.listener.HistoryListener;
 import ex2.utils.ComboBoxUtils;
 import ex2.utils.PanelUtils;
@@ -36,7 +36,7 @@ public class GUIAnalysis extends JFrame implements HistoryListener {
 
     private final JComboBox<XType> xComboBox;
     private final JComboBox<YType> yComboBox;
-    private final List<DataEvent> history;
+    private final List<SearchData> history;
     private final JFreeChart chart;
 
     public GUIAnalysis() {
@@ -91,7 +91,7 @@ public class GUIAnalysis extends JFrame implements HistoryListener {
     }
 
     @Override
-    public void append(final DataEvent event) {
+    public void append(final SearchData event) {
         this.history.add(event);
         this.updateHistory();
     }
@@ -120,7 +120,7 @@ public class GUIAnalysis extends JFrame implements HistoryListener {
         return (YType) this.yComboBox.getSelectedItem();
     }
 
-    private long valueY(final DataEvent event) {
+    private long valueY(final SearchData event) {
         final YType yValue = this.selectY();
         return switch (yValue) {
             case TIME -> event.duration();
@@ -128,7 +128,7 @@ public class GUIAnalysis extends JFrame implements HistoryListener {
         };
     }
 
-    private String valueX(final DataEvent event) {
+    private String valueX(final SearchData event) {
         final XType xValue = this.selectX();
         return switch (xValue) {
             case WORKER -> event.workerStrategy().toString();

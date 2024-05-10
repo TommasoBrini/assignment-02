@@ -1,8 +1,10 @@
 package ex2.core.component.concrete;
 
-import ex2.core.event.DataEvent;
+import ex2.core.component.Searcher;
+import ex2.core.event.SearchData;
 import ex2.core.component.History;
-import ex2.core.event.DataEventImpl;
+import ex2.core.event.SearchResponse;
+import ex2.core.event.factory.SearchDataFactory;
 import ex2.core.listener.HistoryListener;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -13,7 +15,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static ex2.utils.PathUtils.HISTORY_PATH;
 
@@ -23,16 +24,12 @@ public class HistoryImpl implements History {
     private static final int MAX_SIZE = 5;
 
     private final JsonArray historyJson;
-    private final List<DataEvent> history;
+    private final List<SearchData> history;
     private final List<HistoryListener> listeners;
-
-    private Optional<DataEvent> searchEvent;
-    private long time;
 
     public HistoryImpl(final List<HistoryListener> listeners) {
         this.historyJson = new JsonArray();
         this.history = new ArrayList<>();
-        this.searchEvent = Optional.empty();
         this.listeners = new ArrayList<>(listeners);
         this.createJSON();
         this.readJSON();
@@ -60,16 +57,16 @@ public class HistoryImpl implements History {
 
             history.stream()
                     .filter(obj -> obj instanceof JsonObject)
-                    .forEach(obj -> this.append(new DataEventImpl((JsonObject) obj)));
+                    .forEach(obj -> this.append(SearchDataFactory.create((JsonObject) obj)));
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void append(final DataEvent dataEvent) {
-        this.historyJson.add(POSITION_ADD_JSON, dataEvent.toJson());
-        this.history.addFirst(dataEvent);
-        this.listeners.forEach(listener -> listener.append(dataEvent));
+    private void append(final SearchData searchData) {
+        this.historyJson.add(POSITION_ADD_JSON, searchData.toJson());
+        this.history.addFirst(searchData);
+        this.listeners.forEach(listener -> listener.append(searchData));
     }
 
     @Override
@@ -78,12 +75,12 @@ public class HistoryImpl implements History {
     }
 
     @Override
-    public List<DataEvent> history() {
+    public List<SearchData> history() {
         return this.history;
     }
 
     @Override
-    public List<DataEvent> lastHistory() {
+    public List<SearchData> lastHistory() {
         final int skip = Math.max(this.history.size() - MAX_SIZE, 0);
         return this.history.stream().skip(skip).toList();
     }
@@ -100,18 +97,14 @@ public class HistoryImpl implements History {
     }
 
     @Override
-    public void onStart(final DataEvent event) {
-        this.time = System.currentTimeMillis();
-        this.searchEvent = Optional.of(event);
+    public void onStart(final SearchResponse event) {
+
     }
 
     @Override
-    public void onFinish() {
-        this.searchEvent.ifPresent(event -> {
-            final long duration = System.currentTimeMillis() - this.time;
-            final DataEvent dataEvent = new DataEventImpl(event.workerStrategy(), event.searcherType(), event.url(), event.word(), event.maxDepth(), event.currentDepth(), duration);
-            this.append(dataEvent);
-        });
+    public void onFinish(final Searcher searcher) {
+        final SearchData searchData = searcher.dataOnFinish();
+        this.append(searchData);
     }
 }
 

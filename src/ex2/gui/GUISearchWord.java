@@ -1,6 +1,6 @@
 package ex2.gui;
 
-import ex2.core.event.DataEvent;
+import ex2.core.event.SearchData;
 import ex2.core.event.SearchResponse;
 import ex2.core.listener.InputGuiListener;
 import ex2.core.listener.ViewListener;
@@ -45,7 +45,7 @@ public class GUISearchWord extends JFrame implements ViewListener {
         this.add(BorderLayout.CENTER, this.printArea);
     }
 
-    public void start(final List<DataEvent> history) {
+    public void start(final List<SearchData> history) {
         history.forEach(data -> this.historyArea.append(data.workerStrategy(), data.searcherType(), data.url(), data.word(), "" + data.maxDepth()));
         this.setVisible(true);
     }
@@ -73,9 +73,10 @@ public class GUISearchWord extends JFrame implements ViewListener {
     }
 
     @Override
-    public void onFinish() {
+    public void onFinish(final int totalWords) {
         SwingUtilities.invokeLater(() -> {
             this.commandArea.enableCommand();
+            this.commandArea.setTotalWords(totalWords);
             MessageDialogUtils.createMessage(this, "Finish Search");
         });
     }

@@ -1,7 +1,7 @@
 package ex2.worker.concrete;
 
 import ex2.core.event.SearchResponse;
-import ex2.core.event.SearchResponseFactory;
+import ex2.core.event.factory.SearchResponseFactory;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 

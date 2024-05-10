@@ -1,10 +1,11 @@
 package ex2.core.listener;
 
-import ex2.core.event.DataEvent;
+import ex2.core.component.Searcher;
+import ex2.core.event.SearchResponse;
 
 public interface ModelListener {
 
-    void onStart(final DataEvent event);
+    void onStart(final SearchResponse response);
 
-    void onFinish();
+    void onFinish(final Searcher searcher);
 }

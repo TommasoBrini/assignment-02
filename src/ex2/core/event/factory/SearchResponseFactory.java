@@ -1,8 +1,12 @@
-package ex2.core.event;
+package ex2.core.event.factory;
 
 import ex2.core.component.SearchLogic;
+import ex2.core.event.SearchEvent;
+import ex2.core.event.SearchResponse;
 import ex2.worker.LogicWorker;
 import io.vertx.core.json.JsonObject;
+
+import static ex2.core.event.SearchUtils.*;
 
 public final class SearchResponseFactory {
 
@@ -54,7 +58,7 @@ public final class SearchResponseFactory {
         public SearchResponseImpl(final JsonObject jsonObject) {
             this(
                     LogicWorker.Type.valueOf(jsonObject.getString(WORKER_STRATEGY)),
-                    SearchLogic.Type.valueOf(jsonObject.getString(SEARCH_LOGIC_TYPE)),
+                    SearchLogic.Type.valueOf(jsonObject.getString(SEARCHER_TYPE)),
                     jsonObject.getString(URL),
                     jsonObject.getString(WORD),
                     jsonObject.getInteger(COUNT_WORD),
@@ -62,14 +66,6 @@ public final class SearchResponseFactory {
                     jsonObject.getInteger(MAX_DEPTH)
             );
         }
-
-        private static final String WORKER_STRATEGY = "workerStrategy";
-        private static final String SEARCH_LOGIC_TYPE = "searchLogicType";
-        private static final String URL = "url";
-        private static final String WORD = "word";
-        private static final String COUNT_WORD = "countWord";
-        private static final String CURRENT_DEPTH = "currentDepth";
-        private static final String MAX_DEPTH = "maxDepth";
 
         @Override
         public boolean isFinished() {
@@ -80,7 +76,7 @@ public final class SearchResponseFactory {
         public JsonObject toJson() {
             return new JsonObject()
                     .put(WORKER_STRATEGY, this.workerStrategy.name())
-                    .put(SEARCH_LOGIC_TYPE, this.searchLogicType.name())
+                    .put(SEARCHER_TYPE, this.searchLogicType.name())
                     .put(URL, this.url)
                     .put(WORD, this.word)
                     .put(COUNT_WORD, this.countWord)
@@ -91,13 +87,13 @@ public final class SearchResponseFactory {
         @Override
         public String toString() {
             return "SearchResponseImpl{" +
-                    "workerStrategy=" + workerStrategy +
-                    ", searchLogicType=" + searchLogicType +
-                    ", url='" + url + '\'' +
-                    ", word='" + word + '\'' +
-                    ", countWord=" + countWord +
-                    ", currentDepth=" + currentDepth +
-                    ", maxDepth=" + maxDepth +
+                    "workerStrategy=" + this.workerStrategy +
+                    ", searchLogicType=" + this.searchLogicType +
+                    ", url='" + this.url + '\'' +
+                    ", word='" + this.word + '\'' +
+                    ", countWord=" + this.countWord +
+                    ", currentDepth=" + this.currentDepth +
+                    ", maxDepth=" + this.maxDepth +
                     '}';
         }
     }

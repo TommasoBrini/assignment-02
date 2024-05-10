@@ -34,7 +34,7 @@ public class ReactiveImpl extends AbstractWorker {
                     list.forEach(this::onResponseView);
                     return list;
                 }).flatMap(Flowable::fromIterable));
-        this.searchObservable.doOnComplete(this::onFinish).subscribe();
+        this.searchObservable.doOnComplete(this::onFinishListener).subscribe();
     }
 
     @Override

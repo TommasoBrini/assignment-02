@@ -1,5 +1,6 @@
 package ex2.core.component;
 
+import ex2.core.event.SearchData;
 import ex2.core.event.SearchEvent;
 import ex2.core.event.SearchResponse;
 import ex2.web.client.ClientService;
@@ -16,5 +17,5 @@ public interface Searcher {
 
     int totalWord();
 
-    long computeDuration();
+    SearchData dataOnFinish();
 }

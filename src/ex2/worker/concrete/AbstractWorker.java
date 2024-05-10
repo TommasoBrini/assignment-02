@@ -27,7 +27,7 @@ public abstract class AbstractWorker implements LogicWorker {
     public void start(final Searcher searcher) {
         this.searcher = searcher;
         final SearchResponse response = this.searcher.initSearch();
-//        this.modelListeners.forEach(listener -> listener.onStart(null));
+        this.modelListeners.forEach(listener -> listener.onStart(response));
         this.addEventUrl(response);
     }
 
@@ -47,7 +47,8 @@ public abstract class AbstractWorker implements LogicWorker {
 
     public abstract void addEventUrl(final SearchResponse response);
 
-    public void onFinish() {
-        this.viewListeners.forEach(ViewListener::onFinish);
+    public void onFinishListener() {
+        this.modelListeners.forEach(listener -> listener.onFinish(this.searcher));
+        this.viewListeners.forEach(listener -> listener.onFinish(this.searcher.totalWord()));
     }
 }

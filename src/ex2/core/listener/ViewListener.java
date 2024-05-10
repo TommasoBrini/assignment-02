@@ -8,6 +8,6 @@ public interface ViewListener {
 
     void onError(final String message);
 
-    void onFinish();
+    void onFinish(final int totalWords);
 
 }

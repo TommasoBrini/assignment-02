@@ -2,9 +2,11 @@ package ex2.core.component.concrete;
 
 import ex2.core.component.SearchLogicFactory;
 import ex2.core.component.Searcher;
+import ex2.core.event.SearchData;
 import ex2.core.event.SearchEvent;
 import ex2.core.event.SearchResponse;
-import ex2.core.event.SearchResponseFactory;
+import ex2.core.event.factory.SearchDataFactory;
+import ex2.core.event.factory.SearchResponseFactory;
 import ex2.web.client.ClientService;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -81,8 +83,15 @@ public class SearcherImpl implements Searcher {
         return this.totalWord.get();
     }
 
-    @Override
-    public long computeDuration() {
+    private long computeDuration() {
         return System.currentTimeMillis() - this.start;
+    }
+
+    @Override
+    public SearchData dataOnFinish() {
+        return SearchDataFactory.create(
+                this.searchEvent.workerStrategy(), this.searchEvent.searchLogicType(),
+                this.searchEvent.url(), this.searchEvent.word(), this.totalWord.get(),
+                this.searchEvent.maxDepth(), this.computeDuration());
     }
 }

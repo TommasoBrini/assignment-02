@@ -4,7 +4,7 @@ import ex2.core.component.SearchLogic;
 import ex2.worker.LogicWorker;
 import io.vertx.core.json.JsonObject;
 
-public interface DataEvent {
+public interface SearchData {
 
     LogicWorker.Type workerStrategy();
 
@@ -14,7 +14,7 @@ public interface DataEvent {
 
     String word();
 
-    int currentDepth();
+    int countWord();
 
     int maxDepth();
 

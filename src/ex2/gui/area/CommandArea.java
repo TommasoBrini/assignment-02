@@ -4,7 +4,7 @@ import ex2.core.component.SearchLogic;
 import ex2.core.listener.InputGuiListener;
 import ex2.gui.GUIAnalysis;
 import ex2.core.event.SearchEvent;
-import ex2.core.event.SearchEventFactory;
+import ex2.core.event.factory.SearchEventFactory;
 import ex2.gui.components.TextBox;
 import ex2.web.Server;
 import ex2.utils.ComboBoxUtils;
@@ -189,4 +189,7 @@ public class CommandArea extends JPanel {
         this.exitButton.setEnabled(true);
     }
 
+    public void setTotalWords(final int totalWords) {
+        this.boxTotalWords.setText(String.valueOf(totalWords));
+    }
 }

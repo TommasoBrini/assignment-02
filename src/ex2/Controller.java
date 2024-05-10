@@ -52,15 +52,12 @@ public class Controller implements InputGuiListener {
         this.viewListeners.add(this.gui);
         this.modelListeners.add(this.history);
 
-        this.gui.addInputGuiListener(this);
-
-        this.onStart();
-    }
-
-    public void onStart() {
         this.server.run();
+        this.gui.setupAnalysis(this.guiAnalysis);
         this.gui.start(this.history.lastHistory());
+        this.gui.addInputGuiListener(this);
     }
+
 
     private void setupWorker(final LogicWorker.Type type) {
         if (Objects.nonNull(this.logicWorker) && type.equals(this.logicWorker.strategy())) return;
@@ -71,7 +68,6 @@ public class Controller implements InputGuiListener {
 
     @Override
     public void onSearch(final SearchEvent searchEvent) {
-        System.out.println("MAX DEPTH: " + searchEvent.maxDepth());
         this.setupWorker(searchEvent.workerStrategy());
         this.searcher.setup(this.clientService, searchEvent);
         this.logicWorker.start(this.searcher);
@@ -79,8 +75,7 @@ public class Controller implements InputGuiListener {
 
     @Override
     public void onExit() {
-        // TODO
-        this.logicWorker.stop();
+        if (this.logicWorker != null) this.logicWorker.stop();
         this.history.saveJSON();
         this.server.stop();
         this.gui.dispose();
