@@ -9,7 +9,6 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
 public final class ClientServiceFactory {
