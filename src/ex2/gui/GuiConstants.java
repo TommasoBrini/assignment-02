@@ -4,7 +4,7 @@ import java.awt.*;
 
 public final class GuiConstants {
     // DIMENSION
-    public static final Dimension FRAME_DIMENSION = new Dimension(800, 500);
+    public static final Dimension FRAME_DIMENSION = new Dimension(900, 500);
     public static final Dimension PRINT_AREA_DIMENSION = new Dimension(380, 380);
     public static final Dimension HISTORY_AREA_DIMENSION = new Dimension(400, 450);
 

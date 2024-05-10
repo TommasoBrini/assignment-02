@@ -46,4 +46,8 @@ public abstract class AbstractWorker implements LogicWorker {
     }
 
     public abstract void addEventUrl(final SearchResponse response);
+
+    public void onFinish() {
+        this.viewListeners.forEach(ViewListener::onFinish);
+    }
 }
