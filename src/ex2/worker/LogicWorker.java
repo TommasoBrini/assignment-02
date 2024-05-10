@@ -17,8 +17,9 @@ public interface LogicWorker {
 
     void addModelListener(final ModelListener modelListener);
 
+    void start(final Searcher searcher);
+
     void stop();
 
-    void start(final Searcher searcher);
 
 }

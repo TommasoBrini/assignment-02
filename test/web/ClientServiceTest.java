@@ -23,24 +23,24 @@ public class ClientServiceTest {
 
     @Test
     public void searchLocalUrl() {
-        this.clientService.findUrl(LOCAL_URL);
+        this.clientService.findDocument(LOCAL_URL);
     }
 
     @Test
     public void searchRemoteUrl() {
-        this.clientService.findUrl(REMOTE_URL);
+        this.clientService.findDocument(REMOTE_URL);
     }
 
     @Test
     public void searchInvalidUrl() {
-        assertEquals(JsoupUtils.EmptyDocument, this.clientService.findUrl(INVALID_URL));
+        assertEquals(JsoupUtils.EmptyDocument, this.clientService.findDocument(INVALID_URL));
     }
 
     @Test
     public void massiveSearchLocalUrl() {
         final int requests = 1000;
         for (int i = 0; i < requests; i++) {
-            this.clientService.findUrl(LOCAL_URL);
+            this.clientService.findDocument(LOCAL_URL);
         }
     }
 
@@ -48,7 +48,7 @@ public class ClientServiceTest {
     public void massiveSearchRemoteUrl() {
         final int requests = 100;
         for (int i = 0; i < requests; i++) {
-            this.clientService.findUrl(REMOTE_URL);
+            this.clientService.findDocument(REMOTE_URL);
         }
     }
 

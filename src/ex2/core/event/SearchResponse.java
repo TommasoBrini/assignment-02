@@ -1,8 +1,11 @@
 package ex2.core.event;
 
-public interface SearchResponse {
-    String url();
-    String word();
+import io.vertx.core.json.JsonObject;
+
+public interface SearchResponse extends SearchEvent {
+    boolean isFinished();
+
     int countWord();
-    int currentDepth();
+
+    JsonObject toJson();
 }

@@ -18,6 +18,7 @@ import ex2.worker.LogicWorker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Controller implements InputGuiListener {
     // WEB
@@ -51,6 +52,8 @@ public class Controller implements InputGuiListener {
         this.viewListeners.add(this.gui);
         this.modelListeners.add(this.history);
 
+        this.gui.addInputGuiListener(this);
+
         this.onStart();
     }
 
@@ -59,12 +62,18 @@ public class Controller implements InputGuiListener {
         this.gui.start(this.history.lastHistory());
     }
 
-    @Override
-    public void onSearch(final SearchEvent searchEvent) {
-        this.logicWorker = FactoryWorker.createWorker(searchEvent.workerStrategy());
+    private void setupWorker(final LogicWorker.Type type) {
+        if (Objects.nonNull(this.logicWorker) && type.equals(this.logicWorker.strategy())) return;
+        this.logicWorker = FactoryWorker.createWorker(type);
         this.viewListeners.forEach(this.logicWorker::addViewListener);
         this.modelListeners.forEach(this.logicWorker::addModelListener);
-        this.searcher.setup(this.clientService, searchEvent.url(), searchEvent.searchLogicType(), searchEvent.word());
+    }
+
+    @Override
+    public void onSearch(final SearchEvent searchEvent) {
+        System.out.println("MAX DEPTH: " + searchEvent.maxDepth());
+        this.setupWorker(searchEvent.workerStrategy());
+        this.searcher.setup(this.clientService, searchEvent);
         this.logicWorker.start(this.searcher);
     }
 

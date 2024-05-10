@@ -2,7 +2,6 @@ package ex2.worker.concrete;
 
 import ex2.core.component.Searcher;
 import ex2.core.event.SearchResponse;
-import ex2.core.event.SearchResponseFactory;
 import ex2.core.listener.ModelListener;
 import ex2.core.listener.ViewListener;
 import ex2.worker.LogicWorker;
@@ -27,10 +26,13 @@ public abstract class AbstractWorker implements LogicWorker {
     @Override
     public void start(final Searcher searcher) {
         this.searcher = searcher;
-        final List<String> urls = this.searcher.initSearch();
-        this.modelListeners.forEach(listener -> listener.onStart(null));
-//        this.viewListeners.forEach(listener -> listener.onStart());
-        urls.forEach(this::addEventUrl);
+        final SearchResponse response = this.searcher.initSearch();
+//        this.modelListeners.forEach(listener -> listener.onStart(null));
+        this.addEventUrl(response);
+    }
+
+    protected void onResponseView(final SearchResponse response) {
+        this.viewListeners.forEach(listener -> listener.onResponse(response));
     }
 
     @Override
@@ -43,5 +45,5 @@ public abstract class AbstractWorker implements LogicWorker {
         this.modelListeners.add(modelListener);
     }
 
-    public abstract void addEventUrl(final String url);
+    public abstract void addEventUrl(final SearchResponse response);
 }

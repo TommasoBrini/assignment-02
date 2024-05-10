@@ -30,11 +30,11 @@ public final class ClientServiceFactory {
         }
 
         @Override
-        public Document findUrl(final String url) {
+        public Document findDocument(final String url) {
             Document doc = JsoupUtils.EmptyDocument;
             try {
-                doc = this.session.newRequest(url).get();
-            } catch (final IOException ignored) {
+                doc = this.session.newRequest(url).followRedirects(true).get();
+            } catch (final Exception ignored) {
             }
             return doc;
         }
@@ -59,7 +59,7 @@ public final class ClientServiceFactory {
         }
 
         @Override
-        public Document findUrl(final String url) {
+        public Document findDocument(final String url) {
             this.startStopMonitor.pause();
             final AtomicReference<Document> document = new AtomicReference<>(JsoupUtils.EmptyDocument);
             this.webClient.getAbs(url).send(response -> {

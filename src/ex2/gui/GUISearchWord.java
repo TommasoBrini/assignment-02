@@ -63,11 +63,6 @@ public class GUISearchWord extends JFrame implements ViewListener {
     }
 
     @Override
-    public void onStart(final SearchResponse response) {
-        this.printArea.sendEventSearcher(response);
-    }
-
-    @Override
     public void onResponse(final SearchResponse response) {
         this.printArea.sendEventSearcher(response);
     }

@@ -4,7 +4,7 @@ import org.jsoup.nodes.Document;
 
 public interface ClientService {
 
-    Document findUrl(final String url);
+    Document findDocument(final String url);
 
     void close();
 }

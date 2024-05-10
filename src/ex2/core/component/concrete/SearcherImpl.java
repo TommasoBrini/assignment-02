@@ -1,69 +1,84 @@
 package ex2.core.component.concrete;
 
-import ex2.core.component.SearchLogic;
 import ex2.core.component.SearchLogicFactory;
 import ex2.core.component.Searcher;
+import ex2.core.event.SearchEvent;
 import ex2.core.event.SearchResponse;
 import ex2.core.event.SearchResponseFactory;
-import ex2.core.listener.ViewListener;
 import ex2.web.client.ClientService;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SearcherImpl implements Searcher {
+    private final Set<String> cache;
+    private final AtomicInteger totalWord = new AtomicInteger();
+
     private ClientService clientService;
-    private SearchLogic.Type searchLogicType;
-    private String word;
-    private String url;
-    private int totalWord;
+    private SearchEvent searchEvent;
     private long start;
 
     public SearcherImpl() {
+        this.cache = new HashSet<>();
     }
 
     private int findWord(final Document document) {
         final Elements texts = document.select("body");
         return (int) texts.stream().map(Element::text)
                 .flatMap(text -> Arrays.stream(text.split("\\s+")))
-                .filter(word -> word.equals(this.word)).count();
+                .filter(word -> word.equals(this.searchEvent.word())).count();
+    }
+
+    private Document findDocument(final String url) {
+        return this.clientService.findDocument(url);
     }
 
     @Override
-    public void addListener(final ViewListener viewListener) {
-//        this.viewListeners.add(viewListener);
-    }
-
-    @Override
-    public void setup(final ClientService clientService, final String url, final SearchLogic.Type searchLogicType, final String word) {
+    public void setup(final ClientService clientService, final SearchEvent searchEvent) {
         this.clientService = clientService;
-        this.url = url;
-        this.searchLogicType = searchLogicType;
-        this.word = word;
-        this.totalWord = 0;
+        this.searchEvent = searchEvent;
+        this.totalWord.set(0);
     }
 
     @Override
-    public List<String> initSearch() {
+    public SearchResponse initSearch() {
         this.start = System.currentTimeMillis();
-        return this.search(this.url);
+        final Document document = this.findDocument(this.searchEvent.url());
+        final SearchResponse response = SearchResponseFactory.create(this.searchEvent, this.findWord(document));
+        this.cache.add(response.url());
+        return response;
     }
 
     @Override
-    public List<String> search(final String url) {
-        final Document document = this.clientService.findUrl(url);
-        final int countWord = this.findWord(document);
-        this.totalWord += countWord;
-        return SearchLogicFactory.create(this.searchLogicType).findUrls(document);
+    public List<SearchResponse> search(final SearchResponse parent) {
+        if (parent.isFinished()) return List.of();
+
+        final List<String> childrenUrls = SearchLogicFactory.create(parent.searchLogicType())
+                .findUrls(this.findDocument(parent.url()))
+                .stream()
+                .filter(url -> !this.cache.contains(url))
+                .toList();
+
+        final List<SearchResponse> searchResponses = childrenUrls
+                .stream()
+                .map(url -> SearchResponseFactory.createUpdateDepth(parent, url, this.findWord(this.findDocument(url))))
+                .toList();
+
+        final List<Integer> countWords = searchResponses.stream().map(SearchResponse::countWord).toList();
+        this.totalWord.set(this.totalWord() + countWords.stream().reduce(0, Integer::sum));
+        return searchResponses;
     }
+
 
     @Override
     public int totalWord() {
-        return this.totalWord;
+        return this.totalWord.get();
     }
 
     @Override

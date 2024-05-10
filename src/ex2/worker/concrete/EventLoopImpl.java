@@ -1,6 +1,11 @@
 package ex2.worker.concrete;
 
+import ex2.core.event.SearchResponse;
+import ex2.core.event.SearchResponseFactory;
 import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonObject;
+
+import java.util.List;
 
 public class EventLoopImpl extends AbstractWorker {
     private final Vertx vertx;
@@ -13,8 +18,11 @@ public class EventLoopImpl extends AbstractWorker {
 
     private void setupConsumers() {
         this.vertx.eventBus().consumer(EVENT_URL, handler -> {
-            final String url = (String) handler.body();
-            this.searcher().search(url);
+            final JsonObject jsonObject = (JsonObject) handler.body();
+            final SearchResponse response = SearchResponseFactory.create(jsonObject);
+            final List<SearchResponse> responses = this.searcher().search(response);
+            System.out.println("EventLoopImpl.setupConsumers: " + responses.size());
+            responses.forEach(this::addEventUrl);
         });
     }
 
@@ -24,8 +32,9 @@ public class EventLoopImpl extends AbstractWorker {
     }
 
     @Override
-    public void addEventUrl(final String url) {
-        this.vertx.eventBus().send(EVENT_URL, url);
+    public void addEventUrl(final SearchResponse response) {
+        this.onResponseView(response);
+        this.vertx.eventBus().send(EVENT_URL, response.toJson());
     }
 
     @Override

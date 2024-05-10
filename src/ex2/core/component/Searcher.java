@@ -1,19 +1,18 @@
 package ex2.core.component;
 
-import ex2.core.listener.ViewListener;
+import ex2.core.event.SearchEvent;
+import ex2.core.event.SearchResponse;
 import ex2.web.client.ClientService;
 
 import java.util.List;
 
 public interface Searcher {
 
-    void addListener(final ViewListener viewListener);
+    void setup(final ClientService clientService, final SearchEvent searchEvent);
 
-    void setup(final ClientService clientService, final String url, final SearchLogic.Type searchLogicType, final String word);
+    SearchResponse initSearch();
 
-    List<String> initSearch();
-
-    List<String> search(final String url);
+    List<SearchResponse> search(final SearchResponse response);
 
     int totalWord();
 
