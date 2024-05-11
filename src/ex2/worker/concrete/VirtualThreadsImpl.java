@@ -20,6 +20,7 @@ public class VirtualThreadsImpl extends AbstractWorker {
 
     @Override
     public void addEventUrl(final SearchResponse response) {
+        this.onResponseView(response);
         final CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
             final List<SearchResponse> responses = this.searcher().search(response);
             responses.forEach(this::onResponseView);
