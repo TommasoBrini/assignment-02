@@ -32,7 +32,7 @@ public class EventLoopImpl extends AbstractWorker {
             responses.forEach(this::onResponseView);
 
             final List<CompletableFuture<Void>> nestedFutures = responses.stream()
-                .flatMap(res -> IntStream.range(0, res.maxDepth())
+                .flatMap(res -> IntStream.range(1, res.maxDepth())
                         .mapToObj(i -> CompletableFuture.runAsync(() -> {
                             this.onResponseView(res);
                             final List<SearchResponse> list = this.searcher().search(res);
