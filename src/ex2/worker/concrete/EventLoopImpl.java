@@ -2,28 +2,20 @@ package ex2.worker.concrete;
 
 import ex2.core.event.SearchResponse;
 import ex2.core.event.factory.SearchResponseFactory;
+import io.vertx.core.Future;
+import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.IntStream;
 
 public class EventLoopImpl extends AbstractWorker {
     private final Vertx vertx;
-    private static final String EVENT_URL = "searchUrls";
 
     public EventLoopImpl() {
         this.vertx = Vertx.vertx();
-        this.setupConsumers();
-    }
-
-    private void setupConsumers() {
-        this.vertx.eventBus().consumer(EVENT_URL, handler -> {
-            final JsonObject jsonObject = (JsonObject) handler.body();
-            final SearchResponse response = SearchResponseFactory.create(jsonObject);
-            final List<SearchResponse> responses = this.searcher().search(response);
-            System.out.println("EventLoopImpl.setupConsumers: " + responses.size());
-            responses.forEach(this::addEventUrl);
-        });
     }
 
     @Override
@@ -34,14 +26,34 @@ public class EventLoopImpl extends AbstractWorker {
     @Override
     public void addEventUrl(final SearchResponse response) {
         this.onResponseView(response);
-        this.vertx.eventBus().send(EVENT_URL, response.toJson());
+
+        final Future<Void> promise = this.vertx.executeBlocking(() -> {
+            final List<SearchResponse> responses = this.searcher().search(response);
+            responses.forEach(this::onResponseView);
+
+            final List<CompletableFuture<Void>> nestedFutures = responses.stream()
+                .flatMap(res -> IntStream.range(0, res.maxDepth())
+                        .mapToObj(i -> CompletableFuture.runAsync(() -> {
+                            this.onResponseView(res);
+                            final List<SearchResponse> list = this.searcher().search(res);
+                            list.forEach(this::onResponseView);
+                            System.out.println(list.size());
+                            System.out.println("Depth: " + res.currentDepth());
+                        }))).toList();
+
+            final CompletableFuture<Void> allNestedFutures = CompletableFuture.allOf(nestedFutures.toArray(new CompletableFuture[0]));
+            allNestedFutures.join();
+            return null;
+        });
+
+        promise.onComplete(handler -> {
+            this.onFinishListener();
+        });
     }
 
     @Override
     public void stop() {
         this.vertx.close();
     }
-
-
 
 }
