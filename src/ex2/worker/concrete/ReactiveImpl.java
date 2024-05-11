@@ -25,6 +25,7 @@ public class ReactiveImpl extends AbstractWorker {
 
     @Override
     public void addEventUrl(final SearchResponse response) {
+        this.onResponseView(response);
         this.searchObservable = Flowable.just(response).subscribeOn(Schedulers.io());
 
         IntStream.range(0, response.maxDepth()).forEach(i ->
