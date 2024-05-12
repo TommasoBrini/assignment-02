@@ -1,6 +1,28 @@
 # Compiled class file
 *.class
 
+# XML files
+*.xml
+
+# IML files
+*.iml
+
+# Json sbt
+.bps/sbt.json
+
+# sbt
+target/
+output
+
+# Idea files
+.idea/
+
+# Project files
+project/
+
+# doc java
+#res/docs/
+
 # Log file
 *.log
 
@@ -18,7 +40,9 @@
 *.zip
 *.tar.gz
 *.rar
+*.json
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+/src/package.json

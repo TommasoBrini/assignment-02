@@ -6,12 +6,7 @@ import ex1.inspector.stepper.Stepper;
 import ex1.inspector.timeStatistics.TimeStatistics;
 import ex1.synchronizers.monitor.startStop.StartStopMonitor;
 import ex1.synchronizers.worker.master.MasterWorker;
-import ex1.inspector.road.RoadSimStatistics;
-import ex1.inspector.stepper.Stepper;
-import ex1.inspector.timeStatistics.TimeStatistics;
-import ex1.synchronizers.monitor.startStop.StartStopMonitor;
 import ex1.road.AbstractEnvironment;
-import ex1.synchronizers.worker.master.MasterWorker;
 
 import java.util.List;
 

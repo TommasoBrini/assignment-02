@@ -1,14 +1,11 @@
 package ex1.synchronizers.worker.slave;
 
 import ex1.car.command.CarCommand;
-import ex1.synchronizers.monitor.startStop.StartStopMonitor;
-import ex1.synchronizers.monitor.startStop.StartStopMonitor;
 
-public interface Worker {
+import java.util.concurrent.Callable;
 
-    void play(CarCommand command);
+public interface Worker extends Callable<Void> {
 
-    void terminate();
+    void setCarCommand(CarCommand command);
 
-    void addStartStopMonitorInTail(StartStopMonitor startStopMonitor);
 }

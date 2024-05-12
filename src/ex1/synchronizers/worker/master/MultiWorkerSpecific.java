@@ -2,83 +2,65 @@ package ex1.synchronizers.worker.master;
 
 import ex1.car.CarAgent;
 import ex1.car.command.CarCommand;
-import ex1.car.command.concrete.ActionCommand;
-import ex1.car.command.concrete.DecideCommand;
-import ex1.car.command.concrete.SenseCommand;
-import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrier;
-import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrierImpl;
-import ex1.synchronizers.monitor.startStop.StartStopMonitor;
+import ex1.synchronizers.service.CommandService;
+import ex1.synchronizers.service.CommandServiceImpl;
 import ex1.synchronizers.worker.slave.Worker;
 import ex1.synchronizers.worker.slave.WorkerCarBarrier;
-import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrier;
-import ex1.synchronizers.monitor.cycleBarrier.MyCyclicBarrierImpl;
-import ex1.synchronizers.monitor.startStop.StartStopMonitor;
-import ex1.synchronizers.worker.slave.Worker;
-import ex1.synchronizers.worker.slave.WorkerCarBarrier;
-import utils.ListUtils;
+import ex1.utils.ListUtils;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class MultiWorkerSpecific extends BaseMasterWorker implements MasterWorker {
-    private final List<List<Worker>> carsWorkersList;
-    private final List<CarCommand> commands;
-    private final MyCyclicBarrier senseCycleBarrier;
-    private final MyCyclicBarrier decideCycleBarrier;
-    private final MyCyclicBarrier actionCycleBarrier;
-    private int senseDivisor;
-    private int decideDivisor;
-    private int actionDivisor;
+    private final Map<CarCommand, CommandService> commandServiceMap;
+    private final Map<CarCommand, List<Worker>> carsWorkersMap;
+    private final Map<CarCommand, Integer> commandDivisorMap;
 
-    public MultiWorkerSpecific(final StartStopMonitor starStopMonitorSimulation) {
-        super(starStopMonitorSimulation);
-        this.carsWorkersList = new ArrayList<>();
-        this.commands = List.of(new SenseCommand(), new DecideCommand(), new ActionCommand());
-        this.senseCycleBarrier = new MyCyclicBarrierImpl(this.startStopMonitorSimulation());
-        this.decideCycleBarrier = new MyCyclicBarrierImpl(this.startStopMonitorSimulation());
-        this.actionCycleBarrier = new MyCyclicBarrierImpl(this.startStopMonitorSimulation());
-        this.senseDivisor = 5;
-        this.decideDivisor = 5;
-        this.actionDivisor = 5;
+    public MultiWorkerSpecific(final ExecutorService executorService, final int sense, final int decide, final int action) {
+        super(executorService);
+        this.carsWorkersMap = new HashMap<>();
+        this.commandDivisorMap = this.carCommands().stream().collect(Collectors.toMap(command -> command, command -> 5));
+        this.commandServiceMap = this.carCommands().stream().collect(Collectors.toMap(command -> command, command -> new CommandServiceImpl(this)));
+
+        final List<Integer> divisor = List.of(sense, decide, action);
+        IntStream.range(0, Math.min(3, this.totalCommands())).forEach(i -> this.commandDivisorMap.put(this.command(i), divisor.get(i)));
     }
 
-    public MultiWorkerSpecific(final StartStopMonitor starStopMonitorSimulation, final int sense, final int decide, final int action) {
-        this(starStopMonitorSimulation);
-        this.senseDivisor = sense;
-        this.decideDivisor = decide;
-        this.actionDivisor = action;
+    public MultiWorkerSpecific(final int sense, final int decide, final int action) {
+        this.carsWorkersMap = new HashMap<>();
+        this.commandDivisorMap = this.carCommands().stream().collect(Collectors.toMap(command -> command, command -> 5));
+        this.commandServiceMap = this.carCommands().stream().collect(Collectors.toMap(command -> command, command -> new CommandServiceImpl(this)));
+
+        final List<Integer> divisor = List.of(sense, decide, action);
+        IntStream.range(0, Math.min(3, this.totalCommands())).forEach(i -> this.commandDivisorMap.put(this.command(i), divisor.get(i)));
+    }
+
+    public MultiWorkerSpecific() {
+        this(5, 5, 5);
     }
 
     @Override
     public void setup() {
-        final List<List<CarAgent>> carDividedSenseList = ListUtils.divideEqually(this.carAgents(), this.senseDivisor);
-        final List<List<CarAgent>> carDividedDecideList = ListUtils.divideEqually(this.carAgents(), this.decideDivisor);
-        final List<List<CarAgent>> carDividedActionList = ListUtils.divideEqually(this.carAgents(), this.actionDivisor);
-        this.senseCycleBarrier.setup(carDividedSenseList.size());
-        this.decideCycleBarrier.setup(carDividedDecideList.size());
-        this.actionCycleBarrier.setup(carDividedActionList.size());
-
-        final List<Worker> senseWorkers = carDividedSenseList.stream().map(car -> (Worker) new WorkerCarBarrier(this.senseCycleBarrier, car)).toList();
-        final List<Worker> decideWorkers = carDividedDecideList.stream().map(car -> (Worker) new WorkerCarBarrier(this.decideCycleBarrier, car)).toList();
-        final List<Worker> actionWorkers = carDividedActionList.stream().map(car -> (Worker) new WorkerCarBarrier(this.actionCycleBarrier, car)).toList();
-
-        this.carsWorkersList.add(senseWorkers);
-        this.carsWorkersList.add(decideWorkers);
-        this.carsWorkersList.add(actionWorkers);
+        this.carCommands().forEach(command -> {
+            final List<List<CarAgent>> carDividedSenseList = ListUtils.divideEqually(this.carAgents(), this.commandDivisorMap.get(command));
+            final CommandService commandService = this.commandServiceMap.get(command);
+            commandService.setup(carDividedSenseList.size());
+            final List<Worker> workers = carDividedSenseList.stream().map(car -> (Worker) new WorkerCarBarrier(car)).toList();
+            this.carsWorkersMap.put(command, workers);
+        });
     }
 
     @Override
-    public void execute(final int dt) {
-        this.setDtToCarAgents(dt);
-        int index = 0;
-        for (final var command : this.commands) {
-            this.carsWorkersList.get(index++).forEach(worker -> worker.play(command));
-            this.startStopMonitorSimulation().pauseAndWaitUntilPlay();
-        }
+    public void callNextTaskCommand() {
+        final CarCommand command = this.nextCommand();
+        final List<Worker> workers = this.carsWorkersMap.get(command);
+        System.out.println("\nRUN COMMAND: " + command.getClass().getSimpleName());
+        workers.forEach(worker -> worker.setCarCommand(command));
+        this.commandServiceMap.get(command).runTask(this.runTask(workers));
     }
 
-    @Override
-    public void terminateWorkers() {
-        this.carsWorkersList.forEach(workers -> workers.forEach(Worker::terminate));
-    }
 }

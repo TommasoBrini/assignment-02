@@ -8,7 +8,14 @@ public interface MasterWorker {
 
     void execute(int dt);
 
-    void terminateWorkers();
-
     void addCarAgent(final CarAgent carAgent);
+
+    void startSimulation();
+
+    boolean hasCommands();
+
+    void callNextTaskCommand();
+
+    void terminateExecution();
+
 }

@@ -3,14 +3,12 @@ package ex1.road;
 import ex1.car.CarAgentInfo;
 import ex1.road.core.V2d;
 import ex1.road.trafficLight.TrafficLight;
-import ex1.road.trafficLight.TrafficLight;
-import ex1.road.core.V2d;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-import static utils.ViewUtils.CAR_SIZE;
+import static ex1.utils.ViewUtils.CAR_SIZE;
 
 public class RoadPanelView extends JPanel {
 

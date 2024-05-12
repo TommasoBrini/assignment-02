@@ -7,25 +7,18 @@ import java.util.concurrent.locks.ReentrantLock;
 public class StartStopMonitorImpl implements StartStopMonitor {
     private final Lock mutex;
     private final Condition conditionRunning;
-    private boolean isRunning;
+    private boolean isAwaiting;
 
     public StartStopMonitorImpl() {
         this.mutex = new ReentrantLock();
         this.conditionRunning = this.mutex.newCondition();
+        this.isAwaiting = false;
     }
 
-    @Override
-    public void awaitUntilPlay() {
+    private void setAwaiting(final boolean isAwaiting) {
         try {
             this.mutex.lock();
-            while (!this.isRunning) {
-                try {
-//                    System.out.println("Waiting for running");
-                    this.conditionRunning.await();
-                } catch (final InterruptedException ex) {
-                    System.out.println("Interrupted while waiting for running");
-                }
-            }
+            this.isAwaiting = isAwaiting;
         } finally {
             this.mutex.unlock();
         }
@@ -35,8 +28,8 @@ public class StartStopMonitorImpl implements StartStopMonitor {
     public void play() {
         try {
             this.mutex.lock();
-            this.isRunning = true;
-            this.conditionRunning.signal();
+            this.isAwaiting = false;
+            this.conditionRunning.signalAll();
         } finally {
             this.mutex.unlock();
         }
@@ -46,16 +39,21 @@ public class StartStopMonitorImpl implements StartStopMonitor {
     public void pause() {
         try {
             this.mutex.lock();
-            this.isRunning = false;
+            this.isAwaiting = true;
         } finally {
             this.mutex.unlock();
         }
     }
 
     @Override
-    public void pauseAndWaitUntilPlay() {
-        this.pause();
-        this.awaitUntilPlay();
+    public void awaitUntilPlay() {
+        try {
+            this.mutex.lock();
+            while (this.isAwaiting) {
+                this.conditionRunning.awaitUninterruptibly();
+            }
+        } finally {
+            this.mutex.unlock();
+        }
     }
-
 }

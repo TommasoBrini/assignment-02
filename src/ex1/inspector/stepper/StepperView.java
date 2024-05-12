@@ -2,7 +2,7 @@ package ex1.inspector.stepper;
 
 import ex1.inspector.StartStopViewListener;
 import ex1.simulation.InspectorSimulation;
-import utils.ViewUtils;
+import ex1.utils.ViewUtils;
 
 import javax.swing.*;
 import java.awt.*;

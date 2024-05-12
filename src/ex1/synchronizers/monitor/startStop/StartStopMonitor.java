@@ -7,5 +7,4 @@ public interface StartStopMonitor {
 
     void awaitUntilPlay();
 
-    void pauseAndWaitUntilPlay();
 }

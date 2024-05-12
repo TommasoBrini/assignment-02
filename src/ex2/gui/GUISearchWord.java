@@ -1,0 +1,85 @@
+package ex2.gui;
+
+import ex2.core.event.SearchData;
+import ex2.core.event.SearchResponse;
+import ex2.core.listener.InputGuiListener;
+import ex2.core.listener.ViewListener;
+import ex2.gui.area.CommandArea;
+import ex2.gui.area.HistoryArea;
+import ex2.gui.area.PrintArea;
+import ex2.utils.MessageDialogUtils;
+import ex2.worker.LogicWorker;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+
+import static ex2.gui.GuiConstants.FRAME_DIMENSION;
+
+public class GUISearchWord extends JFrame implements ViewListener {
+    private final CommandArea commandArea;
+    private final PrintArea printArea;
+    private final HistoryArea historyArea;
+
+    public GUISearchWord() {
+        super("Search Word");
+        this.commandArea = new CommandArea();
+        this.printArea = new PrintArea();
+        this.historyArea = new HistoryArea(this.commandArea);
+
+        this.setSize(FRAME_DIMENSION);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        this.commandArea.addInputListener(this.printArea);
+        this.commandArea.addInputListener(this.historyArea);
+
+        this.setupGraphics();
+        this.setResizable(true);
+    }
+
+    private void setupGraphics() {
+        this.setLayout(new BorderLayout());
+        this.add(BorderLayout.NORTH, this.commandArea);
+        this.add(BorderLayout.EAST, this.historyArea);
+        this.add(BorderLayout.CENTER, this.printArea);
+    }
+
+    public void start(final List<SearchData> history) {
+        history.forEach(data -> this.historyArea.append(data.workerStrategy(), data.searcherType(), data.url(), data.word(), "" + data.maxDepth()));
+        this.setVisible(true);
+    }
+
+    public void setupAnalysis(final GUIAnalysis guiAnalysis) {
+        this.commandArea.setupAnalysis(guiAnalysis);
+    }
+
+    public LogicWorker.Type getWorkerStrategy() {
+        return this.commandArea.workerStrategy();
+    }
+
+    public void addInputGuiListener(final InputGuiListener inputGuiListener) {
+        this.commandArea.addInputListener(inputGuiListener);
+    }
+
+    @Override
+    public void onResponse(final SearchResponse response) {
+        this.printArea.sendEventSearcher(response);
+    }
+
+    @Override
+    public void onError(final String message) {
+        //SwingUtilities.invokeLater(() -> MessageDialogUtils.createError(this, "ERROR: %s".formatted(message)));
+    }
+
+    @Override
+    public void onFinish(final int totalWords) {
+        SwingUtilities.invokeLater(() -> {
+            this.commandArea.enableCommand();
+            this.commandArea.setTotalWords(totalWords);
+            MessageDialogUtils.createMessage(this, "Finish Search");
+        });
+    }
+
+
+}
